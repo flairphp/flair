@@ -1,0 +1,25 @@
+{
+    "name": "flairphp/flair",
+    "description": "Flair Framework",
+    "type": "library",
+    "keywords": [
+        "framework",
+        "modular"
+    ],
+    "homepage": "https://github.com/flairphp/Flair",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Daniel Sherman",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Flair\\": "src"
+        }
+    }
+}
