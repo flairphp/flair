@@ -32,20 +32,37 @@ namespace Flair\Validation\Core {
         public function getMessage();
 
         /**
-         * Returns the value of the flag that indicates if the rule should break the chain if it's
-         * chained with other rules and isValid returns false.
+         * Returns the value of the halt flag. The halt flag is used by a validator to determine
+         * if an individual rule should prevent processing of other rules in the validator, if
+         * isValid() returns false.
          *
          * @return bool
          */
-        public function getBreakFlag();
+        public function getHalt();
 
         /**
-         * Sets the value of the flag that indicates if the rule should break the chain if it's
-         * chained with other rules and isValid returns false.
+         * Sets the value of the halt flag. The halt flag is used by a validator to determine
+         * if an individual rule should prevent processing of other rules in the validator, if
+         * isValid() returns false.
          *
-         * @param bool $break The value to assign to the break flag.
+         * @param bool $halt The value to assign to the  flag.
          */
-        public function setBreakFlag($break);
+        public function setHalt($halt);
 
+        /**
+         * Sets the callable method/function that will be used by isvalid to
+         * validate the value passed to it.
+         *
+         * @param callable $callable The callable that will be used by isValid.
+         */
+        public function setCallable(callable $callable);
+
+        /**
+         * Gets the callable method/function that will be used by isvalid to
+         * validate the value passed to it.
+         *
+         * @return null|callable Returns the callable method/function if it's set, null otherwise.
+         */
+        public function getCallable();
     }
 }
