@@ -42,7 +42,7 @@ namespace Flair\Exception {
         /**
          * holds the test code
          *
-         * @var integere
+         * @var int
          */
         protected static $code = 999;
 

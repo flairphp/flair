@@ -1,14 +1,20 @@
 <?php
-/**
- * a down and dirty loader
- *
- * ref: http://thephpeffect.com/recursive-glob-vs-recursive-directory-iterator/
- */
-$path = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'src';
-$dir = new RecursiveDirectoryIterator($path);
-$iter = new RecursiveIteratorIterator($dir);
-$files = new RegexIterator($iter, '/\.php$/');
+function phpUnitFlairAutoLoader($class)
+{
+    $class == ltrim($class, '\\');
 
-foreach ($files as $file) {
-    include $file->getPathname();
+    if (stripos($class, 'Flair') === 0) {
+        $baseDir = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR;
+
+        $file = substr($class, strlen('Flair'));
+        $file = ltrim($file, '\\');
+        $file = str_replace(['\\'], DIRECTORY_SEPARATOR, $file) . '.php';
+        $file = $baseDir . $file;
+        require $file;
+        return true;
+    }
+
+    return false;
 }
+
+spl_autoload_register('phpUnitFlairAutoLoader', true, true);

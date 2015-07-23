@@ -5,7 +5,6 @@ namespace Flair\Validation\Core {
      * The RuleTrait provides a minimal implementation of RuleInterface Interface.
      *
      * @author Daniel Sherman
-     * @todo set up unit tests for the class
      */
     trait RuleTrait
     {
@@ -77,7 +76,7 @@ namespace Flair\Validation\Core {
         /**
          * Sets the error message associated with the rule.
          *
-         * @param string $message The new error message.
+         * @param string $message The error message.
          * @uses message
          */
         public function setMessage($message)
@@ -108,7 +107,7 @@ namespace Flair\Validation\Core {
          * if an individual rule should prevent processing of other rules in the validator, if
          * isValid() returns false.
          *
-         * @param bool $halt The value to assign to the  flag.
+         * @param bool $halt The value to assign to the flag.
          * @uses halt
          * @throws Exception If $halt isn't a bool.
          */
@@ -141,7 +140,7 @@ namespace Flair\Validation\Core {
          * @param array $arguments The arguments to be used.
          * @uses arguments
          */
-        public function setArguments(array $arguments)
+        public function setArguments(array $arguments = [])
         {
             $this->arguments = $arguments;
         }
@@ -152,25 +151,32 @@ namespace Flair\Validation\Core {
          * @param mixed $value The value to be validated.
          * @uses getCallable
          * @uses getArguments
-         * @throws Exception If $halt isn't a bool.
+         * @throws Exception If the callable method hasn't been set, or if the method
+         * doesn't return a bool.
          * @return bool
-         * @todo finish the method
          */
         public function isValid($value)
         {
             $call = $this->getCallable();
             $args = $this->getArguments();
 
-            if (count($args) > 0) {
-                //call use func array
-            } else {
-                //regular call
+            if (!is_callable($call)) {
+                throw new Exception('The callable method has not been set!', 2);
             }
 
-            //check if result is a bool
-            // return it if it is
-            // throw exception if it's not
+            if (count($args) > 0) {
+                //only call call_user_func_array if absolutely needed
+                array_unshift($args, $value);
+                $result = call_user_func_array($call, $args);
+            } else {
+                $result = $call($value);
+            }
 
+            if (is_bool($result)) {
+                return $result;
+            }
+
+            throw new Exception('The callable method did not return a boolean!', 3);
         }
 
     }
