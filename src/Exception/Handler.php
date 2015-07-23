@@ -16,8 +16,9 @@ namespace Flair\Exception {
      *</ul>
      *
      * @author Daniel Sherman
+     * @todo set up unit tests for the class
      */
-    class GlobalExceptionHandler
+    class Handler
     {
 
         /**
@@ -63,7 +64,7 @@ namespace Flair\Exception {
          *
          * @author Daniel Sherman
          * @param boolean $buffer Should buffering be used.
-         * @uses $buffer
+         * @uses buffer
          * @return boolean true on success false otherwise.
          */
         public function setBuffering($buffer)
@@ -91,7 +92,7 @@ namespace Flair\Exception {
          *
          * @author Daniel Sherman
          * @param boolean $output Should output be generated.
-         * @uses $output
+         * @uses output
          * @return boolean true on success false otherwise.
          */
         public function setOutput($output)
@@ -108,7 +109,7 @@ namespace Flair\Exception {
          *
          * @author Daniel Sherman
          * @param boolean $log Should the exception be logged when caught.
-         * @uses $log
+         * @uses log
          * @return boolean true on success false otherwise.
          */
         public function setLogging($log)
@@ -126,7 +127,7 @@ namespace Flair\Exception {
          * @author Daniel Sherman
          * @param sting $template The file path to an optional file that will
          * be used to genreate output.
-         * @uses $template
+         * @uses template
          * @return boolean true on success false otherwise.
          */
         public function setTemplate($template)
@@ -154,7 +155,7 @@ namespace Flair\Exception {
          *
          * @author Daniel Sherman
          * @param callable $logger The method to use.
-         * @uses $logger
+         * @uses logger
          * @return boolean true
          */
         public function setLogger(callable $logger)
@@ -177,9 +178,11 @@ namespace Flair\Exception {
          *
          * @author Daniel Sherman
          * @param \Exception $e The exception thats needs to be handled
-         * @uses $buffer
-         * @uses $buffer
-         * @uses $buffer
+         * @uses buffer
+         * @uses output
+         * @uses log
+         * @uses outputter
+         * @uses logException
          */
         public function catcher($e)
         {
@@ -194,7 +197,7 @@ namespace Flair\Exception {
             }
 
             if ($this->log) {
-                $this->logger($e);
+                $this->logException($e);
             }
         }
 
@@ -203,9 +206,9 @@ namespace Flair\Exception {
          *
          * @author Daniel Sherman
          * @param \Exception $e The exception thats needs to be logged
-         * @uses $logger
+         * @uses logger
          */
-        protected function logger($e)
+        protected function logException($e)
         {
             if ($this->logger !== null) {
                 $method = $this->logger;
@@ -220,7 +223,8 @@ namespace Flair\Exception {
          *
          * @author Daniel Sherman
          * @param \Exception $e The exception thats needs to be outputted
-         * @uses $template
+         * @uses template
+         * @uses defaultOutputter
          */
         protected function outputter($e)
         {

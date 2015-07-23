@@ -32,7 +32,7 @@ namespace Flair\AutoLoader {
         /**
          * Gets the current value of $defaultPathPrefix
          *
-         * @uses _defaultPathPrefix
+         * @uses defaultPathPrefix
          * @return string
          */
         public function getDefaultPathPrefix()
@@ -43,7 +43,7 @@ namespace Flair\AutoLoader {
         /**
          * sets $defaultPathPrefix
          *
-         * @uses _defaultPathPrefix
+         * @uses defaultPathPrefix
          * @param string $path What the new default should be.
          * @return boolean true it it works, false if $path was invalid.
          */
@@ -60,7 +60,7 @@ namespace Flair\AutoLoader {
         /**
          * gets the current value of $pefixes
          *
-         * @uses _prefixes
+         * @uses prefixes
          * @return array
          */
         public function getPrefixes()
@@ -76,8 +76,8 @@ namespace Flair\AutoLoader {
          * should be loaded.
          * @param string $pathPrefix The Optional path prefix that will be prepended to
          * the class, before attemting to load it.
-         * @uses _defaultPathPrefix
-         * @uses _prefixes
+         * @uses defaultPathPrefix
+         * @uses prefixes
          * @return boolean true it it works, false if $prefix or $pathPrefix was invalid.
          */
         public function addPrefix($prefix, $pathPrefix = null)
@@ -108,7 +108,7 @@ namespace Flair\AutoLoader {
          * Removes an existing prefix from the internal array.
          *
          * @param string $prefix The class name prefix to remove.
-         * @uses _prefixes
+         * @uses prefixes
          */
         public function removePrefix($prefix)
         {
@@ -189,7 +189,7 @@ namespace Flair\AutoLoader {
          *
          * @param string $class The name of the class that needs to be included.
          * @return boolean Was the class file loaded sucessfully.
-         * @uses _prefixes
+         * @uses prefixes
          */
         public function load($class)
         {
