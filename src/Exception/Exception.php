@@ -40,8 +40,8 @@ namespace Flair\Exception {
          * @param integer $code the code for the exception
          * @param array $extras the array that will be returned along with the
          * exception.
-         * @uses _id
-         * @uses _context
+         * @uses id
+         * @uses context
          */
         public function __construct($message, $code, array $context = null)
         {
@@ -59,7 +59,7 @@ namespace Flair\Exception {
          * Simple accessing method that returns the $id class attribute.
          *
          * @author Daniel Sherman
-         * @uses _id
+         * @uses id
          * @return string
          */
         public function getId()
@@ -71,7 +71,7 @@ namespace Flair\Exception {
          * Simple accessing method that returns the $extras class attribute.
          *
          * @author Daniel Sherman
-         * @uses _context
+         * @uses context
          * @return array
          */
         public function getContext()
@@ -86,6 +86,7 @@ namespace Flair\Exception {
          * @param array $array the array that needs to be turned into a string
          * @param integer $indent the number of spaces that a nested array should be indented.
          * @return string
+         * @uses arrayToString
          */
         protected function arrayToString(array $array, $indent = 0)
         {
@@ -114,7 +115,8 @@ namespace Flair\Exception {
          * returns the $extras class attribute as a string.
          *
          * @author Daniel Sherman
-         * @uses _context
+         * @uses context
+         * @uses arrayToString
          * @return string
          */
         public function getContextAsString()
@@ -126,6 +128,13 @@ namespace Flair\Exception {
          * Generates and returns a string representation of the exception.
          *
          * @author Daniel Sherman
+         * @uses getId
+         * @uses getMessage
+         * @uses getCode
+         * @uses getFile
+         * @uses getLine
+         * @uses getTraceAsString
+         * @uses getContextAsString
          * @return string
          */
         public function __toString()

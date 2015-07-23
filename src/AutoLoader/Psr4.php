@@ -21,7 +21,7 @@ namespace Flair\AutoLoader {
         /**
          * gets the current value of $pefixes
          *
-         * @uses _prefixes
+         * @uses prefixes
          * @return array
          */
         public function getPrefixes()
@@ -36,7 +36,7 @@ namespace Flair\AutoLoader {
          * should be loaded.
          * @param string $baseDir The base directory, that will replace the namespace prefix
          * when trying to load the class.
-         * @uses _prefixes
+         * @uses prefixes
          * @return boolean true it it works, false if $prefix or $baseDir was invalid.
          */
         public function addPrefix($prefix, $baseDir)
@@ -53,7 +53,7 @@ namespace Flair\AutoLoader {
          * Removes an existing prefix from the internal array.
          *
          * @param string $prefix The class name prefix to remove.
-         * @uses _prefixes
+         * @uses prefixes
          */
         public function removePrefix($prefix)
         {
@@ -134,7 +134,7 @@ namespace Flair\AutoLoader {
          *
          * @param string $class The name of the class that needs to be included.
          * @return boolean Was the class file loaded sucessfully.
-         * @uses _prefixes
+         * @uses prefixes
          */
         public function load($class)
         {
