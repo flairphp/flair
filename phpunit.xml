@@ -16,6 +16,7 @@
         <testsuite name="Flair Unit Tests">
             <directory suffix=".php">./tests/unit/</directory>
             <exclude>./tests/unit/Autoloader/_TestClasses</exclude>
+            <exclude>./tests/unit/Validation/Core/_TestCallable</exclude>
         </testsuite>
     </testsuites>
 </phpunit>
