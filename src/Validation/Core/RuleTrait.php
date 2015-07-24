@@ -56,10 +56,12 @@ namespace Flair\Validation\Core {
          *
          * @param callable $callable The callable that will be used by isValid().
          * @uses call
+         * @return bool Always returns true, on success.
          */
         public function setCallable(callable $callable)
         {
             $this->call = $callable;
+            return true;
         }
 
         /**
