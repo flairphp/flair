@@ -13,9 +13,15 @@
          verbose="true"
          debug="true">
     <testsuites>
-        <testsuite name="Flair Unit Tests">
-            <directory suffix=".php">./tests/unit/</directory>
+        <testsuite name="AutoLoader">
+            <directory suffix=".php">./tests/unit/AutoLoader/</directory>
             <exclude>./tests/unit/Autoloader/_TestClasses</exclude>
+        </testsuite>
+        <testsuite name="Excep">
+            <directory suffix=".php">./tests/unit/Exception/</directory>
+        </testsuite>
+        <testsuite name="Validation\Core">
+            <directory suffix=".php">./tests/unit/Validation/Core/</directory>
             <exclude>./tests/unit/Validation/Core/_TestCallable</exclude>
         </testsuite>
     </testsuites>
