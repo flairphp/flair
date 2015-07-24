@@ -58,39 +58,60 @@ namespace Flair\AutoLoader {
          */
         public function testConstruct()
         {
+            $autoLoader = new Psr4();
             $msg = 'the object is not the correct type';
-            $this->assertInstanceOf('Flair\AutoLoader\Psr4', $this->testObject, $msg);
+            $this->assertInstanceOf('Flair\AutoLoader\Psr4', $autoLoader, $msg);
+            return $autoLoader;
         }
 
         /**
          * Checks if getPrefixes works as expected.
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::getPrefixes
          */
-        public function testGetPrefixes()
+        public function testGetPrefixes(Psr4 $autoLoader)
         {
-            $val = $this->testObject->getPrefixes();
+            $val = $autoLoader->getPrefixes();
             $this->assertTrue(is_array($val), 'An array was not returned');
+            return $autoLoader;
         }
 
         /**
          * Checks if addPrefix works as expected.
          * @author Daniel Sherman
          * @test
+         * @depends testGetPrefixes
          * @covers ::addPrefix
          */
-        public function testAddPrefix()
+        public function testAddPrefix(Psr4 $autoLoader)
         {
             $prefix = 'Flair\Autoloader';
             $baseDir = '/www/libs/';
 
-            $result = $this->testObject->addPrefix($prefix, $baseDir);
+            $result = $autoLoader->addPrefix($prefix, $baseDir);
             $this->assertTrue($result, 'a valid prefix could not be added!');
 
             $prefixes = [$prefix => $baseDir];
-            $storedPrefixes = $this->testObject->getPrefixes();
+            $storedPrefixes = $autoLoader->getPrefixes();
             $this->assertEquals($prefixes, $storedPrefixes, 'the prefix did not get saved properly!');
+            return $autoLoader;
+        }
+
+        /**
+         * Checks if removePrefix works as expected.
+         * @author Daniel Sherman
+         * @test
+         * @depends testAddPrefix
+         * @covers ::removePrefix
+         */
+        public function testRemovePrefix(Psr4 $autoLoader)
+        {
+            $prefix = 'Flair\Autoloader';
+            $autoLoader->removePrefix($prefix);
+            $prefixes = $autoLoader->getPrefixes();
+            $this->assertEquals([], $prefixes, 'the prefix did not get removed properly!');
         }
 
         /**
@@ -98,13 +119,14 @@ namespace Flair\AutoLoader {
          *
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::addPrefix
          */
-        public function testAddPrefixTypeConstraint()
+        public function testAddPrefixTypeConstraint(Psr4 $autoLoader)
         {
             foreach (self::$types as $prefixType => $prefixVal) {
                 foreach (self::$types as $baseDirType => $baseDirVal) {
-                    $result = $this->testObject->addPrefix($prefixVal, $baseDirVal);
+                    $result = $autoLoader->addPrefix($prefixVal, $baseDirVal);
 
                     $msg = "A prefix type of $prefixType was accepted";
                     $msg .= " with a baseDir type of $baseDirType!";
@@ -126,63 +148,48 @@ namespace Flair\AutoLoader {
         }
 
         /**
-         * Checks if removePrefix works as expected.
-         * @author Daniel Sherman
-         * @test
-         * @covers ::removePrefix
-         */
-        public function testRemovePrefix()
-        {
-            $prefix = 'Flair\Autoloader';
-            $baseDir = '/www/libs/';
-
-            $result = $this->testObject->addPrefix($prefix, $baseDir);
-            $this->assertTrue($result, 'a valid prefix could not be added!');
-
-            $this->testObject->removePrefix($prefix);
-            $prefixes = $this->testObject->getPrefixes();
-            $this->assertEquals([], $prefixes, 'the prefix did not get removed properly!');
-        }
-
-        /**
          * Checks if register works as expected, and doesn't throw an exception
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::register
          */
-        public function testRegister()
+        public function testRegister(Psr4 $autoLoader)
         {
             $e = null;
             try {
-                $this->testObject->register();
+                $autoLoader->register();
             } catch (\LogicException $e) {}
 
             $this->assertNull($e, 'The autloader failed to register');
+            return $autoLoader;
         }
 
         /**
          * Checks if deregister works as expected.
          * @author Daniel Sherman
          * @test
+         * @depends testRegister
          * @covers ::deregister
          */
-        public function testDeregisterSuccess()
+        public function testDeregisterSuccess(Psr4 $autoLoader)
         {
-            $this->testRegister();
 
-            $result = $this->testObject->deregister();
+            $result = $autoLoader->deregister();
             $this->assertTrue($result, 'Failed to deregister');
+            return $autoLoader;
         }
 
         /**
          * Checks if deregister fails as expected.
          * @author Daniel Sherman
          * @test
+         * @depends testDeregisterSuccess
          * @covers ::deregister
          */
-        public function testDeregisterFail()
+        public function testDeregisterFail(Psr4 $autoLoader)
         {
-            $result = $this->testObject->deregister();
+            $result = $autoLoader->deregister();
             $this->assertFalse($result, 'deregisterd something that was not registered');
         }
 

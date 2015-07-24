@@ -80,12 +80,14 @@ namespace Flair\Validation\Core {
          *
          * @param string $message The error message.
          * @uses message
+         * @throws Exception If $message isn't a string.
+         * @return bool Always returns true, on success.
          */
         public function setMessage($message)
         {
             if (is_string($message)) {
                 $this->message = $message;
-                return;
+                return true;
             }
 
             throw new Exception('$message is not a string!', 0);
@@ -112,12 +114,13 @@ namespace Flair\Validation\Core {
          * @param bool $halt The value to assign to the flag.
          * @uses halt
          * @throws Exception If $halt isn't a bool.
+         * @return bool Always returns true, on success.
          */
         public function setHalt($halt)
         {
             if (is_bool($halt)) {
                 $this->halt = $halt;
-                return;
+                return true;
             }
 
             throw new Exception('$halt is not a bool!', 1);
@@ -141,10 +144,12 @@ namespace Flair\Validation\Core {
          *
          * @param array $arguments The arguments to be used.
          * @uses arguments
+         * @return bool Always returns true, on success.
          */
         public function setArguments(array $arguments = [])
         {
             $this->arguments = $arguments;
+            return true;
         }
 
         /**

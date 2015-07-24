@@ -18,13 +18,6 @@ namespace Flair\AutoLoader {
         protected static $types = [];
 
         /**
-         * The object being tested
-         *
-         * @var Flair\AutoLoader\Psr0
-         */
-        protected $testObject = null;
-
-        /**
          * Set up stuff before testing
          */
         public static function setUpBeforeClass()
@@ -42,14 +35,6 @@ namespace Flair\AutoLoader {
         }
 
         /**
-         * Set up the object before each test
-         */
-        protected function setUp()
-        {
-            $this->testObject = new Psr0();
-        }
-
-        /**
          * Checks the object is of the correct type
          *
          * @author Daniel Sherman
@@ -58,19 +43,22 @@ namespace Flair\AutoLoader {
          */
         public function testConstruct()
         {
+            $autoLoader = new Psr0();
             $msg = 'the object is not the correct type';
-            $this->assertInstanceOf('Flair\AutoLoader\Psr0', $this->testObject, $msg);
+            $this->assertInstanceOf('Flair\AutoLoader\Psr0', $autoLoader, $msg);
+            return $autoLoader;
         }
 
         /**
          * Checks if getDefaultPathPrefix works as expected.
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::getDefaultPathPrefix
          */
-        public function testGetDefaultPathPrefix()
+        public function testGetDefaultPathPrefix(Psr0 $autoLoader)
         {
-            $val = $this->testObject->getDefaultPathPrefix();
+            $val = $autoLoader->getDefaultPathPrefix();
             $this->assertEquals('', $val, 'The default path should be blank');
         }
 
@@ -79,15 +67,30 @@ namespace Flair\AutoLoader {
          *
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::setDefaultPathPrefix
          */
-        public function testSetDefaultPathPrefix()
+        public function testSetDefaultPathPrefix(Psr0 $autoLoader)
         {
             $setTo = '/www/libs/';
-            $result = $this->testObject->setDefaultPathPrefix($setTo);
-            $this->assertTrue($result, 'The default prefix did not saved sucessfully');
+            $result = $autoLoader->setDefaultPathPrefix($setTo);
+            $this->assertTrue($result, 'The default prefix did not saved successfully');
+            return $autoLoader;
 
-            $val = $this->testObject->getDefaultPathPrefix();
+        }
+
+        /**
+         * Checks if getDefaultPathPrefix works as expected.
+         *
+         * @author Daniel Sherman
+         * @test
+         * @depends testSetDefaultPathPrefix
+         * @covers ::getDefaultPathPrefix
+         */
+        public function testDefaultPathPrefixSaved(Psr0 $autoLoader)
+        {
+            $setTo = '/www/libs/';
+            $val = $autoLoader->getDefaultPathPrefix();
             $this->assertEquals($setTo, $val, 'The default prefix is not what it should be!');
         }
 
@@ -96,13 +99,14 @@ namespace Flair\AutoLoader {
          *
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::setDefaultPathPrefix
          */
-        public function testSetDefaultPathPrefixTypeConstraint()
+        public function testSetDefaultPathPrefixTypeConstraint(Psr0 $autoLoader)
         {
             foreach (self::$types as $type => $val) {
 
-                $result = $this->testObject->setDefaultPathPrefix($val);
+                $result = $autoLoader->setDefaultPathPrefix($val);
                 $msg = "A value of type $type was accepted";
 
                 if ($type !== 'string') {
@@ -114,55 +118,78 @@ namespace Flair\AutoLoader {
         }
 
         /**
-         * Checks if getPrefixes works as expected.
-         * @author Daniel Sherman
-         * @test
-         * @covers ::getPrefixes
-         */
-        public function testGetPrefixes()
-        {
-            $val = $this->testObject->getPrefixes();
-            $this->assertTrue(is_array($val), 'An array was not returned');
-        }
-
-        /**
          * Checks if addPrefix works as expected.
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::addPrefix
          */
-        public function testAddPrefix()
+        public function testAddPrefix(Psr0 $autoLoader)
         {
             $prefix = 'Flair\Autoloader';
             $pathPrefix = '/www/libs/';
 
-            $result = $this->testObject->addPrefix($prefix, $pathPrefix);
+            $result = $autoLoader->addPrefix($prefix, $pathPrefix);
             $this->assertTrue($result, 'a valid prefix could not be added!');
+            return $autoLoader;
+        }
 
-            $prefixes = [$prefix => $pathPrefix];
-            $storedPrefixes = $this->testObject->getPrefixes();
-            $this->assertEquals($prefixes, $storedPrefixes, 'the prefix did not get saved properly!');
+        /**
+         * Checks if getPrefixes works as expected. and the value passed into
+         * addPrefix saved correctly.
+         * @author Daniel Sherman
+         * @test
+         * @depends testAddPrefix
+         * @covers ::getPrefixes
+         */
+        public function testGetPrefixes(Psr0 $autoLoader)
+        {
+            $val = $autoLoader->getPrefixes();
+            $this->assertTrue(is_array($val), 'An array was not returned');
+
+            $prefixes = ['Flair\Autoloader' => '/www/libs/'];
+            $this->assertEquals($prefixes, $val, 'the prefix did not get saved properly!');
+
+            return $autoLoader;
+        }
+
+        /**
+         * Checks if removePrefix works as expected.
+         * @author Daniel Sherman
+         * @test
+         * @depends testGetPrefixes
+         * @covers ::removePrefix
+         */
+        public function testRemovePrefix(Psr0 $autoLoader)
+        {
+            $prefix = 'Flair\Autoloader';
+            $result = $autoLoader->removePrefix($prefix);
+            $this->assertTrue($result, 'the prefix did not get removed');
+
+            $prefixes = $autoLoader->getPrefixes();
+            $this->assertEquals([], $prefixes, 'the prefix did not get removed properly!');
         }
 
         /**
          * Checks if addPrefix works as expected when no pathprefix is passed.
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::addPrefix
          */
-        public function testAddPrefixDefault()
+        public function testAddPrefixDefault(Psr0 $autoLoader)
         {
             $prefix = 'Flair\Autoloader';
             $pathPrefix = '/www/libs/HelloWorld';
 
-            $result = $this->testObject->setDefaultPathPrefix($pathPrefix);
-            $this->assertTrue($result, 'The default prefix did not save sucessfully');
+            $result = $autoLoader->setDefaultPathPrefix($pathPrefix);
+            $this->assertTrue($result, 'The default prefix did not save successfully');
 
-            $result = $this->testObject->addPrefix($prefix);
+            $result = $autoLoader->addPrefix($prefix);
             $this->assertTrue($result, 'a valid prefix could not be added!');
 
             $prefixes = [$prefix => $pathPrefix];
-            $storedPrefixes = $this->testObject->getPrefixes();
+            $storedPrefixes = $autoLoader->getPrefixes();
             $this->assertEquals($prefixes, $storedPrefixes, 'the prefix did not get saved properly!');
         }
 
@@ -171,13 +198,16 @@ namespace Flair\AutoLoader {
          *
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::addPrefix
          */
-        public function testAddPrefixTypeConstraint()
+        public function testAddPrefixTypeConstraint(Psr0 $autoLoader)
         {
             foreach (self::$types as $prefixType => $prefixVal) {
+
                 foreach (self::$types as $pathPrefixType => $pathPrefixVal) {
-                    $result = $this->testObject->addPrefix($prefixVal, $pathPrefixVal);
+
+                    $result = $autoLoader->addPrefix($prefixVal, $pathPrefixVal);
                     $msg = "A prefix type of $prefixType was accepted";
                     $msg .= " with a path prefix type of $pathPrefixType!";
 
@@ -198,63 +228,47 @@ namespace Flair\AutoLoader {
         }
 
         /**
-         * Checks if removePrefix works as expected.
-         * @author Daniel Sherman
-         * @test
-         * @covers ::removePrefix
-         */
-        public function testRemovePrefix()
-        {
-            $prefix = 'Flair\Autoloader';
-            $pathPrefix = '/www/libs/';
-
-            $result = $this->testObject->addPrefix($prefix, $pathPrefix);
-            $this->assertTrue($result, 'a valid prefix could not be added!');
-
-            $this->testObject->removePrefix($prefix);
-            $prefixes = $this->testObject->getPrefixes();
-            $this->assertEquals([], $prefixes, 'the prefix did not get removed properly!');
-        }
-
-        /**
          * Checks if register works as expected, and doesn't throw an exception
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::register
          */
-        public function testRegister()
+        public function testRegister(Psr0 $autoLoader)
         {
             $e = null;
             try {
-                $this->testObject->register();
+                $autoLoader->register();
             } catch (\LogicException $e) {}
 
             $this->assertNull($e, 'The autloader failed to register');
+            return $autoLoader;
         }
 
         /**
          * Checks if deregister works as expected.
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::deregister
          */
-        public function testDeregisterSuccess()
+        public function testDeregisterSuccess(Psr0 $autoLoader)
         {
-            $this->testRegister();
-
-            $result = $this->testObject->deregister();
+            $result = $autoLoader->deregister();
             $this->assertTrue($result, 'Failed to deregister');
+            return $autoLoader;
         }
 
         /**
          * Checks if deregister fails as expected.
          * @author Daniel Sherman
          * @test
+         * @depends testDeregisterSuccess
          * @covers ::deregister
          */
-        public function testDeregisterFail()
+        public function testDeregisterFail(Psr0 $autoLoader)
         {
-            $result = $this->testObject->deregister();
+            $result = $autoLoader->deregister();
             $this->assertFalse($result, 'deregisterd something that was not registered');
         }
 
@@ -262,14 +276,15 @@ namespace Flair\AutoLoader {
          * Checks if addToIncludePath works as expected.
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::addToIncludePath
          */
-        public function testAddToIncludePath()
+        public function testAddToIncludePath(Psr0 $autoLoader)
         {
-            $newPath = '/www';
+            $newPath = '/someCrapola';
             $origonalPath = get_include_path();
 
-            $result = $this->testObject->addToIncludePath($newPath);
+            $result = $autoLoader->addToIncludePath($newPath);
             $this->assertTrue($result, 'The include path failed to update');
 
             $expected = $origonalPath . PATH_SEPARATOR . $newPath;
@@ -278,21 +293,23 @@ namespace Flair\AutoLoader {
             $this->assertEquals($expected, $newpath, 'The include is not what it should be');
 
             set_include_path($origonalPath);
+            return $autoLoader;
         }
 
         /**
          * Checks if addToIncludePath handles types properly.
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::addToIncludePath
          */
-        public function testAddToIncludePathTypeConstraint()
+        public function testAddToIncludePathTypeConstraint(Psr0 $autoLoader)
         {
             $origonalPath = get_include_path();
 
             foreach (self::$types as $type => $val) {
 
-                $result = $this->testObject->addToIncludePath($val);
+                $result = $autoLoader->addToIncludePath($val);
                 $msg = "A value of type $type was accepted";
 
                 if ($type !== 'string') {
@@ -309,16 +326,17 @@ namespace Flair\AutoLoader {
          * Checks if removeFromIncludePath works.
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::removeFromIncludePath
          */
-        public function testRemoveFromIncludePath()
+        public function testRemoveFromIncludePath(Psr0 $autoLoader)
         {
             $newPath = '/www';
             $origonalPath = get_include_path();
 
-            $this->testObject->addToIncludePath($newPath);
+            set_include_path($origonalPath . PATH_SEPARATOR . $newPath);
 
-            $result = $this->testObject->removeFromIncludePath($newPath);
+            $result = $autoLoader->removeFromIncludePath($newPath);
             $this->assertTrue($result, 'The path was not removed from the include path');
 
             $updatedPath = get_include_path();
@@ -328,56 +346,42 @@ namespace Flair\AutoLoader {
         }
 
         /**
-         * Checks if load only accepts strings.
+         * Checks if load works as expected using the include path
          * @author Daniel Sherman
          * @test
-         * @covers ::load
-         */
-        public function testLoadTypeConstraint()
-        {
-            foreach (self::$types as $type => $val) {
-                if ($type !== 'string') {
-                    $result = $this->testObject->load($val);
-                    $msg = "A value of type $type was accepted";
-                    $this->assertFalse($result, $msg);
-                }
-            }
-        }
-
-        /**
-         * Checks if load works as expected using the inclde path
-         * @author Daniel Sherman
-         * @test
+         * @depends testConstruct
+         * @depends testAddToIncludePath
+         * @depends testAddPrefix
          * @covers ::load
          */
         public function testLoadIncludePath()
         {
             $origonalIncludePath = get_include_path();
+
+            $autoLoader = new Psr0();
             $prefix = 'Simple';
-            $newPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_testClasses';
+            $newPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_TestClasses';
 
             //configure the object
-            $this->testObject->addToIncludePath($newPath);
-            $this->testObject->addPrefix($prefix);
-            $this->testObject->register();
+            $autoLoader->addToIncludePath($newPath);
+            $autoLoader->addPrefix($prefix);
 
             // the actual assertions/tests
-            $result = $this->testObject->load('simpleClass');
+            $result = $autoLoader->load('SimpleClass');
             $this->assertTrue($result, 'the class file did not get load');
 
-            $result = class_exists('simpleClass', false);
+            $result = class_exists('SimpleClass', false);
             $this->assertTrue($result, 'the class is not in scope');
 
-            $result = $this->testObject->load('simpleNonexistentClass');
+            $result = $autoLoader->load('SimpleNonexistentClass');
             $this->assertFalse($result, 'the class/file does not exist');
 
-            $result = $this->testObject->load('ComplexClass');
+            $result = $autoLoader->load('ComplexClass');
             $this->assertFalse($result, 'The prefix was not configured');
 
             // un-configure the object
-            $this->testObject->deregister();
-            $this->testObject->removePrefix($prefix);
-            $this->testObject->removeFromIncludePath($newPath);
+            $autoLoader->removePrefix($prefix);
+            $autoLoader->removeFromIncludePath($newPath);
             set_include_path($origonalIncludePath);
         }
 
@@ -385,69 +389,66 @@ namespace Flair\AutoLoader {
          * Checks if load works as expected using the default path prefix
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
+         * @depends testSetDefaultPathPrefix
+         * @depends testAddPrefix
          * @covers ::load
          */
         public function testLoadDefaultPathPrefix()
         {
+            $autoLoader = new Psr0();
+
             $prefix = 'Simple';
-            $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_testClasses' . DIRECTORY_SEPARATOR;
+            $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_TestClasses' . DIRECTORY_SEPARATOR;
 
             //configure the object
-            $this->testObject->setDefaultPathPrefix($path);
-            $this->testObject->addPrefix($prefix);
-            $this->testObject->register();
+            $autoLoader->setDefaultPathPrefix($path);
+            $autoLoader->addPrefix($prefix);
 
             // the actual assertions/tests
-            $result = $this->testObject->load('simpleClassTwo');
+            $result = $autoLoader->load('SimpleClassTwo');
             $this->assertTrue($result, 'the class file did not get load');
 
-            $result = class_exists('simpleClassTwo', false);
+            $result = class_exists('SimpleClassTwo', false);
             $this->assertTrue($result, 'the class is not in scope');
 
-            $result = $this->testObject->load('simpleNonexistentClassTwo');
+            $result = $autoLoader->load('SimpleNonexistentClassTwo');
             $this->assertFalse($result, 'the class/file does not exist');
 
-            $result = $this->testObject->load('ComplexClassTwo');
+            $result = $autoLoader->load('ComplexClassTwo');
             $this->assertFalse($result, 'The prefix was not configured');
-
-            // un-configure the object
-            $this->testObject->deregister();
-            $this->testObject->setDefaultPathPrefix('');
-            $this->testObject->removePrefix($prefix);
-
         }
 
         /**
          * Checks if load works as expected using the default path prefix
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
+         * @depends testAddPrefix
          * @covers ::load
          */
         public function testLoadPassedPathPrefix()
         {
+            $autoLoader = new Psr0();
+
             $prefix = 'Simple';
-            $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_testClasses' . DIRECTORY_SEPARATOR;
+            $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_TestClasses' . DIRECTORY_SEPARATOR;
 
             //configure the object
-            $this->testObject->addPrefix($prefix, $path);
-            $this->testObject->register();
+            $autoLoader->addPrefix($prefix, $path);
 
             // the actual assertions/tests
-            $result = $this->testObject->load('simpleClassThree');
+            $result = $autoLoader->load('SimpleClassThree');
             $this->assertTrue($result, 'the class file did not get load');
 
-            $result = class_exists('simpleClassThree', false);
+            $result = class_exists('SimpleClassThree', false);
             $this->assertTrue($result, 'the class is not in scope');
 
-            $result = $this->testObject->load('simpleNonexistentClassThree');
+            $result = $autoLoader->load('SimpleNonexistentClassThree');
             $this->assertFalse($result, 'the class/file does not exist');
 
-            $result = $this->testObject->load('ComplexClassThree');
+            $result = $autoLoader->load('ComplexClassThree');
             $this->assertFalse($result, 'The prefix was not configured');
-
-            // un-configure the object
-            $this->testObject->deregister();
-            $this->testObject->removePrefix($prefix);
         }
 
     }

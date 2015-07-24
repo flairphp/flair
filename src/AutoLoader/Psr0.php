@@ -88,9 +88,6 @@ namespace Flair\AutoLoader {
                 return false;
             }
 
-            // deal with the bug in php version 5.3.2
-            $prefix == ltrim($prefix, '\\');
-
             if (is_string($pathPrefix) || is_null($pathPrefix)) {
                 if (!is_string($pathPrefix)) {
                     // use the default
@@ -112,7 +109,12 @@ namespace Flair\AutoLoader {
          */
         public function removePrefix($prefix)
         {
-            unset($this->prefixes[$prefix]);
+            if (isset($this->prefixes[$prefix])) {
+                unset($this->prefixes[$prefix]);
+                return true;
+            }
+
+            return false;
         }
 
         /**
@@ -197,9 +199,6 @@ namespace Flair\AutoLoader {
             if (!is_string($class)) {
                 return false;
             }
-
-            // deal with the bug in php version 5.3.2
-            $class == ltrim($class, '\\');
 
             foreach ($this->prefixes as $prefix => $pathPrefix) {
 
