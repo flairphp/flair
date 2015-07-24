@@ -5,7 +5,7 @@ namespace Flair\Validation\Core {
      * A bare bones rule, that can be used or extended.
      *
      * @author Daniel Sherman
-     * @todo set up unit tests for the class
+     * @todo finish unit tests
      */
     class Rule implements RuleInterface
     {
