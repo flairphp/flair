@@ -27,7 +27,7 @@ namespace Flair\Validation\Core {
          *
          * @var array
          */
-        protected static $types = [];
+        protected static $callableTypes = [];
 
         /**
          * Set up stuff before testing
@@ -36,25 +36,12 @@ namespace Flair\Validation\Core {
         {
             self::$callables = new \TestCallable();
 
-            self::$types = [
-                'boolean' => true,
-                'integer' => 1,
-                'float' => 1.15,
-                'string' => 'hello',
-                'array' => [],
-                'object' => new \stdClass(),
-                'resource' => fopen(__FILE__, "r"),
-                'null' => null,
-                // core php function
-                'callable 1' => 'is_string',
-                // anonymous function
-                'callable 2' => function () {return true;},
-                // instantiated object
-                'callable 3' => [self::$callables, 'alwaysTrue'],
-                // static method
-                'callable 4' => ['\TestCallable', 'staticAlwaysTrue'],
-                // instantiate
-                'callable 5' => [new \TestCallable(), 'alwaysTrue'],
+            self::$callableTypes = [
+                'core' => 'is_string',
+                'anonymous' => function () {return true;},
+                'instantiated' => [self::$callables, 'alwaysTrue'],
+                'static method' => ['\TestCallable', 'staticAlwaysTrue'],
+                //'instantiate' => [new \TestCallable(), 'alwaysTrue'],
             ];
         }
 
@@ -65,7 +52,7 @@ namespace Flair\Validation\Core {
          * @test
          * @covers ::__construct
          */
-        public function basicTests()
+        public function testBasic()
         {
             $rule = new Rule([self::$callables, 'alwaysTrue']);
 
@@ -80,37 +67,34 @@ namespace Flair\Validation\Core {
         }
 
         /**
-         * checks setCallable handles types properly
+         * checks setCallable handles types properly. Either the assertion
+         * will pass or phpunit will throw an exception.
          *
          * @author Daniel Sherman
          * @test
          * @covers ::setCallable
          */
-        public function setCallableTests()
+        public function testSetCallable()
         {
             $rule = new Rule([self::$callables, 'alwaysTrue']);
 
-            foreach (self::$types as $type => $val) {
-                $msg = "A value of type '$type' was accepted";
-
-                if (stripos($type, 'callable') === 0) {
-                    $result = $rule->setCallable($val);
-                    $this->assertTrue($result, $msg);
-                } else {
-                    try {
-                        $rule->setCallable($val);
-                    } catch (\PHPUnit_Framework_Error $e) {
-                        // the correct code
-                        $this->assertSame($e->getCode(), 4096, $msg);
-
-                        // the correct message
-                        $start = 'Argument 1 passed to Flair\Validation\Core\Rule::setCallable() must be callable,';
-                        $this->assertSame(stripos($e->getMessage(), $start), 0, $msg);
-                    }
-                }
-
+            foreach (self::$callableTypes as $type => $val) {
+                $this->assertTrue($rule->setCallable($val));
             }
+        }
 
+        /**
+         * checks setCallable handles an instantiated object properly. Either the assertion
+         * will pass or phpunit will throw an exception.
+         *
+         * @author Daniel Sherman
+         * @test
+         * @covers ::setCallable
+         */
+        public function testSetCallableInstantiated()
+        {
+            $rule = new Rule([new \TestCallable(), 'alwaysTrue']);
+            $this->assertInstanceOf('Flair\Validation\Core\Rule', $rule);
         }
 
     }

@@ -24,9 +24,11 @@ namespace Flair\Exception {
         protected $id = null;
 
         /**
-         * An array used to store additonal output in the exception, to give context to it.
+         * An array used to store additional output in the exception, to give context to it.
          * The array can be indexed or associative, as well as being infinitively nested.
-         * Any values other than arrays or scalars will be ignored when converted to a string.
+         *
+         * Any values other than arrays, scalars, or objects with __toString() Methods will be
+         * ignored when converted to a string.
          *
          * @var array $context
          */
@@ -38,14 +40,15 @@ namespace Flair\Exception {
          * @author Daniel Sherman
          * @param string $message the message for the exception
          * @param integer $code the code for the exception
-         * @param array $extras the array that will be returned along with the
+         * @param \Exception $previous A previous exception
+         * @param array $context the array that will be returned along with the
          * exception.
          * @uses id
          * @uses context
          */
-        public function __construct($message, $code, array $context = null)
+        public function __construct($message, $code, $previous = null, array $context = null)
         {
-            parent::__construct($message, $code);
+            parent::__construct($message, $code, $previous);
 
             $this->id = str_replace('.', '', uniqid('', true));
 
@@ -105,6 +108,10 @@ namespace Flair\Exception {
                     # push $value to the buffer
                     $buffer .= sprintf($format, '');
                     $buffer .= $key . ' => ' . $val . PHP_EOL;
+                } elseif (method_exists($val, '__toString')) {
+                    # got a method with a __toString method
+                    $buffer .= sprintf($format, '');
+                    $buffer .= $key . ' => ' . $val->__toString() . PHP_EOL;
                 }
             }
 
@@ -133,6 +140,7 @@ namespace Flair\Exception {
          * @uses getCode
          * @uses getFile
          * @uses getLine
+         * @uses getPrevious
          * @uses getTraceAsString
          * @uses getContextAsString
          * @return string
@@ -154,6 +162,12 @@ namespace Flair\Exception {
             $exception .= $separator . PHP_EOL;
             $exception .= $this->getContextAsString() . PHP_EOL;
             $exception .= $wrapper . PHP_EOL;
+
+            $previous = $this->getPrevious();
+            if ($previous !== null) {
+                $exception .= $previous->__toString();
+                $exception .= PHP_EOL . PHP_EOL;
+            }
 
             return $exception;
         }
