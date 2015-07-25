@@ -16,4 +16,13 @@ class TestCallable
     {
         return true;
     }
+
+    /**
+     * a method that always returns the second parameter it was given
+     */
+    public function returnsGivenType($one, $two)
+    {
+        return $two;
+    }
+
 }

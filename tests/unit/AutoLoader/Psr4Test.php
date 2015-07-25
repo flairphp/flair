@@ -18,13 +18,6 @@ namespace Flair\AutoLoader {
         protected static $types = [];
 
         /**
-         * The object being tested.
-         *
-         * @var Flair\AutoLoader\Psr4
-         */
-        protected $testObject = null;
-
-        /**
          * Set up stuff before testing
          */
         public static function setUpBeforeClass()
@@ -39,14 +32,6 @@ namespace Flair\AutoLoader {
                 'resource' => fopen(__FILE__, "r"),
                 'null' => null,
             ];
-        }
-
-        /**
-         * Set up the object before each test
-         */
-        protected function setUp()
-        {
-            $this->testObject = new Psr4();
         }
 
         /**
@@ -109,7 +94,9 @@ namespace Flair\AutoLoader {
         public function testRemovePrefix(Psr4 $autoLoader)
         {
             $prefix = 'Flair\Autoloader';
-            $autoLoader->removePrefix($prefix);
+            $result = $autoLoader->removePrefix($prefix);
+            $this->assertTrue($result, 'the prefix did not get removed');
+
             $prefixes = $autoLoader->getPrefixes();
             $this->assertEquals([], $prefixes, 'the prefix did not get removed properly!');
         }
@@ -120,6 +107,8 @@ namespace Flair\AutoLoader {
          * @author Daniel Sherman
          * @test
          * @depends testConstruct
+         * @depends testGetPrefixes
+         * @depends testRemovePrefix
          * @covers ::addPrefix
          */
         public function testAddPrefixTypeConstraint(Psr4 $autoLoader)
@@ -144,6 +133,13 @@ namespace Flair\AutoLoader {
                         }
                     }
                 }
+            }
+
+            $storedPrefixes = $autoLoader->getPrefixes();
+            $this->assertTrue(is_array($storedPrefixes), 'An array was not returned');
+            foreach ($storedPrefixes as $key => $val) {
+                $result = $autoLoader->removePrefix($key);
+                $this->assertTrue($result, 'the prefix did not get removed');
             }
         }
 
@@ -174,7 +170,6 @@ namespace Flair\AutoLoader {
          */
         public function testDeregisterSuccess(Psr4 $autoLoader)
         {
-
             $result = $autoLoader->deregister();
             $this->assertTrue($result, 'Failed to deregister');
             return $autoLoader;
@@ -197,14 +192,15 @@ namespace Flair\AutoLoader {
          * Checks if addToIncludePath works as expected.
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::addToIncludePath
          */
-        public function testAddToIncludePath()
+        public function testAddToIncludePath(Psr4 $autoLoader)
         {
-            $newPath = '/www';
+            $newPath = '/someCrapola';
             $origonalPath = get_include_path();
 
-            $result = $this->testObject->addToIncludePath($newPath);
+            $result = $autoLoader->addToIncludePath($newPath);
             $this->assertTrue($result, 'The include path failed to update');
 
             $expected = $origonalPath . PATH_SEPARATOR . $newPath;
@@ -213,21 +209,23 @@ namespace Flair\AutoLoader {
             $this->assertEquals($expected, $newpath, 'The include is not what it should be');
 
             set_include_path($origonalPath);
+            return $autoLoader;
         }
 
         /**
          * Checks if addToIncludePath handles types properly.
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::addToIncludePath
          */
-        public function testAddToIncludePathTypeConstraint()
+        public function testAddToIncludePathTypeConstraint(Psr4 $autoLoader)
         {
             $origonalPath = get_include_path();
 
             foreach (self::$types as $type => $val) {
 
-                $result = $this->testObject->addToIncludePath($val);
+                $result = $autoLoader->addToIncludePath($val);
                 $msg = "A value of type $type was accepted";
 
                 if ($type !== 'string') {
@@ -244,16 +242,17 @@ namespace Flair\AutoLoader {
          * Checks if removeFromIncludePath works.
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::removeFromIncludePath
          */
-        public function testRemoveFromIncludePath()
+        public function testRemoveFromIncludePath(Psr4 $autoLoader)
         {
             $newPath = '/www';
             $origonalPath = get_include_path();
 
-            $this->testObject->addToIncludePath($newPath);
+            set_include_path($origonalPath . PATH_SEPARATOR . $newPath);
 
-            $result = $this->testObject->removeFromIncludePath($newPath);
+            $result = $autoLoader->removeFromIncludePath($newPath);
             $this->assertTrue($result, 'The path was not removed from the include path');
 
             $updatedPath = get_include_path();
@@ -263,29 +262,17 @@ namespace Flair\AutoLoader {
         }
 
         /**
-         * Checks if load only accepts strings.
-         * @author Daniel Sherman
-         * @test
-         * @covers ::load
-         */
-        public function testLoadTypeConstraint()
-        {
-            foreach (self::$types as $type => $val) {
-                if ($type !== 'string') {
-                    $result = $this->testObject->load($val);
-                    $msg = "A value of type $type was accepted";
-                    $this->assertFalse($result, $msg);
-                }
-            }
-        }
-
-        /**
          * Checks if load works as expected using the inclde path
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
+         * @depends testAddToIncludePath
+         * @depends testAddPrefix
+         * @depends testRemovePrefix
+         * @depends testRemoveFromIncludePath
          * @covers ::load
          */
-        public function testLoadIncludePath()
+        public function testLoadIncludePath(Psr4 $autoLoader)
         {
             $origonalIncludePath = get_include_path();
             $prefix = 'Vendor\\Simple';
@@ -295,27 +282,29 @@ namespace Flair\AutoLoader {
             $newPath .= DIRECTORY_SEPARATOR . 'Psr4';
 
             //configure the object
-            $this->testObject->addToIncludePath($newPath);
-            $this->testObject->addPrefix($prefix, $baseDir);
-            $this->testObject->register();
+            $result = $autoLoader->addToIncludePath($newPath);
+            $this->assertTrue($result, 'updating the includepath failed');
+            $result = $autoLoader->addPrefix($prefix, $baseDir);
+            $this->assertTrue($result, 'adding a prefix failed');
 
             // the actual assertions/tests
-            $result = $this->testObject->load('Vendor\\Simple\\ClassOne');
+            $result = $autoLoader->load('Vendor\\Simple\\ClassOne');
             $this->assertTrue($result, 'the class file did not get load');
 
             $result = class_exists('Vendor\\Simple\\ClassOne', false);
             $this->assertTrue($result, 'the class is not in scope');
 
-            $result = $this->testObject->load('Vendor\\Simple\\NonexistentClassOne');
+            $result = $autoLoader->load('Vendor\\Simple\\NonexistentClassOne');
             $this->assertFalse($result, 'the class/file does not exist');
 
-            $result = $this->testObject->load('Vendor\\Complex\\ClassOne');
+            $result = $autoLoader->load('Vendor\\Complex\\ClassOne');
             $this->assertFalse($result, 'The prefix was not configured');
 
-            // un-configure the object
-            $this->testObject->deregister();
-            $this->testObject->removePrefix($prefix);
-            $this->testObject->removeFromIncludePath($newPath);
+            // reconfigure the object
+            $result = $autoLoader->removePrefix($prefix);
+            $this->assertTrue($result, 'removing a prefix failed');
+            $result = $autoLoader->removeFromIncludePath($newPath);
+            $this->assertTrue($result, 'updating includepath failed');
             set_include_path($origonalIncludePath);
         }
 
@@ -323,9 +312,12 @@ namespace Flair\AutoLoader {
          * Checks if load works as expected
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
+         * @depends testAddPrefix
+         * @depends testRemovePrefix
          * @covers ::load
          */
-        public function testLoad()
+        public function testLoad(Psr4 $autoLoader)
         {
             $prefix = 'Vendor\\Simple';
             $baseDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_TestClasses';
@@ -333,25 +325,25 @@ namespace Flair\AutoLoader {
             $baseDir .= 'Vendor' . DIRECTORY_SEPARATOR . 'Simple' . DIRECTORY_SEPARATOR;
 
             //configure the object
-            $this->testObject->addPrefix($prefix, $baseDir);
-            $this->testObject->register();
+            $result = $autoLoader->addPrefix($prefix, $baseDir);
+            $this->assertTrue($result, 'adding a prefix failed');
 
             // the actual assertions/tests
-            $result = $this->testObject->load('Vendor\\Simple\\ClassTwo');
+            $result = $autoLoader->load('Vendor\\Simple\\ClassTwo');
             $this->assertTrue($result, 'the class file did not get load');
 
             $result = class_exists('Vendor\\Simple\\ClassTwo', false);
             $this->assertTrue($result, 'the class is not in scope');
 
-            $result = $this->testObject->load('Vendor\\Simple\\NonexistentClassTwo');
+            $result = $autoLoader->load('Vendor\\Simple\\NonexistentClassTwo');
             $this->assertFalse($result, 'the class/file does not exist');
 
-            $result = $this->testObject->load('Vendor\\Complex\\ClassTwo');
+            $result = $autoLoader->load('Vendor\\Complex\\ClassTwo');
             $this->assertFalse($result, 'The prefix was not configured');
 
-            // un-configure the object
-            $this->testObject->deregister();
-            $this->testObject->removePrefix($prefix);
+            // reconfigure the object
+            $result = $autoLoader->removePrefix($prefix);
+            $this->assertTrue($result, 'removing a prefix failed');
         }
     }
 }
