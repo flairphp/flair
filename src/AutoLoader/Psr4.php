@@ -53,11 +53,17 @@ namespace Flair\AutoLoader {
          * Removes an existing prefix from the internal array.
          *
          * @param string $prefix The class name prefix to remove.
+         * @return boolean true it it works, false otherwise.
          * @uses prefixes
          */
         public function removePrefix($prefix)
         {
-            unset($this->prefixes[$prefix]);
+            if (isset($this->prefixes[$prefix])) {
+                unset($this->prefixes[$prefix]);
+                return true;
+            }
+
+            return false;
         }
 
         /**
@@ -109,6 +115,7 @@ namespace Flair\AutoLoader {
          * Provides a way of removing a path from the include_path.
          *
          * @param string $path A path to remove from the include_path.
+         * @return boolean true it it works, false otherwise.
          */
         public function removeFromIncludePath($path)
         {

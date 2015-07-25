@@ -4,7 +4,7 @@ namespace Flair\Validation\Core {
     /**
      * the needed test class
      */
-    require '/_testCallable/TestCallable.php';
+    require dirname(__FILE__) . DIRECTORY_SEPARATOR . '_testCallable' . DIRECTORY_SEPARATOR . 'TestCallable.php';
 
     /**
      * The Unit test for the Exception class.
@@ -16,11 +16,18 @@ namespace Flair\Validation\Core {
     {
 
         /**
-         * holds a list of types to test against, that should not be accepted.
+         * holds a list of basic types to test against.
          *
          * @var array
          */
         protected static $types = [];
+
+        /**
+         * holds a list of callable types to test against.
+         *
+         * @var array
+         */
+        protected static $callableTypes = [];
 
         /**
          * holds an object of callables
@@ -28,13 +35,6 @@ namespace Flair\Validation\Core {
          * @var object
          */
         public static $callables = null;
-
-        /**
-         * holds a list of types to test against.
-         *
-         * @var array
-         */
-        protected static $callableTypes = [];
 
         /**
          * Set up stuff before testing
@@ -83,6 +83,8 @@ namespace Flair\Validation\Core {
 
             $msg = 'the object does not use the correct trait';
             $this->assertContains('Flair\Validation\Core\RuleTrait', class_uses($rule), $msg);
+
+            return $rule;
         }
 
         /**
@@ -91,12 +93,11 @@ namespace Flair\Validation\Core {
          *
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::setCallable
          */
-        public function testSetCallable()
+        public function testSetCallable(Rule $rule)
         {
-            $rule = new Rule([self::$callables, 'alwaysTrue']);
-
             foreach (self::$callableTypes as $type => $val) {
                 $this->assertTrue($rule->setCallable($val));
             }
@@ -108,6 +109,7 @@ namespace Flair\Validation\Core {
          *
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::setCallable
          */
         public function testSetCallableInstantiated()
@@ -121,11 +123,13 @@ namespace Flair\Validation\Core {
          *
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
+         * @depends testSetCallable
          * @covers ::getCallable
          */
         public function testGetCallable()
         {
-            $callable = [new \TestCallable(), 'alwaysTrue'];
+            $callable = [self::$callables, 'alwaysTrue'];
             $rule = new Rule($callable);
             $result = $rule->getCallable();
             $msg = 'Did not get back what was passed in!';
@@ -137,12 +141,11 @@ namespace Flair\Validation\Core {
          *
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::setMessage
          */
-        public function testSetMessage()
+        public function testSetMessage(Rule $rule)
         {
-            $rule = new Rule([new \TestCallable(), 'alwaysTrue']);
-
             foreach (self::$types as $type => $val) {
                 if ($type === 'string') {
                     $msg = "A string was not accepted.";
@@ -163,11 +166,11 @@ namespace Flair\Validation\Core {
          *
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::getMessage
          */
-        public function testGetMessage()
+        public function testGetMessage(Rule $rule)
         {
-            $rule = new Rule([new \TestCallable(), 'alwaysTrue']);
             $msg = 'Did not get back a string!';
             $this->assertTrue(is_string($rule->getMessage()), $msg);
         }
@@ -177,12 +180,11 @@ namespace Flair\Validation\Core {
          *
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::setHalt
          */
-        public function testSetHalt()
+        public function testSetHalt(Rule $rule)
         {
-            $rule = new Rule([new \TestCallable(), 'alwaysTrue']);
-
             foreach (self::$types as $type => $val) {
                 if ($type === 'boolean') {
                     $msg = "A boolean was not accepted.";
@@ -203,11 +205,11 @@ namespace Flair\Validation\Core {
          *
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::getHalt
          */
-        public function testGetHalt()
+        public function testGetHalt(Rule $rule)
         {
-            $rule = new Rule([new \TestCallable(), 'alwaysTrue']);
             $msg = 'Did not get back a bool!';
             $this->assertTrue(is_bool($rule->getHalt()), $msg);
         }
@@ -217,11 +219,11 @@ namespace Flair\Validation\Core {
          *
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::setArguments
          */
-        public function testSetArguments()
+        public function testSetArguments(Rule $rule)
         {
-            $rule = new Rule([self::$callables, 'alwaysTrue']);
             $msg = 'an array was not accepted!';
             $this->assertTrue($rule->setArguments([]), $msg);
         }
@@ -231,25 +233,42 @@ namespace Flair\Validation\Core {
          *
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
          * @covers ::getArguments
          */
-        public function testGetArguments()
+        public function testGetArguments(Rule $rule)
         {
-            $rule = new Rule([self::$callables, 'alwaysTrue']);
             $msg = 'an array was not returned!';
             $this->assertTrue(is_array($rule->getArguments()), $msg);
         }
 
         /**
-         * checks isValid only returns arrays
+         * checks isValid only returns boolean
          *
          * @author Daniel Sherman
          * @test
+         * @depends testConstruct
+         * @depends testSetCallable
+         * @depends testSetArguments
          * @covers ::isValid
          */
-        public function testIsValid()
+        public function testIsValid(Rule $rule)
         {
-        }
+            $msg = 'could not set callable';
+            $this->assertTrue($rule->setCallable([self::$callables, 'returnsGivenType']));
 
+            foreach (self::$types as $type => $val) {
+                $rule->setArguments([$val]);
+
+                try {
+                    $msg = "A $type was returned";
+                    $result = $rule->isValid('anyRandomValue');
+                    $this->assertTrue(is_bool($result), $msg);
+                } catch (Exception $e) {
+                    $this->assertInstanceOf('Flair\Validation\Core\Exception', $e, $msg . ': wrong Exception');
+                    $this->assertEquals(3, $e->getCode(), $msg . ': wrong Code');
+                }
+            }
+        }
     }
 }

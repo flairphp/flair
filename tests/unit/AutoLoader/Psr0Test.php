@@ -92,6 +92,11 @@ namespace Flair\AutoLoader {
             $setTo = '/www/libs/';
             $val = $autoLoader->getDefaultPathPrefix();
             $this->assertEquals($setTo, $val, 'The default prefix is not what it should be!');
+
+            $result = $autoLoader->setDefaultPathPrefix('');
+            $this->assertTrue($result, 'The default prefix did not saved successfully');
+
+            return $autoLoader;
         }
 
         /**
@@ -99,7 +104,7 @@ namespace Flair\AutoLoader {
          *
          * @author Daniel Sherman
          * @test
-         * @depends testConstruct
+         * @depends testDefaultPathPrefixSaved
          * @covers ::setDefaultPathPrefix
          */
         public function testSetDefaultPathPrefixTypeConstraint(Psr0 $autoLoader)
@@ -115,13 +120,32 @@ namespace Flair\AutoLoader {
                     $this->assertTrue($result, $msg);
                 }
             }
+
+            $result = $autoLoader->setDefaultPathPrefix('');
+            $this->assertTrue($result, 'The default prefix did not saved successfully');
+        }
+
+        /**
+         * Checks if getPrefixes works as expected. and the value passed into
+         * addPrefix saved correctly.
+         * @author Daniel Sherman
+         * @test
+         * @depends testConstruct
+         * @covers ::getPrefixes
+         */
+        public function testGetPrefixes(Psr0 $autoLoader)
+        {
+            $val = $autoLoader->getPrefixes();
+            $this->assertTrue(is_array($val), 'An array was not returned');
+
+            return $autoLoader;
         }
 
         /**
          * Checks if addPrefix works as expected.
          * @author Daniel Sherman
          * @test
-         * @depends testConstruct
+         * @depends testGetPrefixes
          * @covers ::addPrefix
          */
         public function testAddPrefix(Psr0 $autoLoader)
@@ -131,25 +155,10 @@ namespace Flair\AutoLoader {
 
             $result = $autoLoader->addPrefix($prefix, $pathPrefix);
             $this->assertTrue($result, 'a valid prefix could not be added!');
-            return $autoLoader;
-        }
 
-        /**
-         * Checks if getPrefixes works as expected. and the value passed into
-         * addPrefix saved correctly.
-         * @author Daniel Sherman
-         * @test
-         * @depends testAddPrefix
-         * @covers ::getPrefixes
-         */
-        public function testGetPrefixes(Psr0 $autoLoader)
-        {
-            $val = $autoLoader->getPrefixes();
-            $this->assertTrue(is_array($val), 'An array was not returned');
-
-            $prefixes = ['Flair\Autoloader' => '/www/libs/'];
-            $this->assertEquals($prefixes, $val, 'the prefix did not get saved properly!');
-
+            $prefixes = [$prefix => $pathPrefix];
+            $storedPrefixes = $autoLoader->getPrefixes();
+            $this->assertEquals($prefixes, $storedPrefixes, 'the prefix did not get saved properly!');
             return $autoLoader;
         }
 
@@ -174,7 +183,10 @@ namespace Flair\AutoLoader {
          * Checks if addPrefix works as expected when no pathprefix is passed.
          * @author Daniel Sherman
          * @test
-         * @depends testConstruct
+         * @depends testSetDefaultPathPrefix
+         * @depends testAddPrefix
+         * @depends testGetPrefixes
+         * @depends testRemovePrefix
          * @covers ::addPrefix
          */
         public function testAddPrefixDefault(Psr0 $autoLoader)
@@ -191,6 +203,14 @@ namespace Flair\AutoLoader {
             $prefixes = [$prefix => $pathPrefix];
             $storedPrefixes = $autoLoader->getPrefixes();
             $this->assertEquals($prefixes, $storedPrefixes, 'the prefix did not get saved properly!');
+
+            $result = $autoLoader->setDefaultPathPrefix('');
+            $this->assertTrue($result, 'The default prefix did not save successfully');
+
+            $result = $autoLoader->removePrefix($prefix);
+            $this->assertTrue($result, 'the prefix did not get removed');
+
+            return $autoLoader;
         }
 
         /**
@@ -198,7 +218,9 @@ namespace Flair\AutoLoader {
          *
          * @author Daniel Sherman
          * @test
-         * @depends testConstruct
+         * @depends testAddPrefixDefault
+         * @depends testGetPrefixes
+         * @depends testRemovePrefix
          * @covers ::addPrefix
          */
         public function testAddPrefixTypeConstraint(Psr0 $autoLoader)
@@ -225,6 +247,13 @@ namespace Flair\AutoLoader {
                     }
                 }
             }
+
+            $storedPrefixes = $autoLoader->getPrefixes();
+            $this->assertTrue(is_array($storedPrefixes), 'An array was not returned');
+            foreach ($storedPrefixes as $key => $val) {
+                $result = $autoLoader->removePrefix($key);
+                $this->assertTrue($result, 'the prefix did not get removed');
+            }
         }
 
         /**
@@ -249,7 +278,7 @@ namespace Flair\AutoLoader {
          * Checks if deregister works as expected.
          * @author Daniel Sherman
          * @test
-         * @depends testConstruct
+         * @depends testRegister
          * @covers ::deregister
          */
         public function testDeregisterSuccess(Psr0 $autoLoader)
@@ -352,19 +381,22 @@ namespace Flair\AutoLoader {
          * @depends testConstruct
          * @depends testAddToIncludePath
          * @depends testAddPrefix
+         * @depends testRemovePrefix
+         * @depends testRemoveFromIncludePath
          * @covers ::load
          */
-        public function testLoadIncludePath()
+        public function testLoadIncludePath(Psr0 $autoLoader)
         {
             $origonalIncludePath = get_include_path();
 
-            $autoLoader = new Psr0();
             $prefix = 'Simple';
             $newPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_TestClasses';
 
             //configure the object
-            $autoLoader->addToIncludePath($newPath);
-            $autoLoader->addPrefix($prefix);
+            $result = $autoLoader->addToIncludePath($newPath);
+            $this->assertTrue($result, 'updating the includepath failed');
+            $result = $autoLoader->addPrefix($prefix);
+            $this->assertTrue($result, 'adding a prefix failed');
 
             // the actual assertions/tests
             $result = $autoLoader->load('SimpleClass');
@@ -379,9 +411,11 @@ namespace Flair\AutoLoader {
             $result = $autoLoader->load('ComplexClass');
             $this->assertFalse($result, 'The prefix was not configured');
 
-            // un-configure the object
-            $autoLoader->removePrefix($prefix);
-            $autoLoader->removeFromIncludePath($newPath);
+            // reconfigure the object
+            $result = $autoLoader->removePrefix($prefix);
+            $this->assertTrue($result, 'removing a prefix failed');
+            $result = $autoLoader->removeFromIncludePath($newPath);
+            $this->assertTrue($result, 'updating includepath failed');
             set_include_path($origonalIncludePath);
         }
 
@@ -392,18 +426,19 @@ namespace Flair\AutoLoader {
          * @depends testConstruct
          * @depends testSetDefaultPathPrefix
          * @depends testAddPrefix
+         * @depends testRemovePrefix
          * @covers ::load
          */
-        public function testLoadDefaultPathPrefix()
+        public function testLoadDefaultPathPrefix(Psr0 $autoLoader)
         {
-            $autoLoader = new Psr0();
-
             $prefix = 'Simple';
             $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_TestClasses' . DIRECTORY_SEPARATOR;
 
             //configure the object
-            $autoLoader->setDefaultPathPrefix($path);
-            $autoLoader->addPrefix($prefix);
+            $result = $autoLoader->setDefaultPathPrefix($path);
+            $this->assertTrue($result, 'setting the default prefix failed');
+            $result = $autoLoader->addPrefix($prefix);
+            $this->assertTrue($result, 'adding a prefix failed');
 
             // the actual assertions/tests
             $result = $autoLoader->load('SimpleClassTwo');
@@ -417,6 +452,12 @@ namespace Flair\AutoLoader {
 
             $result = $autoLoader->load('ComplexClassTwo');
             $this->assertFalse($result, 'The prefix was not configured');
+
+            // reconfigure
+            $result = $autoLoader->setDefaultPathPrefix($path);
+            $this->assertTrue($result, 'setting the default prefix failed');
+            $result = $autoLoader->removePrefix($prefix);
+            $this->assertTrue($result, 'removing a prefix failed');
         }
 
         /**
@@ -425,17 +466,17 @@ namespace Flair\AutoLoader {
          * @test
          * @depends testConstruct
          * @depends testAddPrefix
+         * @depends testRemovePrefix
          * @covers ::load
          */
-        public function testLoadPassedPathPrefix()
+        public function testLoadPassedPathPrefix(Psr0 $autoLoader)
         {
-            $autoLoader = new Psr0();
-
             $prefix = 'Simple';
             $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_TestClasses' . DIRECTORY_SEPARATOR;
 
             //configure the object
-            $autoLoader->addPrefix($prefix, $path);
+            $result = $autoLoader->addPrefix($prefix, $path);
+            $this->assertTrue($result, 'adding a prefix failed');
 
             // the actual assertions/tests
             $result = $autoLoader->load('SimpleClassThree');
@@ -449,6 +490,10 @@ namespace Flair\AutoLoader {
 
             $result = $autoLoader->load('ComplexClassThree');
             $this->assertFalse($result, 'The prefix was not configured');
+
+            // reconfigure
+            $result = $autoLoader->removePrefix($prefix);
+            $this->assertTrue($result, 'removing a prefix failed');
         }
 
     }
