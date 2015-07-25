@@ -22,6 +22,7 @@ namespace Flair\Validation\Core {
          * passed to it. The method/function should always return a bool value.
          *
          * @param callable $callable The callable that will be used by isValid.
+         * @return bool Always returns true, on success.
          */
         public function setCallable(callable $callable);
 
@@ -36,6 +37,8 @@ namespace Flair\Validation\Core {
          * Sets the error message associated with the rule.
          *
          * @param string $message The new error message.
+         * @throws Exception If $message isn't a string.
+         * @return bool Always returns true, on success.
          */
         public function setMessage($message);
 
@@ -54,6 +57,8 @@ namespace Flair\Validation\Core {
          * isValid() returns false.
          *
          * @param bool $halt The value to assign to the  flag.
+         * @throws Exception If $halt isn't a bool.
+         * @return bool Always returns true, on success.
          */
         public function setHalt($halt);
 
@@ -70,6 +75,7 @@ namespace Flair\Validation\Core {
          * it uses for validating its input.
          *
          * @param array $arguments The arguments to be used.
+         * @return bool Always returns true, on success.
          */
         public function setArguments(array $arguments);
 
@@ -77,6 +83,8 @@ namespace Flair\Validation\Core {
          * Returns true if $value is valid, false otherwise.
          *
          * @param mixed $value The value to be validated.
+         * @throws Exception If the callable method hasn't been set, or if the method
+         * doesn't return a bool.
          * @return bool
          */
         public function isValid($value);
