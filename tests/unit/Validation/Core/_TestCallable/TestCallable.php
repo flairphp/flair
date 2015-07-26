@@ -20,9 +20,9 @@ class TestCallable
     /**
      * a method that always returns the second parameter it was given
      */
-    public function returnsGivenType($one, $two)
+    public function returnsGivenType($val)
     {
-        return $two;
+        return $val;
     }
 
 }

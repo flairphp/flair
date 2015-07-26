@@ -2,11 +2,11 @@
 namespace Flair\Exception {
 
     /**
-     * The Exception class is the class that all other Exception
-     * classes should be extended from.
+     * The class that all other Exception classes in the Flair namespace
+     * should be extended from.
      *
-     * The Exception class is designed to control how non fatal errors are
-     * handled. The class can be extended by child classes to provide additonal
+     * The class is designed to control how non fatal errors are
+     * handled. The class can be extended by child classes to provide additional
      * control over exceptions. The Exception class is an extension of
      * the internal php Exception class.
      *

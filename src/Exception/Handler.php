@@ -1,11 +1,10 @@
 <?php
 namespace Flair\Exception {
     /**
-     * The Handler class provides some basic functionality for
-     * handling exceptions that go uncaught.
+     * The class provides some basic functionality for handling exceptions that go uncaught.
      *
-     * This class should only be instantiated once per execution, ideally it should be called as soon
-     * as possible. The class provides the following functunallity.
+     * This class should only be instantiated once per execution, ideally it should be called
+     * as soon as possible. The class provides the following functionality.
      *<ul>
      *    <li>A  output buffer that allows clearing partially generated output.</li>
      *    <li>An option to log the uncaught exception to the error log.</li>
@@ -59,7 +58,7 @@ namespace Flair\Exception {
         protected $logger = null;
 
         /**
-         * Sets the buffering flag and trys to start an output buffer if true is passed.
+         * Sets the buffering flag and tries to start an output buffer if true is passed.
          * This method should only be called once.
          *
          * @author Daniel Sherman
@@ -122,11 +121,11 @@ namespace Flair\Exception {
         }
 
         /**
-         * Sets the path to an optional template that is used during ouput generation.
+         * Sets the path to an optional template that is used during output generation.
          *
          * @author Daniel Sherman
          * @param sting $template The file path to an optional file that will
-         * be used to genreate output.
+         * be used to generate output.
          * @uses template
          * @return boolean true on success false otherwise.
          */
