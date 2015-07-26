@@ -3,6 +3,3 @@ namespace Vendor\Complex {
 	class ClassTwo
 	{}	
 }
-
-
-
