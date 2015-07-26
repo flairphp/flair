@@ -2,7 +2,7 @@
 namespace Flair\AutoLoader {
 
     /**
-     * The Psr4 class is used to automatically load files that are
+     * Used to automatically load files that are
      * compliant with the PSR-4 standard.
      *
      * @author Daniel Sherman

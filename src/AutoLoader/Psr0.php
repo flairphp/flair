@@ -2,11 +2,11 @@
 namespace Flair\AutoLoader {
 
     /**
-     * The Psr0 class is used to automatically load files that are
+     * Used to automatically load files that are
      * compliant with the PSR-0 standard.
      *
      * The class uses the concept of class prefix Identifiers to determine if a
-     * class should be loaded. Additonally each prefix can have a path prefix
+     * class should be loaded. Additionally each prefix can have a path prefix
      * that will be prepended to the filename before trying to include it.
      * @author Daniel Sherman
      */
