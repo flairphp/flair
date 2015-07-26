@@ -1,5 +1,5 @@
 # Flair Framework
-Flair is dsigned to be
+Flair is dsigned ........
 
 
 ## Features

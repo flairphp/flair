@@ -3,6 +3,3 @@ namespace Vendor\Simple {
 	class ClassOne
 	{}	
 }
-
-
-
