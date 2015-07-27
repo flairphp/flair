@@ -47,31 +47,33 @@ namespace Flair\Exception {
         protected static $code = 999;
 
         /**
-         * holds a previous exception
-         *
-         * @var \Exception
-         */
-        protected static $previous = null;
-
-        /**
-         * A simple helper function that returns a thrown exception.
+         * A data provider that returns an exception with a null previous exception
          *
          * @author Daniel Sherman
          */
-        protected function thrower($multi = false)
+        public function nullPreviousExceptionProvider()
         {
-
-            if ($multi) {
-                $grandParent = new UnexpectedValueException('grandParent', 0);
-                $previous = new UnexpectedValueException('parent', 1, $grandParent);
-            } else {
-                $previous = self::$previous;
+            try {
+                throw new UnexpectedValueException(self::$msg, self::$code, null, self::$context);
+            } catch (\Exception $e) {
+                return [[$e]];
             }
+        }
+
+        /**
+         * A data provider that returns an exception with a previous exception
+         * of the same type
+         *
+         * @author Daniel Sherman
+         */
+        public function exceptionProvider()
+        {
+            $previous = new UnexpectedValueException('parent', 1);
 
             try {
                 throw new UnexpectedValueException(self::$msg, self::$code, $previous, self::$context);
             } catch (\Exception $e) {
-                return $e;
+                return [[$e]];
             }
         }
 
@@ -81,20 +83,19 @@ namespace Flair\Exception {
          *
          * @author Daniel Sherman
          * @test
+         * @dataProvider exceptionProvider
          * @covers ::__construct
          */
-        public function testConstruct()
+        public function testConstruct($e)
         {
-            $exception = $this->thrower();
-
             $msg = 'the object is not the correct type';
-            $this->assertInstanceOf('Flair\Exception\UnexpectedValueException', $exception, $msg);
+            $this->assertInstanceOf('Flair\Exception\UnexpectedValueException', $e, $msg);
 
             $msg = 'the object does not implement the correct interface';
-            $this->assertInstanceOf('Flair\Exception\ExceptionInterface', $exception, $msg);
+            $this->assertInstanceOf('Flair\Exception\ExceptionInterface', $e, $msg);
 
             $msg = 'the object does not use the correct trait';
-            $this->assertContains('Flair\Exception\ExceptionTrait', class_uses($exception), $msg);
+            $this->assertContains('Flair\Exception\ExceptionTrait', class_uses($e), $msg);
         }
 
         /**
@@ -102,12 +103,12 @@ namespace Flair\Exception {
          *
          * @author Daniel Sherman
          * @test
+         * @dataProvider exceptionProvider
          * @covers ::getId
          */
-        public function testGetId()
+        public function testGetId($e)
         {
             $msg = 'the id is not the correct type';
-            $e = $this->thrower();
             $this->assertTrue(is_string($e->getId()), $msg);
         }
 
@@ -116,11 +117,11 @@ namespace Flair\Exception {
          *
          * @author Daniel Sherman
          * @test
+         * @dataProvider exceptionProvider
          * @covers ::getContext
          */
-        public function testGetContext()
+        public function testGetContext($e)
         {
-            $e = $this->thrower();
             $context = $e->getContext();
 
             $msg = 'the context is not the correct type';
@@ -135,12 +136,11 @@ namespace Flair\Exception {
          *
          * @author Daniel Sherman
          * @test
+         * @dataProvider exceptionProvider
          * @covers ::getContextAsString
          */
-        public function testGetContextAsString()
+        public function testGetContextAsString($e)
         {
-            $e = $this->thrower();
-
             $msg = 'the return value was not what it should be';
             $this->assertTrue(is_string($e->getContextAsString()), $msg);
         }
@@ -150,29 +150,39 @@ namespace Flair\Exception {
          *
          * @author Daniel Sherman
          * @test
+         * @dataProvider exceptionProvider
          * @covers ::__toString()
          */
-        public function testToString()
+        public function testToString($e)
         {
-            $e = $this->thrower();
             $msg = 'the return value was not what it should be';
             $this->assertTrue(is_string($e->__toString()), $msg);
         }
 
         /**
-         * Checks getPrevious  works as expected.
+         * Checks getPrevious works as expected. when null is returned.
          *
          * @author Daniel Sherman
          * @test
+         * @dataProvider nullpreviousExceptionProvider
          * @covers ::getPrevious()
          */
-        public function testGetPrevious()
+        public function testGetPreviousNull($e)
         {
-            $e = $this->thrower();
             $msg = 'the object is not the correct type';
             $this->assertNull($e->getPrevious(), $msg);
+        }
 
-            $e = $this->thrower(true);
+        /**
+         * Checks getPrevious works as expected. when an exception is returned
+         *
+         * @author Daniel Sherman
+         * @test
+         * @dataProvider exceptionProvider
+         * @covers ::getPrevious()
+         */
+        public function testGetPrevious($e)
+        {
             $msg = 'the object is not the correct type';
             $this->assertInstanceOf('Flair\Exception\UnexpectedValueException', $e->getPrevious(), $msg);
         }
