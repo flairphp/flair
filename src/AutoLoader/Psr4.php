@@ -6,6 +6,7 @@ namespace Flair\AutoLoader {
      * compliant with the PSR-4 standard.
      *
      * @author Daniel Sherman
+     * @todo simplify unit tests
      */
     class Psr4
     {
