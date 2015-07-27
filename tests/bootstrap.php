@@ -10,8 +10,11 @@ function phpUnitFlairAutoLoader($class)
         $file = ltrim($file, '\\');
         $file = str_replace(['\\'], DIRECTORY_SEPARATOR, $file) . '.php';
         $file = $baseDir . $file;
-        require $file;
-        return true;
+
+        if (is_readable($file)) {
+            require $file;
+            return true;
+        }
     }
 
     return false;

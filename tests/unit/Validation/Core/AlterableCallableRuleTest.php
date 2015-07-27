@@ -1,10 +1,11 @@
 <?php
-namespace Flair\Validation\Core {
+namespace Flair\Validation\Core{
 
     /**
      * the needed test class
      */
-    require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . '_testCallable' . DIRECTORY_SEPARATOR . 'TestCallable.php';
+    $fixturePath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR;
+    require_once $fixturePath . 'TestCallable.php';
 
     /**
      * The Unit test for the Exception class.
@@ -14,21 +15,6 @@ namespace Flair\Validation\Core {
      */
     class AlterableCallableRuleTest extends \PHPUnit_Framework_TestCase
     {
-
-        /**
-         * holds a list of basic types to test against.
-         *
-         * @var array
-         */
-        protected static $types = [];
-
-        /**
-         * holds a list of callable types to test against.
-         *
-         * @var array
-         */
-        protected static $callableTypes = [];
-
         /**
          * holds an object of callables
          *
@@ -41,28 +27,7 @@ namespace Flair\Validation\Core {
          */
         public static function setUpBeforeClass()
         {
-
-            self::$types = [
-                'boolean' => true,
-                'integer' => 1,
-                'float' => 1.15,
-                'string' => '/www/libs/',
-                'array' => [],
-                'object' => new \stdClass(),
-                'resource' => fopen(__FILE__, "r"),
-                'null' => null,
-            ];
-
-            self::$callables = new \TestCallable();
-
-            self::$callableTypes = [
-                'core' => 'is_string',
-                'anonymous' => function () {return true;},
-                'instantiated' => [self::$callables, 'alwaysTrue'],
-                'static method' => ['\TestCallable', 'staticAlwaysTrue'],
-                'instantiate' => [new \TestCallable(), 'returnsGivenType'],
-            ];
-
+            self::$callables = new TestCallable();
         }
 
         /**
@@ -99,22 +64,42 @@ namespace Flair\Validation\Core {
          * @depends testConstruct
          * @covers ::setMessage
          */
-        public function testSetMessage(AlterableCallableRule $rule)
+        public function testSetMessageToString(AlterableCallableRule $rule)
         {
-            foreach (self::$types as $type => $val) {
-                if ($type === 'string') {
-                    $msg = "A string was not accepted.";
-                    $this->assertTrue($rule->setMessage($val), $msg);
-                } else {
-                    try {
-                        $rule->setMessage($val);
-                    } catch (\Exception $e) {
-                        $class = 'Flair\Validation\Core\InvalidArgumentException';
-                        $this->assertInstanceOf($class, $e, 'wrong Exception Class');
-                        $this->assertEquals(0, $e->getCode(), 'wrong Code');
-                    }
-                }
-            }
+            $msg = "A string was not accepted.";
+            $this->assertTrue($rule->setMessage('i am a string'), $msg);
+        }
+
+        /**
+         * checks setMessage fails on anything thats not a sting
+         *
+         * @author Daniel Sherman
+         * @test
+         * @depends testConstruct
+         * @dataProvider setMessageFailsProvider
+         * @expectedException InvalidArgumentException
+         * @expectedExceptionCode 0
+         * @covers ::setMessage
+         */
+        public function testSetMessageFails($type, $val, AlterableCallableRule $rule)
+        {
+            $rule->setMessage($val);
+        }
+
+        /**
+         * provides data for testSetMessageFails
+         */
+        public function setMessageFailsProvider()
+        {
+            return [
+                ['boolean', true],
+                ['integer', 1],
+                ['float', 1.15],
+                ['array', []],
+                ['object', new \stdClass()],
+                ['resource', fopen(__FILE__, "r")],
+                ['null', null],
+            ];
         }
 
         /**
@@ -132,29 +117,49 @@ namespace Flair\Validation\Core {
         }
 
         /**
-         * checks setHalt only accepts bools
+         * checks setHalt excepts a bool
          *
          * @author Daniel Sherman
          * @test
          * @depends testConstruct
          * @covers ::setHalt
          */
-        public function testSetHalt(AlterableCallableRule $rule)
+        public function testSetHaltToBool(AlterableCallableRule $rule)
         {
-            foreach (self::$types as $type => $val) {
-                if ($type === 'boolean') {
-                    $msg = "A boolean was not accepted.";
-                    $this->assertTrue($rule->setHalt($val), $msg);
-                } else {
-                    try {
-                        $rule->setHalt($val);
-                    } catch (\Exception $e) {
-                        $class = 'Flair\Validation\Core\InvalidArgumentException';
-                        $this->assertInstanceOf($class, $e, 'wrong Exception Class');
-                        $this->assertEquals(1, $e->getCode(), $msg . ': wrong Code');
-                    }
-                }
-            }
+            $msg = "A boolean was not accepted.";
+            $this->assertTrue($rule->setHalt(true), $msg);
+        }
+
+        /**
+         * checks setHalt fails on anything thats not a bool
+         *
+         * @author Daniel Sherman
+         * @test
+         * @depends testConstruct
+         * @dataProvider setHaltFailsProvider
+         * @expectedException InvalidArgumentException
+         * @expectedExceptionCode 1
+         * @covers ::setHalt
+         */
+        public function testSetHaltFails($type, $val, AlterableCallableRule $rule)
+        {
+            $rule->setHalt($val);
+        }
+
+        /**
+         * provides data for testSetHaltFails
+         */
+        public function setHaltFailsProvider()
+        {
+            return [
+                ['string', 'a string'],
+                ['integer', 1],
+                ['float', 1.15],
+                ['array', []],
+                ['object', new \stdClass()],
+                ['resource', fopen(__FILE__, "r")],
+                ['null', null],
+            ];
         }
 
         /**
@@ -200,19 +205,33 @@ namespace Flair\Validation\Core {
         }
 
         /**
-         * checks setCallable handles types properly. Either the assertion
-         * will pass or phpunit will throw an exception.
+         * checks setCallable accepts all the allowed callable types.
          *
          * @author Daniel Sherman
          * @test
          * @depends testConstruct
+         * @dataProvider setetCallableSuccessProvider
          * @covers ::setCallable
          */
-        public function testSetCallable(AlterableCallableRule $rule)
+        public function testSetCallableSuccess($type, $val, AlterableCallableRule $rule)
         {
-            foreach (self::$callableTypes as $type => $val) {
-                $this->assertTrue($rule->setCallable($val));
-            }
+            $this->assertTrue($rule->setCallable($val));
+        }
+
+        /**
+         * provides data for testSetCallable
+         */
+        public function setetCallableSuccessProvider()
+        {
+            $inst = new TestCallable();
+
+            return [
+                ['core', 'is_string'],
+                ['anonymous', function () {return true;}],
+                ['instantiated', [$inst, 'returnsGivenType']],
+                ['static method', ['Flair\Validation\Core\TestCallable', 'staticAlwaysTrue']],
+                ['instantiate', [new TestCallable(), 'returnsGivenType']],
+            ];
         }
 
         /**
@@ -221,7 +240,6 @@ namespace Flair\Validation\Core {
          * @author Daniel Sherman
          * @test
          * @depends testConstruct
-         * @depends testSetCallable
          * @covers ::getCallable
          */
         public function testGetCallable(AlterableCallableRule $rule)
@@ -238,30 +256,51 @@ namespace Flair\Validation\Core {
         }
 
         /**
-         * checks isValid only returns boolean
+         * checks that if is valid gets a bool back from the callable it
+         * doesn't throw anything.
          *
          * @author Daniel Sherman
          * @test
          * @depends testConstruct
-         * @depends testSetCallable
          * @covers ::isValid
          */
-        public function testIsValid(AlterableCallableRule $rule)
+        public function testIsValidReturnsBool(AlterableCallableRule $rule)
         {
-            $msg = 'Unable to set callable';
-            $this->assertTrue($rule->setCallable([self::$callables, 'returnsGivenType']), $msg);
+            $result = $rule->isValid(true);
+            $this->assertTrue(is_bool($result));
+        }
 
-            foreach (self::$types as $type => $val) {
-                try {
-                    $msg = "A $type was returned";
-                    $result = $rule->isValid('anyRandomValue');
-                    $this->assertTrue(is_bool($result), $msg);
-                } catch (\Exception $e) {
-                    $class = 'Flair\Validation\Core\UnexpectedValueException';
-                    $this->assertInstanceOf($class, $e, 'wrong Exception Class');
-                    $this->assertEquals(3, $e->getCode(), $msg . ': wrong Code');
-                }
-            }
+        /**
+         * checks isValid throws an excpetion if it doesn't get a boolean
+         * result from the callable
+         *
+         * @author Daniel Sherman
+         * @test
+         * @depends testConstruct
+         * @dataProvider isValidProvider
+         * @expectedException UnexpectedValueException
+         * @expectedExceptionCode 3
+         * @covers ::isValid
+         */
+        public function testIsValidFails($type, $val, AlterableCallableRule $rule)
+        {
+            $rule->isValid($val);
+        }
+
+        /**
+         * provides data for testIsValidFails
+         */
+        public function isValidProvider()
+        {
+            return [
+                ['string', 'a string'],
+                ['integer', 1],
+                ['float', 1.15],
+                ['array', []],
+                ['object', new \stdClass()],
+                ['resource', fopen(__FILE__, "r")],
+                ['null', null],
+            ];
         }
     }
 }
