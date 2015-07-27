@@ -20,7 +20,7 @@ namespace Flair\Validation\Core {
          * Sets the error message associated with the rule.
          *
          * @param string $message The new error message.
-         * @throws Exception If $message isn't a string.
+         * @throws InvalidArgumentException If $message isn't a string.
          * @return bool Always returns true, on success.
          */
         public function setMessage($message);
@@ -40,7 +40,7 @@ namespace Flair\Validation\Core {
          * isValid() returns false.
          *
          * @param bool $halt The value to assign to the flag.
-         * @throws Exception If $halt isn't a bool.
+         * @throws InvalidArgumentException If $halt isn't a bool.
          * @return bool Always returns true, on success.
          */
         public function setHalt($halt);
@@ -49,7 +49,7 @@ namespace Flair\Validation\Core {
          * Returns true if $value is valid, false otherwise.
          *
          * @param mixed $value The value to be validated.
-         * @throws Exception If it's not possible to validate  $value.
+         * @throws LogicException If it's not possible to validate $value.
          * @return bool
          */
         public function isValid($value);

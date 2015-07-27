@@ -88,8 +88,8 @@ namespace Flair\Validation\Core {
          * @param mixed $value The value to be validated.
          * @uses getCallable
          * @uses getArguments
-         * @throws Exception If the callable method hasn't been set, or if the method
-         * doesn't return a bool.
+         * @throws LogicException If the callable method hasn't been set.
+         * @throws UnexpectedValueException If the callable method doesn't return a bool.
          * @return bool
          */
         public function isValid($value)
@@ -98,7 +98,7 @@ namespace Flair\Validation\Core {
             $args = $this->getArguments();
 
             if (!is_callable($call)) {
-                throw new Exception('The callable method has not been set!', 2);
+                throw new LogicException('The callable method has not been set!', 2);
             }
 
             if (count($args) > 0) {
@@ -113,7 +113,7 @@ namespace Flair\Validation\Core {
                 return $result;
             }
 
-            throw new Exception('The callable method did not return a boolean!', 3);
+            throw new UnexpectedValueException('The callable method did not return a boolean!', 3);
         }
     }
 }

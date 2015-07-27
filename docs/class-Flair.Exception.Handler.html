@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Class Flair\Exception\Handler | Flair</title>
+
+	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+				<h3>Namespaces</h3>
+			<ul>
+				<li class="active">
+					<a href="namespace-Flair.html">
+						Flair<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-Flair.AutoLoader.html">
+						AutoLoader					</a>
+
+						</li>
+				<li class="active">
+					<a href="namespace-Flair.Exception.html">
+						Exception					</a>
+
+						</li>
+				<li>
+					<a href="namespace-Flair.Validation.html">
+						Validation<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-Flair.Validation.Core.html">
+						Core					</a>
+
+						</li>
+							</ul></li></ul></li>
+				<li>
+					<a href="namespace-PHP.html">
+						PHP					</a>
+
+						</li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li class="active"><a href="class-Flair.Exception.Handler.html">Handler</a></li>
+			</ul>
+
+			<h3>Interfaces</h3>
+			<ul>
+				<li><a href="class-Flair.Exception.ExceptionInterface.html">ExceptionInterface</a></li>
+			</ul>
+
+			<h3>Traits</h3>
+			<ul>
+				<li><a href="class-Flair.Exception.ExceptionTrait.html">ExceptionTrait</a></li>
+			</ul>
+
+			<h3>Exceptions</h3>
+			<ul>
+				<li><a href="class-Flair.Exception.Exception.html">Exception</a></li>
+				<li><a href="class-Flair.Exception.InvalidArgumentException.html">InvalidArgumentException</a></li>
+				<li><a href="class-Flair.Exception.LogicException.html">LogicException</a></li>
+				<li><a href="class-Flair.Exception.UnexpectedValueException.html">UnexpectedValueException</a></li>
+			</ul>
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-Flair.Exception.html" title="Summary of Flair\Exception"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
+			</li>
+				<li>
+					<a href="annotation-group-todo.html" title="List of elements with todo annotation">
+						<span>Todo</span>
+					</a>
+				</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class Handler</h1>
+
+
+	<div class="description">
+	<p>The class provides some basic functionality for handling exceptions that go uncaught.</p>
+
+<p>This class should only be instantiated once per execution, ideally it should be called
+as soon as possible. The class provides the following functionality.</p>
+
+<ul> <li>A  output buffer that allows clearing partially generated output.</li> <li>An option to log the uncaught exception to the error log.</li> <li>An option to log the uncaught exception with a PSR-3 compliant logger.</li> <li>An option to generate an output message if an output buffer was used.</li> <li>An option to generate a custom output message (using a template file) if an output buffer was used.</li>
+</ul>
+	</div>
+
+
+
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		<b>Namespace:</b> <a href="namespace-Flair.html">Flair</a>\<a href="namespace-Flair.Exception.html">Exception</a><br>
+		
+
+				<b>Author:</b>
+				Daniel Sherman<br>
+				<b>Todo:</b>
+				set up unit tests for the class<br>
+			<b>Located at</b> <a href="source-class-Flair.Exception.Handler.html#3-261" title="Go to source code">Exception/Handler.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="setBuffering" id="_setBuffering">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setBuffering">#</a>
+		<code><a href="source-class-Flair.Exception.Handler.html#60-87" title="Go to source code">setBuffering</a>( <span>boolean <var>$buffer</var></span> )</code>
+
+		<div class="description short">
+			<p>Sets the buffering flag and tries to start an output buffer if true is passed.
+This method should only be called once.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Sets the buffering flag and tries to start an output buffer if true is passed.
+This method should only be called once.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$buffer</var></dt>
+					<dd>Should buffering be used.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>true on success false otherwise.
+				</div>
+
+
+				<h4>Author</h4>
+				<div class="list">
+						Daniel Sherman<br>
+				</div>
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-Flair.Exception.Handler.html#$buffer">Flair\Exception\Handler::<var>$buffer</var></a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setOutput" id="_setOutput">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setOutput">#</a>
+		<code><a href="source-class-Flair.Exception.Handler.html#89-104" title="Go to source code">setOutput</a>( <span>boolean <var>$output</var></span> )</code>
+
+		<div class="description short">
+			<p>Sets the output flag.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Sets the output flag.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$output</var></dt>
+					<dd>Should output be generated.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>true on success false otherwise.
+				</div>
+
+
+				<h4>Author</h4>
+				<div class="list">
+						Daniel Sherman<br>
+				</div>
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-Flair.Exception.Handler.html#$output">Flair\Exception\Handler::<var>$output</var></a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setLogging" id="_setLogging">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setLogging">#</a>
+		<code><a href="source-class-Flair.Exception.Handler.html#106-121" title="Go to source code">setLogging</a>( <span>boolean <var>$log</var></span> )</code>
+
+		<div class="description short">
+			<p>Sets the logging flag.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Sets the logging flag.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$log</var></dt>
+					<dd>Should the exception be logged when caught.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>true on success false otherwise.
+				</div>
+
+
+				<h4>Author</h4>
+				<div class="list">
+						Daniel Sherman<br>
+				</div>
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-Flair.Exception.Handler.html#$log">Flair\Exception\Handler::<var>$log</var></a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setTemplate" id="_setTemplate">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setTemplate">#</a>
+		<code><a href="source-class-Flair.Exception.Handler.html#123-149" title="Go to source code">setTemplate</a>( <span>sting <var>$template</var></span> )</code>
+
+		<div class="description short">
+			<p>Sets the path to an optional template that is used during output generation.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Sets the path to an optional template that is used during output generation.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$template</var></dt>
+					<dd><p>The file path to an optional file that will
+be used to generate output.</p></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>true on success false otherwise.
+				</div>
+
+
+				<h4>Author</h4>
+				<div class="list">
+						Daniel Sherman<br>
+				</div>
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-Flair.Exception.Handler.html#$template">Flair\Exception\Handler::<var>$template</var></a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setLogger" id="_setLogger">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setLogger">#</a>
+		<code><a href="source-class-Flair.Exception.Handler.html#151-163" title="Go to source code">setLogger</a>( <span>callable <var>$logger</var></span> )</code>
+
+		<div class="description short">
+			<p>Sets an optional logging method to use instead of the default.
+This makes the class psr-3 compliant.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Sets an optional logging method to use instead of the default.
+This makes the class psr-3 compliant.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$logger</var></dt>
+					<dd>The method to use.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>true
+				</div>
+
+
+				<h4>Author</h4>
+				<div class="list">
+						Daniel Sherman<br>
+				</div>
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-Flair.Exception.Handler.html#$logger">Flair\Exception\Handler::<var>$logger</var></a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="register" id="_register">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_register">#</a>
+		<code><a href="source-class-Flair.Exception.Handler.html#165-173" title="Go to source code">register</a>( )</code>
+
+		<div class="description short">
+			<p>Registers the object with php so it can handle uncaught exceptions.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Registers the object with php so it can handle uncaught exceptions.</p>
+
+
+
+
+
+				<h4>Author</h4>
+				<div class="list">
+						Daniel Sherman<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="catcher" id="_catcher">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_catcher">#</a>
+		<code><a href="source-class-Flair.Exception.Handler.html#175-201" title="Go to source code">catcher</a>( <span><code><a href="class-Exception.html">Exception</a></code> <var>$e</var></span> )</code>
+
+		<div class="description short">
+			<p>Handles The uncaught exceptions, &amp; clears the output buffers if directed to.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Handles The uncaught exceptions, &amp; clears the output buffers if directed to.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$e</var></dt>
+					<dd>The exception thats needs to be handled</dd>
+				</dl></div>
+
+
+
+				<h4>Author</h4>
+				<div class="list">
+						Daniel Sherman<br>
+				</div>
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-Flair.Exception.Handler.html#$buffer">Flair\Exception\Handler::<var>$buffer</var></a></code><br>
+						<code><a href="class-Flair.Exception.Handler.html#$output">Flair\Exception\Handler::<var>$output</var></a></code><br>
+						<code><a href="class-Flair.Exception.Handler.html#$log">Flair\Exception\Handler::<var>$log</var></a></code><br>
+						<code><a href="class-Flair.Exception.Handler.html#_outputter">Flair\Exception\Handler::outputter()</a></code><br>
+						<code><a href="class-Flair.Exception.Handler.html#_logException">Flair\Exception\Handler::logException()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="logException" id="_logException">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_logException">#</a>
+		<code><a href="source-class-Flair.Exception.Handler.html#203-218" title="Go to source code">logException</a>( <span><code><a href="class-Exception.html">Exception</a></code> <var>$e</var></span> )</code>
+
+		<div class="description short">
+			<p>logs the exception appropriately.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>logs the exception appropriately.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$e</var></dt>
+					<dd>The exception thats needs to be logged</dd>
+				</dl></div>
+
+
+
+				<h4>Author</h4>
+				<div class="list">
+						Daniel Sherman<br>
+				</div>
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-Flair.Exception.Handler.html#$logger">Flair\Exception\Handler::<var>$logger</var></a></code><br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-Flair.Exception.Handler.html#_catcher">Flair\Exception\Handler::catcher()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="outputter" id="_outputter">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_outputter">#</a>
+		<code><a href="source-class-Flair.Exception.Handler.html#220-235" title="Go to source code">outputter</a>( <span><code><a href="class-Exception.html">Exception</a></code> <var>$e</var></span> )</code>
+
+		<div class="description short">
+			<p>renders error output.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>renders error output.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$e</var></dt>
+					<dd>The exception thats needs to be outputted</dd>
+				</dl></div>
+
+
+
+				<h4>Author</h4>
+				<div class="list">
+						Daniel Sherman<br>
+				</div>
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-Flair.Exception.Handler.html#$template">Flair\Exception\Handler::<var>$template</var></a></code><br>
+						<code><a href="class-Flair.Exception.Handler.html#_defaultOutputter">Flair\Exception\Handler::defaultOutputter()</a></code><br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-Flair.Exception.Handler.html#_catcher">Flair\Exception\Handler::catcher()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="defaultOutputter" id="_defaultOutputter">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_defaultOutputter">#</a>
+		<code><a href="source-class-Flair.Exception.Handler.html#237-259" title="Go to source code">defaultOutputter</a>( <span><code><a href="class-Exception.html">Exception</a></code> <var>$e</var></span> )</code>
+
+		<div class="description short">
+			<p>Renders the default error output</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Renders the default error output</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$e</var></dt>
+					<dd>The exception thats needs to be outputted</dd>
+				</dl></div>
+
+
+
+				<h4>Author</h4>
+				<div class="list">
+						Daniel Sherman<br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-Flair.Exception.Handler.html#_outputter">Flair\Exception\Handler::outputter()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+	<table class="summary properties" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="buffer" id="$buffer">
+		<td class="attributes"><code>
+			protected  
+			boolean
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Flair.Exception.Handler.html#23-28" title="Go to source code"><var>$buffer</var></a>
+
+			<div class="description short">
+				<p>is a global output buffer in use. This flag is not absolute, as output buffering cannot be</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>is a global output buffer in use. This flag is not absolute, as output buffering cannot be</p>
+
+					<h4>Used by</h4>
+					<div class="list">
+							<code><a href="class-Flair.Exception.Handler.html#_setBuffering">Flair\Exception\Handler::setBuffering()</a></code><br>
+							<code><a href="class-Flair.Exception.Handler.html#_catcher">Flair\Exception\Handler::catcher()</a></code><br>
+					</div>
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$buffer" class="anchor">#</a>
+				<code><span class="php-keyword1">false</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="output" id="$output">
+		<td class="attributes"><code>
+			protected  
+			boolean
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Flair.Exception.Handler.html#30-35" title="Go to source code"><var>$output</var></a>
+
+			<div class="description short">
+				<p>should a caught exception generate output</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>should a caught exception generate output</p>
+
+					<h4>Used by</h4>
+					<div class="list">
+							<code><a href="class-Flair.Exception.Handler.html#_setOutput">Flair\Exception\Handler::setOutput()</a></code><br>
+							<code><a href="class-Flair.Exception.Handler.html#_catcher">Flair\Exception\Handler::catcher()</a></code><br>
+					</div>
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$output" class="anchor">#</a>
+				<code><span class="php-keyword1">false</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="log" id="$log">
+		<td class="attributes"><code>
+			protected  
+			boolean
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Flair.Exception.Handler.html#37-42" title="Go to source code"><var>$log</var></a>
+
+			<div class="description short">
+				<p>should a caught exception be logged</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>should a caught exception be logged</p>
+
+					<h4>Used by</h4>
+					<div class="list">
+							<code><a href="class-Flair.Exception.Handler.html#_setLogging">Flair\Exception\Handler::setLogging()</a></code><br>
+							<code><a href="class-Flair.Exception.Handler.html#_catcher">Flair\Exception\Handler::catcher()</a></code><br>
+					</div>
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$log" class="anchor">#</a>
+				<code><span class="php-keyword1">true</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="template" id="$template">
+		<td class="attributes"><code>
+			protected  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Flair.Exception.Handler.html#44-50" title="Go to source code"><var>$template</var></a>
+
+			<div class="description short">
+				<p>the file path to an optional template file that
+will be used to generate output if output should be generated.</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>the file path to an optional template file that
+will be used to generate output if output should be generated.</p>
+
+					<h4>Used by</h4>
+					<div class="list">
+							<code><a href="class-Flair.Exception.Handler.html#_setTemplate">Flair\Exception\Handler::setTemplate()</a></code><br>
+							<code><a href="class-Flair.Exception.Handler.html#_outputter">Flair\Exception\Handler::outputter()</a></code><br>
+					</div>
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$template" class="anchor">#</a>
+				<code><span class="php-keyword1">null</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="logger" id="$logger">
+		<td class="attributes"><code>
+			protected  
+			callable
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Flair.Exception.Handler.html#52-58" title="Go to source code"><var>$logger</var></a>
+
+			<div class="description short">
+				<p>an optional logger to be called instead of the default. The method
+will be passed the exception object.</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>an optional logger to be called instead of the default. The method
+will be passed the exception object.</p>
+
+					<h4>Used by</h4>
+					<div class="list">
+							<code><a href="class-Flair.Exception.Handler.html#_setLogger">Flair\Exception\Handler::setLogger()</a></code><br>
+							<code><a href="class-Flair.Exception.Handler.html#_logException">Flair\Exception\Handler::logException()</a></code><br>
+					</div>
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$logger" class="anchor">#</a>
+				<code><span class="php-keyword1">null</span></code>
+			</div>
+		</td>
+	</tr>
+	</table>
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		Flair API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
+</body>
+</html>

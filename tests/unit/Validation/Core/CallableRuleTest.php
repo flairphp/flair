@@ -89,8 +89,9 @@ namespace Flair\Validation\Core {
                 } else {
                     try {
                         $rule->setMessage($val);
-                    } catch (Exception $e) {
-                        $this->assertInstanceOf('Flair\Validation\Core\Exception', $e, 'wrong Exception');
+                    } catch (\Exception $e) {
+                        $class = 'Flair\Validation\Core\InvalidArgumentException';
+                        $this->assertInstanceOf($class, $e, 'wrong Exception Class');
                         $this->assertEquals(0, $e->getCode(), 'wrong Code');
                     }
                 }
@@ -128,8 +129,9 @@ namespace Flair\Validation\Core {
                 } else {
                     try {
                         $rule->setHalt($val);
-                    } catch (Exception $e) {
-                        $this->assertInstanceOf('Flair\Validation\Core\Exception', $e, $msg . ': wrong Exception');
+                    } catch (\Exception $e) {
+                        $class = 'Flair\Validation\Core\InvalidArgumentException';
+                        $this->assertInstanceOf($class, $e, 'wrong Exception Class');
                         $this->assertEquals(1, $e->getCode(), $msg . ': wrong Code');
                     }
                 }
@@ -165,8 +167,9 @@ namespace Flair\Validation\Core {
                     $msg = "A $type was returned";
                     $result = $rule->isValid('anyRandomValue');
                     $this->assertTrue(is_bool($result), $msg);
-                } catch (Exception $e) {
-                    $this->assertInstanceOf('Flair\Validation\Core\Exception', $e, $msg . ': wrong Exception');
+                } catch (\Exception $e) {
+                    $class = 'Flair\Validation\Core\UnexpectedValueException';
+                    $this->assertInstanceOf($class, $e, 'wrong Exception Class');
                     $this->assertEquals(3, $e->getCode(), $msg . ': wrong Code');
                 }
             }

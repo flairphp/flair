@@ -2,11 +2,11 @@
 namespace Flair\Exception {
 
     /**
-     * A bare bones Exception, that can be used or extended.
+     * A bare bones InvalidArgumentException, that can be used or extended.
      *
      * @author Daniel Sherman
      */
-    class Exception extends \Exception implements ExceptionInterface
+    class InvalidArgumentException extends \InvalidArgumentException implements ExceptionInterface
     {
 
         /**

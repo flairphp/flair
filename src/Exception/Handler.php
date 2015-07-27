@@ -244,7 +244,7 @@ namespace Flair\Exception {
         {
             $message = 'Fatal Error: ';
 
-            if ($e instanceof \Flair\Exception\Exception) {
+            if ($e instanceof ExceptionInterface) {
                 $message .= $e->getId();
             }
 
