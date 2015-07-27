@@ -213,7 +213,7 @@ namespace Flair\Exception {
                 $method = $this->logger;
                 $method($e);
             } else {
-                error_log($e->_toString());
+                error_log($e->__toString());
             }
         }
 
