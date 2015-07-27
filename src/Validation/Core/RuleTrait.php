@@ -41,7 +41,7 @@ namespace Flair\Validation\Core {
          *
          * @param string $message The error message.
          * @uses message
-         * @throws Exception If $message isn't a string.
+         * @throws InvalidArgumentException If $message isn't a string.
          * @return bool Always returns true, on success.
          */
         public function setMessage($message)
@@ -51,7 +51,7 @@ namespace Flair\Validation\Core {
                 return true;
             }
 
-            throw new Exception('$message is not a string!', 0);
+            throw new InvalidArgumentException('$message is not a string!', 0);
         }
 
         /**
@@ -74,7 +74,7 @@ namespace Flair\Validation\Core {
          *
          * @param bool $halt The value to assign to the flag.
          * @uses halt
-         * @throws Exception If $halt isn't a bool.
+         * @throws InvalidArgumentException If $halt isn't a bool.
          * @return bool Always returns true, on success.
          */
         public function setHalt($halt)
@@ -84,7 +84,7 @@ namespace Flair\Validation\Core {
                 return true;
             }
 
-            throw new Exception('$halt is not a bool!', 1);
+            throw new InvalidArgumentException('$halt is not a bool!', 1);
         }
     }
 }

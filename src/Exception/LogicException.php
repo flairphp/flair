@@ -2,11 +2,11 @@
 namespace Flair\Exception {
 
     /**
-     * A bare bones Exception, that can be used or extended.
+     * A bare bones LogicException, that can be used or extended.
      *
      * @author Daniel Sherman
      */
-    class Exception extends \Exception implements ExceptionInterface
+    class LogicException extends \LogicException implements ExceptionInterface
     {
 
         /**

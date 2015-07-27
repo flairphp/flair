@@ -2,12 +2,12 @@
 namespace Flair\Exception {
 
     /**
-     * The Unit test for the Exception class.
+     * The Unit test for the UnexpectedValueException class.
      *
      * @author Daniel Sherman
-     * @coversDefaultClass \Flair\Exception\Exception
+     * @coversDefaultClass \Flair\Exception\UnexpectedValueException
      */
-    class ExceptionTest extends \PHPUnit_Framework_TestCase
+    class UnexpectedValueExceptionTest extends \PHPUnit_Framework_TestCase
     {
         /**
          * holds a list of context data.
@@ -62,14 +62,14 @@ namespace Flair\Exception {
         {
 
             if ($multi) {
-                $grandParent = new Exception('grandParent', 0);
-                $previous = new Exception('parent', 1, $grandParent);
+                $grandParent = new UnexpectedValueException('grandParent', 0);
+                $previous = new UnexpectedValueException('parent', 1, $grandParent);
             } else {
                 $previous = self::$previous;
             }
 
             try {
-                throw new Exception(self::$msg, self::$code, $previous, self::$context);
+                throw new UnexpectedValueException(self::$msg, self::$code, $previous, self::$context);
             } catch (\Exception $e) {
                 return $e;
             }
@@ -88,7 +88,7 @@ namespace Flair\Exception {
             $exception = $this->thrower();
 
             $msg = 'the object is not the correct type';
-            $this->assertInstanceOf('Flair\Exception\Exception', $exception, $msg);
+            $this->assertInstanceOf('Flair\Exception\UnexpectedValueException', $exception, $msg);
 
             $msg = 'the object does not implement the correct interface';
             $this->assertInstanceOf('Flair\Exception\ExceptionInterface', $exception, $msg);
@@ -174,7 +174,7 @@ namespace Flair\Exception {
 
             $e = $this->thrower(true);
             $msg = 'the object is not the correct type';
-            $this->assertInstanceOf('Flair\Exception\Exception', $e->getPrevious(), $msg);
+            $this->assertInstanceOf('Flair\Exception\UnexpectedValueException', $e->getPrevious(), $msg);
         }
 
     }

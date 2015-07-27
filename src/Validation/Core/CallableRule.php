@@ -25,7 +25,7 @@ namespace Flair\Validation\Core {
          * @uses setArguments
          * @uses setMessage
          * @uses setHalt
-         * @throws Exception If $message or $halt are an incorrect type.
+         * @throws InvalidArgumentException If $message isn't a string or $halt isn't a bool.
          */
         public function __construct(callable $callable, array $arguments = [], $message = '', $halt = false)
         {
