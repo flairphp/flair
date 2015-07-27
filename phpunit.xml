@@ -14,15 +14,13 @@
          debug="true">
     <testsuites>
         <testsuite name="AutoLoader">
-            <directory suffix=".php">./tests/unit/AutoLoader/</directory>
-            <exclude>./tests/unit/Autoloader/_TestClasses</exclude>
+            <directory suffix="Test.php">./tests/unit/AutoLoader/</directory>
         </testsuite>
         <testsuite name="Excep">
-            <directory suffix=".php">./tests/unit/Exception/</directory>
+            <directory suffix="Test.php">./tests/unit/Exception/</directory>
         </testsuite>
         <testsuite name="Validation\Core">
-            <directory suffix=".php">./tests/unit/Validation/Core/</directory>
-            <exclude>./tests/unit/Validation/Core/_TestCallable</exclude>
+            <directory suffix="Test.php">./tests/unit/Validation/Core/</directory>
         </testsuite>
     </testsuites>
 </phpunit>

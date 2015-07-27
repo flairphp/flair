@@ -278,7 +278,7 @@ namespace Flair\AutoLoader {
             $prefix = 'Vendor\\Simple';
             $baseDir = 'Vendor' . DIRECTORY_SEPARATOR . 'Simple' . DIRECTORY_SEPARATOR;
 
-            $newPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_TestClasses';
+            $newPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'fixtures';
             $newPath .= DIRECTORY_SEPARATOR . 'Psr4';
 
             //configure the object
@@ -320,7 +320,7 @@ namespace Flair\AutoLoader {
         public function testLoad(Psr4 $autoLoader)
         {
             $prefix = 'Vendor\\Simple';
-            $baseDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_TestClasses';
+            $baseDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'fixtures';
             $baseDir .= DIRECTORY_SEPARATOR . 'Psr4' . DIRECTORY_SEPARATOR;
             $baseDir .= 'Vendor' . DIRECTORY_SEPARATOR . 'Simple' . DIRECTORY_SEPARATOR;
 

@@ -390,7 +390,7 @@ namespace Flair\AutoLoader {
             $origonalIncludePath = get_include_path();
 
             $prefix = 'Simple';
-            $newPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_TestClasses';
+            $newPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'fixtures';
 
             //configure the object
             $result = $autoLoader->addToIncludePath($newPath);
@@ -432,7 +432,7 @@ namespace Flair\AutoLoader {
         public function testLoadDefaultPathPrefix(Psr0 $autoLoader)
         {
             $prefix = 'Simple';
-            $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_TestClasses' . DIRECTORY_SEPARATOR;
+            $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR;
 
             //configure the object
             $result = $autoLoader->setDefaultPathPrefix($path);
@@ -472,7 +472,7 @@ namespace Flair\AutoLoader {
         public function testLoadPassedPathPrefix(Psr0 $autoLoader)
         {
             $prefix = 'Simple';
-            $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . '_TestClasses' . DIRECTORY_SEPARATOR;
+            $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR;
 
             //configure the object
             $result = $autoLoader->addPrefix($prefix, $path);
