@@ -144,8 +144,7 @@ namespace Flair\Exception {
 
             $previous = $this->getPrevious();
             if ($previous !== null) {
-                $exception .= $previous->__toString();
-                $exception .= PHP_EOL . PHP_EOL;
+                $exception .= PHP_EOL . $previous->__toString();
             }
 
             return $exception;
