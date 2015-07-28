@@ -15,18 +15,10 @@ namespace Flair\Exception {
      *</ul>
      *
      * @author Daniel Sherman
-     * @todo set up unit tests for the class
+     * @todo run some tests on the stuff that can't be unit tested
      */
     class Handler
     {
-
-        /**
-         * is a global output buffer in use. This flag is not absolute, as output buffering cannot be
-         *
-         * @var boolean $buffer
-         */
-        protected $buffer = false;
-
         /**
          * should a caught exception generate output
          *
@@ -35,11 +27,11 @@ namespace Flair\Exception {
         protected $output = false;
 
         /**
-         * should a caught exception be logged
+         * holds the level of of the output buffer, when output override was enabled.
          *
-         * @var boolean $log
+         * @var int $obLevel
          */
-        protected $log = true;
+        protected $obLevel = 0;
 
         /**
          * the file path to an optional template file that
@@ -50,82 +42,52 @@ namespace Flair\Exception {
         protected $template = null;
 
         /**
+         * should a caught exception be logged
+         *
+         * @var boolean $log
+         */
+        protected $log = true;
+
+        /**
          * an optional logger to be called instead of the default. The method
          * will be passed the exception object.
          *
-         * @var callable $template
+         * @var callable $logger
          */
         protected $logger = null;
 
         /**
-         * Sets the buffering flag and tries to start an output buffer if true is passed.
-         * This method should only be called once.
+         * Enables an output buffer, so that if an exception is caught the output can
+         * be overridden with a custom output.
          *
          * @author Daniel Sherman
-         * @param boolean $buffer Should buffering be used.
          * @uses buffer
-         * @return boolean true on success false otherwise.
+         * @return null|bool True on success false on failure, and null if it's
+         * already been enabled.
          */
-        public function setBuffering($buffer)
+        public function enableOutputOverride()
         {
-            if ($this->buffer) {
-                // buffering is already on so just return
-                return true;
+            if ($this->output) {
+                // already on so return null
+                return null;
             }
 
-            if (is_bool($buffer)) {
-                $this->buffer = $buffer;
-
-                if ($buffer) {
-                    return ob_start();
-                } else {
-                    return true;
-                }
-            } else {
-                return false;
+            $result = ob_start();
+            if ($result) {
+                $this->output = true;
+                $this->obLevel = ob_get_level();
             }
+
+            return $result;
         }
 
         /**
-         * Sets the output flag.
+         * Sets the path to an optional template that is used during output generation,
+         * instead of the default. The template will only be included if output override
+         * is enabled.
          *
          * @author Daniel Sherman
-         * @param boolean $output Should output be generated.
-         * @uses output
-         * @return boolean true on success false otherwise.
-         */
-        public function setOutput($output)
-        {
-            if (is_bool($output)) {
-                $this->output = $output;
-                return true;
-            }
-            return false;
-        }
-
-        /**
-         * Sets the logging flag.
-         *
-         * @author Daniel Sherman
-         * @param boolean $log Should the exception be logged when caught.
-         * @uses log
-         * @return boolean true on success false otherwise.
-         */
-        public function setLogging($log)
-        {
-            if (is_bool($log)) {
-                $this->log = $log;
-                return true;
-            }
-            return false;
-        }
-
-        /**
-         * Sets the path to an optional template that is used during output generation.
-         *
-         * @author Daniel Sherman
-         * @param sting $template The file path to an optional file that will
-         * be used to generate output.
+         * @param sting $template The file path to the template.
          * @uses template
          * @return boolean true on success false otherwise.
          */
@@ -135,16 +97,33 @@ namespace Flair\Exception {
                 return false;
             }
 
-            $resolvedTemplate = stream_resolve_include_path($template);
+            $resolvedFile = stream_resolve_include_path($template);
             if ($resolvedFile !== false) {
 
                 // the file was found so see if it can be read
-                if (is_readable($resolvedTemplate)) {
+                if (is_readable($resolvedFile)) {
                     $this->template = $template;
                     return true;
                 }
             }
 
+            return false;
+        }
+
+        /**
+         * should an uncaught exception be logged. On by default.
+         *
+         * @author Daniel Sherman
+         * @param boolean $log
+         * @uses log
+         * @return boolean true on success false otherwise.
+         */
+        public function setLogging($log)
+        {
+            if (is_bool($log)) {
+                $this->log = $log;
+                return true;
+            }
             return false;
         }
 
@@ -160,44 +139,7 @@ namespace Flair\Exception {
         public function setLogger(callable $logger)
         {
             $this->logger = $logger;
-        }
-
-        /**
-         * Registers the object with php so it can handle uncaught exceptions.
-         *
-         * @author Daniel Sherman
-         */
-        public function register()
-        {
-            set_exception_handler([$this, 'catcher']);
-        }
-
-        /**
-         * Handles The uncaught exceptions, & clears the output buffers if directed to.
-         *
-         * @author Daniel Sherman
-         * @param \Exception $e The exception thats needs to be handled
-         * @uses buffer
-         * @uses output
-         * @uses log
-         * @uses outputter
-         * @uses logException
-         */
-        public function catcher($e)
-        {
-            if ($this->buffer) {
-                while (ob_get_level()) {
-                    ob_end_clean();
-                }
-            }
-
-            if ($this->output) {
-                $this->outputter($e);
-            }
-
-            if ($this->log) {
-                $this->logException($e);
-            }
+            return true;
         }
 
         /**
@@ -207,14 +149,42 @@ namespace Flair\Exception {
          * @param \Exception $e The exception thats needs to be logged
          * @uses logger
          */
-        protected function logException($e)
+        public function logException(\Exception $e)
         {
             if ($this->logger !== null) {
                 $method = $this->logger;
                 $method($e);
             } else {
+                // this can't really be unit tested tested
                 error_log($e->__toString());
             }
+        }
+
+        /**
+         * generates the default error output
+         *
+         * @author Daniel Sherman
+         * @param \Exception $e The exception thats needs to be outputted
+         * @return string the default output
+         */
+        public function generateDefaultOutput(\Exception $e)
+        {
+            $message = 'Issue: ';
+
+            if ($e instanceof ExceptionInterface) {
+                $message .= $e->getId();
+            }
+
+            $interface = php_sapi_name();
+            if (substr($interface, 0, 3) != 'cli') {
+                // this can't really be unit tested tested
+
+                // it should be noted that the response code will be ignored
+                // if data has already been sent to the browser.
+                http_response_code(500);
+            }
+
+            return $message;
         }
 
         /**
@@ -223,40 +193,54 @@ namespace Flair\Exception {
          * @author Daniel Sherman
          * @param \Exception $e The exception thats needs to be outputted
          * @uses template
-         * @uses defaultOutputter
+         * @uses generateDefaultOutput
          */
-        protected function outputter($e)
+        public function generateOutput(\Exception $e)
         {
             if ($this->template !== null) {
                 require $this->template;
             } else {
-                $this->defaultOutputter($e);
+                echo $this->generateDefaultOutput($e);
             }
         }
 
         /**
-         * Renders the default error output
+         * Registers the object with php so it can handle uncaught exceptions.
          *
          * @author Daniel Sherman
-         * @param \Exception $e The exception thats needs to be outputted
          */
-        protected function defaultOutputter($e)
+        public function register()
         {
-            $message = 'Fatal Error: ';
-
-            if ($e instanceof ExceptionInterface) {
-                $message .= $e->getId();
-            }
-
-            $interface = php_sapi_name();
-            if (substr($interface, 0, 3) != 'cli') {
-                // it should be noted that the response code will be ignored
-                // if data has already been sent to the browser.
-                http_response_code(500);
-            }
-
-            exit($message);
+            // this can't really be unit tested tested
+            set_exception_handler([$this, 'catcher']);
         }
 
+        /**
+         * Handles The uncaught exceptions. Logs the exception if needed,
+         * and generates output if needed.
+         *
+         * @author Daniel Sherman
+         * @param \Exception $e The exception thats needs to be handled
+         * @uses log
+         * @uses logException
+         * @uses output
+         * @uses obLevel
+         */
+        public function catcher(\Exception $e)
+        {
+            // this can't really be unit tested tested
+
+            if ($this->log) {
+                $this->logException($e);
+            }
+
+            if ($this->output) {
+                while (ob_get_level() >= $this->obLevel) {
+                    ob_end_clean();
+                }
+
+                $this->generateOutput($e);
+            }
+        }
     }
 }
