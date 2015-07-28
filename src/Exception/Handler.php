@@ -15,7 +15,6 @@ namespace Flair\Exception {
      *</ul>
      *
      * @author Daniel Sherman
-     * @todo run some tests on the stuff that can't be unit tested
      */
     class Handler
     {
@@ -156,7 +155,10 @@ namespace Flair\Exception {
                 $method($e);
             } else {
                 // this can't really be unit tested tested
-                error_log($e->__toString());
+                $lines = explode(PHP_EOL, $e->__toString());
+                foreach ($lines as $line) {
+                    error_log($line);
+                }
             }
         }
 
