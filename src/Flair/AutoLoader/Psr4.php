@@ -150,14 +150,12 @@ namespace Flair\AutoLoader {
                 return false;
             }
 
-            // deal with the bug in php version 5.3.2
-            $class == ltrim($class, '\\');
-
             foreach ($this->prefixes as $prefix => $baseDir) {
 
                 if (stripos($class, $prefix) === 0) {
+
+                    //we found a class to load
                     $file = substr($class, strlen($prefix));
-                    $file = ltrim($file, '\\');
                     $file = str_replace(['\\'], DIRECTORY_SEPARATOR, $file) . '.php';
 
                     $resolvedFile = stream_resolve_include_path($baseDir . $file);

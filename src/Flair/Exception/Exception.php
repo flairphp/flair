@@ -2,11 +2,11 @@
 namespace Flair\Exception {
 
     /**
-     * A bare bones InvalidArgumentException, that can be used or extended.
+     * A bare bones Exception, that can be used or extended.
      *
      * @author Daniel Sherman
      */
-    class InvalidArgumentException extends \InvalidArgumentException implements ExceptionInterface
+    class Exception extends \Exception implements ExceptionInterface
     {
 
         /**
@@ -26,7 +26,7 @@ namespace Flair\Exception {
          * @uses setId
          * @uses context
          */
-        public function __construct($message, $code, $previous = null, array $context = [])
+        public function __construct($message = null, $code = 0, $previous = null, array $context = [])
         {
             parent::__construct($message, $code, $previous);
             $this->setId();
