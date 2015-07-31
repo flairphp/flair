@@ -4,7 +4,8 @@ function phpUnitFlairAutoLoader($class)
     $class == ltrim($class, '\\');
 
     if (stripos($class, 'Flair') === 0) {
-        $baseDir = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR;
+        $baseDir = dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'src';
+        $baseDir .= DIRECTORY_SEPARATOR . 'Flair' . DIRECTORY_SEPARATOR;
 
         $file = substr($class, strlen('Flair'));
         $file = ltrim($file, '\\');
