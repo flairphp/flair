@@ -8,14 +8,13 @@ namespace Flair\Exception{
     require_once $fixturePath . 'HandlerTestLoggers.php';
 
     /**
-     * The Unit test for the Exception class.
+     * The Unit test for the Handler class.
      *
      * @author Daniel Sherman
      * @coversDefaultClass \Flair\Exception\Handler
      */
-    class HandlerTest extends \PHPUnit_Framework_TestCase
+    class HandlerTest extends \Flair\PhpUnit\TestCase
     {
-
         /**
          * holds a regular base Flair exception.
          *
@@ -44,7 +43,6 @@ namespace Flair\Exception{
         {
             self::$fixturePath = dirname(__FILE__) . DIRECTORY_SEPARATOR;
             self::$fixturePath .= 'fixtures' . DIRECTORY_SEPARATOR;
-
             self::$logger = new HandlerTestLoggers();
         }
 
@@ -87,6 +85,7 @@ namespace Flair\Exception{
             }
             $this->assertTrue($result, $msg);
 
+            // should get null because it's already been enabled once
             $msg = 'did not get null like we should';
             $result = self::$handler->enableOutputOverride();
             if ($result) {
@@ -148,15 +147,8 @@ namespace Flair\Exception{
          */
         public function setTemplateTypesProvider()
         {
-            return [
-                ['boolean', true],
-                ['integer', 1],
-                ['float', 1.15],
-                ['array', []],
-                ['object', new \stdClass()],
-                ['resource', fopen(__FILE__, "r")],
-                ['null', null],
-            ];
+            $data = self::getDataTypeProvider();
+            return $data->arrayOfArrays($data->excludeTypes());
         }
 
         /**
@@ -193,15 +185,8 @@ namespace Flair\Exception{
          */
         public function setLoggingFailProvider()
         {
-            return [
-                ['string', '/www/libs'],
-                ['integer', 1],
-                ['float', 1.15],
-                ['array', []],
-                ['object', new \stdClass()],
-                ['resource', fopen(__FILE__, "r")],
-                ['null', null],
-            ];
+            $data = self::getDataTypeProvider();
+            return $data->arrayOfArrays($data->excludeTypes(['boolean']));
         }
 
         /**
@@ -225,7 +210,6 @@ namespace Flair\Exception{
         public function setLoggerProvider()
         {
             $inst = new HandlerTestLoggers();
-
             return [
                 ['core', 'is_string'],
                 ['anonymous', function () {return true;}],
@@ -248,7 +232,6 @@ namespace Flair\Exception{
         {
             $result = self::$handler->setLogger([new HandlerTestLoggers(), 'echoMethod']);
             $this->assertTrue($result);
-
             $e = new Exception('', 0);
             $this->expectOutputString('goodBye');
             self::$handler->logException($e);
@@ -267,7 +250,6 @@ namespace Flair\Exception{
             $e = new \Exception('', 0);
             $result = self::$handler->generateDefaultOutput($e);
             $this->assertEquals('Issue: ', $result);
-
             $stub = $this->getMockBuilder('Flair\Exception\Exception')->disableOriginalConstructor()->getMock();
             $stub->method('getId')->willReturn('123456789');
             $result = self::$handler->generateDefaultOutput($stub);
@@ -290,7 +272,6 @@ namespace Flair\Exception{
             $result = self::$handler->setTemplate($temp);
             $msg = 'unable to set a valid template';
             $this->assertTrue($result, $msg);
-
             $e = new \Exception('', 0);
             $this->expectOutputString('Hello World!');
             self::$handler->generateOutput($e);
