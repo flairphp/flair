@@ -13,14 +13,8 @@
          verbose="true"
          debug="true">
     <testsuites>
-        <testsuite name="AutoLoader">
-            <directory suffix="Test.php">./tests/unit/AutoLoader/</directory>
-        </testsuite>
-        <testsuite name="Excep">
-            <directory suffix="Test.php">./tests/unit/Exception/</directory>
-        </testsuite>
-        <testsuite name="Validation\Core">
-            <directory suffix="Test.php">./tests/unit/Validation/Core/</directory>
+        <testsuite name="Unit">
+            <file>./tests/unit/Exception/HandlerTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

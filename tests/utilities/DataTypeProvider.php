@@ -67,5 +67,23 @@ namespace Flair\PhpUnit {
             return $result;
         }
 
+        /**
+         * turns an array into an array of arrays as follows.
+         * ['key1' => 1, 'key2' => 2] would become [['key1',1],['key12',2]]
+         *
+         * This makes it easer to export return data from a data provider.
+         *
+         * @param array $in T
+         * @return array
+         */
+        public function arrayOfArrays(array $in = [])
+        {
+            $out = [];
+            foreach ($in as $key => $value) {
+                $out[] = [$key, $value];
+            }
+            return $out;
+        }
+
     }
 }
