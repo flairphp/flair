@@ -1,12 +1,12 @@
 <?php
 namespace Flair\AutoLoader {
     /**
-     * The Unit test for the psr0 class.
+     * The Unit test for the psr4 class.
      *
      * @author Daniel Sherman
-     * @coversDefaultClass \Flair\AutoLoader\Psr0
+     * @coversDefaultClass \Flair\AutoLoader\Psr4
      */
-    class Psr0Test extends \Flair\PhpUnit\TestCase
+    class Psr4Test extends \Flair\PhpUnit\TestCase
     {
         /**
          * holds a loader
@@ -20,7 +20,7 @@ namespace Flair\AutoLoader {
          */
         protected function setUp()
         {
-            self::$loader = new Psr0();
+            self::$loader = new Psr4();
         }
 
         /**
@@ -33,74 +33,11 @@ namespace Flair\AutoLoader {
         public function testConstruct()
         {
             $msg = 'the object is not the correct type';
-            $this->assertInstanceOf('Flair\AutoLoader\Psr0', self::$loader, $msg);
+            $this->assertInstanceOf('Flair\AutoLoader\Psr4', self::$loader, $msg);
         }
 
         /**
-         * Checks if getDefaultPathPrefix works as expected.
-         * @author Daniel Sherman
-         * @test
-         * @depends testConstruct
-         * @covers ::getDefaultPathPrefix
-         */
-        public function testGetDefaultPathPrefix()
-        {
-            $val = self::$loader->getDefaultPathPrefix();
-            $this->assertEquals('', $val, 'The default path should be blank');
-        }
-
-        /**
-         * Checks if setDefaultPathPrefix works as expected.
-         *
-         * @author Daniel Sherman
-         * @test
-         * @depends testConstruct
-         * @depends testGetDefaultPathPrefix
-         * @covers ::setDefaultPathPrefix
-         */
-        public function testSetDefaultPathPrefix()
-        {
-            $setTo = '/www/libs/';
-            $result = self::$loader->setDefaultPathPrefix($setTo);
-            $this->assertTrue($result, 'The default prefix did not saved successfully');
-
-            $val = self::$loader->getDefaultPathPrefix();
-            $this->assertEquals($setTo, $val, 'The default is not what it should be');
-        }
-
-        /**
-         * Checks if setDefaultPathPrefix forces the proper type constraint.
-         *
-         * @author Daniel Sherman
-         * @test
-         * @depends testSetDefaultPathPrefix
-         * @dataProvider testSetDefaultPathPrefixTypeConstraintProvider
-         * @covers ::setDefaultPathPrefix
-         */
-        public function testSetDefaultPathPrefixTypeConstraint($type, $val)
-        {
-            $result = self::$loader->setDefaultPathPrefix($val);
-            $msg = "A value of type $type was accepted";
-
-            if ($type !== 'string') {
-                $this->assertFalse($result, $msg);
-            } else {
-                $this->assertTrue($result, $msg);
-            }
-        }
-
-        /**
-         * provides data for testSetDefaultPathPrefixTypeConstraint
-         */
-        public function testSetDefaultPathPrefixTypeConstraintProvider()
-        {
-            $data = self::getDataTypeProvider();
-            return $data->arrayOfArrays($data->excludeTypes());
-        }
-
-        /**
-         * Checks if getPrefixes works as expected. and the value passed into
-         * addPrefix saved correctly.
+         * Checks if getPrefixes works as expected.
          * @author Daniel Sherman
          * @test
          * @depends testConstruct
@@ -110,7 +47,6 @@ namespace Flair\AutoLoader {
         {
             $val = self::$loader->getPrefixes();
             $this->assertTrue(is_array($val), 'An array was not returned');
-            $this->assertEquals(0, count($val), 'the array was not empty');
         }
 
         /**
@@ -123,11 +59,11 @@ namespace Flair\AutoLoader {
         public function testAddPrefix()
         {
             $prefix = 'Flair\Autoloader';
-            $pathPrefix = '/www/libs/';
-            $result = self::$loader->addPrefix($prefix, $pathPrefix);
+            $baseDir = '/www/libs/';
+            $result = self::$loader->addPrefix($prefix, $baseDir);
             $this->assertTrue($result, 'a valid prefix could not be added!');
 
-            $prefixes = [$prefix => $pathPrefix];
+            $prefixes = [$prefix => $baseDir];
             $storedPrefixes = self::$loader->getPrefixes();
             $msg = 'the prefix did not get saved properly!';
             $this->assertEquals($prefixes, $storedPrefixes, $msg);
@@ -144,45 +80,20 @@ namespace Flair\AutoLoader {
         public function testRemovePrefix()
         {
             $prefix = 'Flair\Autoloader';
-            $pathPrefix = '/www/libs/';
-            $result = self::$loader->addPrefix($prefix, $pathPrefix);
+            $baseDir = '/www/libs/';
+            $result = self::$loader->addPrefix($prefix, $baseDir);
             $this->assertTrue($result, 'a valid prefix could not be added!');
 
-            $prefixes = [$prefix => $pathPrefix];
+            $prefixes = [$prefix => $baseDir];
             $storedPrefixes = self::$loader->getPrefixes();
             $msg = 'the prefix did not get saved properly!';
             $this->assertEquals($prefixes, $storedPrefixes, $msg);
 
             $result = self::$loader->removePrefix($prefix);
             $this->assertTrue($result, 'the prefix did not get removed');
+
             $prefixes = self::$loader->getPrefixes();
             $this->assertEquals([], $prefixes, 'the prefix did not get removed properly!');
-        }
-
-        /**
-         * Checks if addPrefix works as expected when no pathprefix is passed.
-         * @author Daniel Sherman
-         * @test
-         * @depends testSetDefaultPathPrefix
-         * @depends testAddPrefix
-         * @depends testGetPrefixes
-         * @covers ::addPrefix
-         */
-        public function testAddPrefixDefault()
-        {
-            $prefix = 'Flair\Autoloader';
-            $pathPrefix = '/www/libs/HelloWorld';
-
-            $result = self::$loader->setDefaultPathPrefix($pathPrefix);
-            $this->assertTrue($result, 'The default prefix did not save successfully');
-
-            $result = self::$loader->addPrefix($prefix);
-            $this->assertTrue($result, 'a valid prefix could not be added!');
-
-            $prefixes = [$prefix => $pathPrefix];
-            $storedPrefixes = self::$loader->getPrefixes();
-            $msg = 'the prefix did not get saved properly!';
-            $this->assertEquals($prefixes, $storedPrefixes, $msg);
         }
 
         /**
@@ -190,7 +101,6 @@ namespace Flair\AutoLoader {
          *
          * @author Daniel Sherman
          * @test
-         * @depends testAddPrefixDefault
          * @depends testGetPrefixes
          * @depends testRemovePrefix
          * @dataProvider testAddPrefixTypeConstraintProvider
@@ -206,7 +116,7 @@ namespace Flair\AutoLoader {
                 // we should get false any time $prefixType is not a string
                 $this->assertFalse($result, $msg);
             } else {
-                if ($pathPrefixType === 'string' || $pathPrefixType === 'null') {
+                if ($pathPrefixType === 'string') {
                     // we should get true if a sting or null was passed
                     $this->assertTrue($result, $msg);
                 } else {
@@ -247,7 +157,6 @@ namespace Flair\AutoLoader {
             try {
                 self::$loader->register();
             } catch (\LogicException $e) {}
-
             $this->assertNull($e, 'The autloader failed to register');
         }
 
@@ -361,7 +270,7 @@ namespace Flair\AutoLoader {
         }
 
         /**
-         * Checks if load works as expected using the include path
+         * Checks if load works as expected using the inclde path
          * @author Daniel Sherman
          * @test
          * @depends testConstruct
@@ -372,96 +281,71 @@ namespace Flair\AutoLoader {
         public function testLoadIncludePath()
         {
             $origonalIncludePath = get_include_path();
-
-            $prefix = 'Simple';
+            $prefix = 'Vendor\\Simple';
+            $baseDir = 'Vendor' . DIRECTORY_SEPARATOR . 'Simple' . DIRECTORY_SEPARATOR;
             $newPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'fixtures';
+            $newPath .= DIRECTORY_SEPARATOR . 'Psr4';
 
             //configure the object
             $result = self::$loader->addToIncludePath($newPath);
             $this->assertTrue($result, 'updating the includepath failed');
 
-            $result = self::$loader->addPrefix($prefix);
+            $result = self::$loader->addPrefix($prefix, $baseDir);
             $this->assertTrue($result, 'adding a prefix failed');
 
             // the actual assertions/tests
-            $result = self::$loader->load('SimpleClass');
+            $result = self::$loader->load('Vendor\\Simple\\ClassOne');
             $this->assertTrue($result, 'the class file did not get load');
-            $result = class_exists('SimpleClass', false);
+
+            $result = class_exists('Vendor\\Simple\\ClassOne', false);
             $this->assertTrue($result, 'the class is not in scope');
 
-            $result = self::$loader->load('SimpleNonexistentClass');
+            $result = self::$loader->load('Vendor\\Simple\\NonexistentClassOne');
             $this->assertFalse($result, 'the class/file does not exist');
 
-            $result = self::$loader->load('ComplexClass');
+            $result = self::$loader->load('Vendor\\Complex\\ClassOne');
             $this->assertFalse($result, 'The prefix was not configured');
 
+            // reconfigure the object
             set_include_path($origonalIncludePath);
         }
 
         /**
-         * Checks if load works as expected using the default path prefix
-         * @author Daniel Sherman
-         * @test
-         * @depends testConstruct
-         * @depends testSetDefaultPathPrefix
-         * @depends testAddPrefix
-         * @covers ::load
-         */
-        public function testLoadDefaultPathPrefix()
-        {
-            $prefix = 'Simple';
-            $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR;
-
-            //configure the object
-            $result = self::$loader->setDefaultPathPrefix($path);
-            $this->assertTrue($result, 'setting the default prefix failed');
-
-            $result = self::$loader->addPrefix($prefix);
-            $this->assertTrue($result, 'adding a prefix failed');
-
-            // the actual assertions/tests
-            $result = self::$loader->load('SimpleClassTwo');
-            $this->assertTrue($result, 'the class file did not get load');
-
-            $result = class_exists('SimpleClassTwo', false);
-            $this->assertTrue($result, 'the class is not in scope');
-
-            $result = self::$loader->load('SimpleNonexistentClassTwo');
-            $this->assertFalse($result, 'the class/file does not exist');
-
-            $result = self::$loader->load('ComplexClassTwo');
-            $this->assertFalse($result, 'The prefix was not configured');
-        }
-
-        /**
-         * Checks if load works as expected using the default path prefix
+         * Checks if load works as expected
          * @author Daniel Sherman
          * @test
          * @depends testConstruct
          * @depends testAddPrefix
+         * @depends testRemovePrefix
          * @covers ::load
          */
-        public function testLoadPassedPathPrefix()
+        public function testLoad()
         {
-            $prefix = 'Simple';
-            $path = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR;
+            $prefix = 'Vendor\\Simple';
+            $baseDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'fixtures';
+            $baseDir .= DIRECTORY_SEPARATOR . 'Psr4' . DIRECTORY_SEPARATOR;
+            $baseDir .= 'Vendor' . DIRECTORY_SEPARATOR . 'Simple' . DIRECTORY_SEPARATOR;
 
             //configure the object
-            $result = self::$loader->addPrefix($prefix, $path);
+            $result = self::$loader->addPrefix($prefix, $baseDir);
             $this->assertTrue($result, 'adding a prefix failed');
 
             // the actual assertions/tests
-            $result = self::$loader->load('SimpleClassThree');
+            $result = self::$loader->load('Vendor\\Simple\\ClassTwo');
             $this->assertTrue($result, 'the class file did not get load');
 
-            $result = class_exists('SimpleClassThree', false);
+            $result = class_exists('Vendor\\Simple\\ClassTwo', false);
             $this->assertTrue($result, 'the class is not in scope');
 
-            $result = self::$loader->load('SimpleNonexistentClassThree');
+            $result = self::$loader->load('Vendor\\Simple\\NonexistentClassTwo');
             $this->assertFalse($result, 'the class/file does not exist');
 
-            $result = self::$loader->load('ComplexClassThree');
+            $result = self::$loader->load('Vendor\\Complex\\ClassTwo');
             $this->assertFalse($result, 'The prefix was not configured');
+
+            // reconfigure the object
+            $result = self::$loader->removePrefix($prefix);
+            $this->assertTrue($result, 'removing a prefix failed');
         }
     }
 }
