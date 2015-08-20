@@ -1,6 +1,5 @@
 <?php
 namespace Flair\Exception {
-
     /**
      * Provides all the functionality needed to meet the requirements of the
      * {@link ExceptionInterface} Interface.
@@ -50,10 +49,8 @@ namespace Flair\Exception {
         {
             # string used to store the output
             $buffer = ''; # string used to store the output
-
             # format to use when pushing values to the buffer
             $format = '%' . $indent . 's';
-
             foreach ($array as $key => $val) {
                 if (is_array($val)) {
                     # $value is an array perform a recursive call
@@ -69,7 +66,6 @@ namespace Flair\Exception {
                     $buffer .= $key . ' => ' . $val->__toString() . PHP_EOL;
                 }
             }
-
             return $buffer;
         }
 
@@ -128,7 +124,6 @@ namespace Flair\Exception {
         {
             $separator = sprintf("%'-80s", '-');
             $wrapper = sprintf("%'#80s", '#');
-
             $exception = $wrapper . PHP_EOL;
             $exception .= 'Class: ' . get_class($this) . PHP_EOL;
             $exception .= 'Id: ' . $this->getId() . PHP_EOL;
@@ -141,14 +136,11 @@ namespace Flair\Exception {
             $exception .= $separator . PHP_EOL;
             $exception .= $this->getContextAsString() . PHP_EOL;
             $exception .= $wrapper . PHP_EOL;
-
             $previous = $this->getPrevious();
             if ($previous !== null) {
                 $exception .= PHP_EOL . $previous->__toString();
             }
-
             return $exception;
         }
-
     }
 }
