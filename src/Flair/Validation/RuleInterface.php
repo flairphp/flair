@@ -1,5 +1,5 @@
 <?php
-namespace Flair\Validation\Core {
+namespace Flair\Validation {
 
     /**
      * The blueprint to build basic rules against, and hint for all rules with.
@@ -10,38 +10,21 @@ namespace Flair\Validation\Core {
     {
 
         /**
-         * Returns the error message associated with the rule.
-         *
-         * @return string
-         */
-        public function getMessage();
-
-        /**
-         * Sets the error message associated with the rule.
-         *
-         * @param string $message The new error message.
-         * @throws InvalidArgumentException If $message isn't a string.
-         * @return bool Always returns true, on success.
-         */
-        public function setMessage($message);
-
-        /**
-         * Returns the value of the halt flag. The halt flag is used by a validator to determine
-         * if an individual rule should prevent processing of other rules in the validator, if
-         * isValid() returns false.
+         * Returns the value of the halt flag. The halt flag is used to identify that 
+         * if a value fails to pass validation, that further processing should halt, 
+         * and the failure addressed.
          *
          * @return bool
          */
-        public function getHalt();
+        public function halt();
 
         /**
-         * Sets the value of the halt flag. The halt flag is used by a validator to determine
-         * if an individual rule should prevent processing of other rules in the validator, if
-         * isValid() returns false.
+         * Sets the value of the halt flag. The halt flag is used to identify that 
+         * if a value fails to pass validation, that further processing should halt, 
+         * and the failure addressed.
          *
          * @param bool $halt The value to assign to the flag.
          * @throws InvalidArgumentException If $halt isn't a bool.
-         * @return bool Always returns true, on success.
          */
         public function setHalt($halt);
 

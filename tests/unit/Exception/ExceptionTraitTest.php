@@ -108,7 +108,7 @@ namespace Flair\Exception {
          * @test
          * @covers ::__toString
          */
-        public function testTostring()
+        public function testToString()
         {
             $string = self::$traitObj->__toString();
 
