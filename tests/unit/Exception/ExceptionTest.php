@@ -6,7 +6,7 @@ namespace Flair\Exception {
      * @author Daniel Sherman
      * @coversDefaultClass \Flair\Exception\Exception
      */
-    class ExceptionTest extends \Flair\PhpUnit\TestCase
+    class ExceptionTest extends \Flair\Exception\ExceptionTraitTest
     {
         /**
          * holds a list of context data.
@@ -51,6 +51,16 @@ namespace Flair\Exception {
          * @var string
          */
         protected static $class = 'Flair\Exception\Exception';
+
+        /**
+         * set up the needed data before the testing starts.
+         */
+        public static function setUpBeforeClass()
+        {
+            parent::setUpBeforeClass();
+            self::addDependentTestCase('Flair\Exception\ExceptionTraitTest');
+            self::skipTestCaseOnFailedDependencies();
+        }
 
         /**
          * A data provider that returns an exception with a null previous exception
@@ -111,7 +121,7 @@ namespace Flair\Exception {
          * @dataProvider exceptionProvider
          * @covers ::getId
          */
-        public function testGetId($e)
+        public function testGetIdFromObject($e)
         {
             $msg = 'the id is not the correct type';
             $this->assertTrue(is_string($e->getId()), $msg);
@@ -125,7 +135,7 @@ namespace Flair\Exception {
          * @dataProvider exceptionProvider
          * @covers ::getContext
          */
-        public function testGetContext($e)
+        public function testGetContextFromObject($e)
         {
             $context = $e->getContext();
 
@@ -144,7 +154,7 @@ namespace Flair\Exception {
          * @dataProvider exceptionProvider
          * @covers ::getContextAsString
          */
-        public function testGetContextAsString($e)
+        public function testGetContextAsStringFromObject($e)
         {
             $msg = 'the return value was not what it should be';
             $this->assertTrue(is_string($e->getContextAsString()), $msg);
@@ -158,7 +168,7 @@ namespace Flair\Exception {
          * @dataProvider exceptionProvider
          * @covers ::__toString()
          */
-        public function testToString($e)
+        public function testToStringFromObject($e)
         {
             $msg = 'the return value was not what it should be';
             $this->assertTrue(is_string($e->__toString()), $msg);
