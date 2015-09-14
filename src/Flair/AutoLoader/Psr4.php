@@ -1,179 +1,169 @@
 <?php
 namespace Flair\AutoLoader {
 
-    /**
-     * Used to automatically load files that are
-     * compliant with the PSR-4 standard.
-     *
-     * @author Daniel Sherman
-     * @todo simplify unit tests
-     */
-    class Psr4
-    {
+	/**
+	 * Used to automatically load files that are
+	 * compliant with the PSR-4 standard.
+	 *
+	 * @author Daniel Sherman
+	 */
+	class Psr4 {
 
-        /**
-         * an associative array of namespace/class prefixes and their base directories.
-         * The key is the class prefix, & the value is the base directory.
-         *
-         * @var Array
-         */
-        protected $prefixes = [];
+		/**
+		 * an associative array of namespace/class prefixes and their base directories.
+		 * The key is the class prefix, & the value is the base directory.
+		 *
+		 * @var Array
+		 */
+		protected $prefixes = [];
 
-        /**
-         * gets the current value of $pefixes
-         *
-         * @uses prefixes
-         * @return array
-         */
-        public function getPrefixes()
-        {
-            return $this->prefixes;
-        }
+		/**
+		 * gets the current value of $pefixes
+		 *
+		 * @uses prefixes
+		 * @return array
+		 */
+		public function getPrefixes() {
+			return $this->prefixes;
+		}
 
-        /**
-         * Adds a new prefix to, or resets an existing prefix in the internal array.
-         *
-         * @param string $prefix The namespace prefix used to identify classes that
-         * should be loaded.
-         * @param string $baseDir The base directory, that will replace the namespace prefix
-         * when trying to load the class.
-         * @uses prefixes
-         * @return boolean true it it works, false if $prefix or $baseDir was invalid.
-         */
-        public function addPrefix($prefix, $baseDir)
-        {
-            if (!is_string($prefix) || !is_string($baseDir)) {
-                return false;
-            }
+		/**
+		 * Adds a new prefix to, or resets an existing prefix in the internal array.
+		 *
+		 * @param string $prefix The namespace prefix used to identify classes that
+		 * should be loaded.
+		 * @param string $baseDir The base directory, that will replace the namespace prefix
+		 * when trying to load the class.
+		 * @uses prefixes
+		 * @return boolean true it it works, false if $prefix or $baseDir was invalid.
+		 */
+		public function addPrefix($prefix, $baseDir) {
+			if (!is_string($prefix) || !is_string($baseDir)) {
+				return false;
+			}
 
-            $this->prefixes[$prefix] = $baseDir;
-            return true;
-        }
+			$this->prefixes[$prefix] = $baseDir;
+			return true;
+		}
 
-        /**
-         * Removes an existing prefix from the internal array.
-         *
-         * @param string $prefix The class name prefix to remove.
-         * @return boolean true it it works, false otherwise.
-         * @uses prefixes
-         */
-        public function removePrefix($prefix)
-        {
-            if (isset($this->prefixes[$prefix])) {
-                unset($this->prefixes[$prefix]);
-                return true;
-            }
+		/**
+		 * Removes an existing prefix from the internal array.
+		 *
+		 * @param string $prefix The class name prefix to remove.
+		 * @return boolean true it it works, false otherwise.
+		 * @uses prefixes
+		 */
+		public function removePrefix($prefix) {
+			if (isset($this->prefixes[$prefix])) {
+				unset($this->prefixes[$prefix]);
+				return true;
+			}
 
-            return false;
-        }
+			return false;
+		}
 
-        /**
-         * Registers the class with php as an autoloader.
-         *
-         * @param bool $prepend Should the loader be prepended to the list.
-         * @throws \LogicException If spl_autoload_register fails.
-         */
-        public function register($prepend = false)
-        {
-            if (!is_bool($prepend)) {
-                // somone didn't give a valid value so we will use the defualt
-                $prepend = false;
-            }
+		/**
+		 * Registers the class with php as an autoloader.
+		 *
+		 * @param bool $prepend Should the loader be prepended to the list.
+		 * @throws \LogicException If spl_autoload_register fails.
+		 */
+		public function register($prepend = false) {
+			if (!is_bool($prepend)) {
+				// somone didn't give a valid value so we will use the defualt
+				$prepend = false;
+			}
 
-            spl_autoload_register([$this, 'load'], true, $prepend);
-        }
+			spl_autoload_register([$this, 'load'], true, $prepend);
+		}
 
-        /**
-         * Deregisters the class with php as an autoloader if it's not needed anymore.
-         *
-         * @return boolean true it it works, false otherwise.
-         */
-        public function deregister()
-        {
-            return spl_autoload_unregister([$this, 'load']);
-        }
+		/**
+		 * Deregisters the class with php as an autoloader if it's not needed anymore.
+		 *
+		 * @return boolean true it it works, false otherwise.
+		 */
+		public function deregister() {
+			return spl_autoload_unregister([$this, 'load']);
+		}
 
-        /**
-         * Provides a way of adding a path to the include_path.
-         *
-         * @param string $path A new path to add to the include_path.
-         * @return boolean true it it works, false otherwise.
-         */
-        public function addToIncludePath($path)
-        {
-            if (is_string($path)) {
-                $result = set_include_path(get_include_path() . PATH_SEPARATOR . $path);
+		/**
+		 * Provides a way of adding a path to the include_path.
+		 *
+		 * @param string $path A new path to add to the include_path.
+		 * @return boolean true it it works, false otherwise.
+		 */
+		public function addToIncludePath($path) {
+			if (is_string($path)) {
+				$result = set_include_path(get_include_path() . PATH_SEPARATOR . $path);
 
-                if ($result !== false) {
-                    return true;
-                }
-            }
+				if ($result !== false) {
+					return true;
+				}
+			}
 
-            return false;
-        }
+			return false;
+		}
 
-        /**
-         * Provides a way of removing a path from the include_path.
-         *
-         * @param string $path A path to remove from the include_path.
-         * @return boolean true it it works, false otherwise.
-         */
-        public function removeFromIncludePath($path)
-        {
-            $paths = get_include_path();
-            $paths = explode(PATH_SEPARATOR, $paths);
+		/**
+		 * Provides a way of removing a path from the include_path.
+		 *
+		 * @param string $path A path to remove from the include_path.
+		 * @return boolean true it it works, false otherwise.
+		 */
+		public function removeFromIncludePath($path) {
+			$paths = get_include_path();
+			$paths = explode(PATH_SEPARATOR, $paths);
 
-            $key = array_search($path, $paths);
-            if ($key !== false) {
-                unset($paths[$key]);
+			$key = array_search($path, $paths);
+			if ($key !== false) {
+				unset($paths[$key]);
 
-                $paths = implode(PATH_SEPARATOR, $paths);
-                $result = set_include_path($paths);
-                if ($result !== false) {
-                    return true;
-                }
-            }
+				$paths = implode(PATH_SEPARATOR, $paths);
+				$result = set_include_path($paths);
+				if ($result !== false) {
+					return true;
+				}
+			}
 
-            return false;
-        }
+			return false;
+		}
 
-        /**
-         * This is the method called by spl_autoload to actually load a class.
-         *
-         * @param string $class The name of the class that needs to be included.
-         * @return boolean Was the class file loaded sucessfully.
-         * @uses prefixes
-         */
-        public function load($class)
-        {
-            if (!is_string($class)) {
-                return false;
-            }
+		/**
+		 * This is the method called by spl_autoload to actually load a class.
+		 *
+		 * @param string $class The name of the class that needs to be included.
+		 * @return boolean Was the class file loaded sucessfully.
+		 * @uses prefixes
+		 */
+		public function load($class) {
+			if (!is_string($class)) {
+				return false;
+			}
 
-            foreach ($this->prefixes as $prefix => $baseDir) {
+			foreach ($this->prefixes as $prefix => $baseDir) {
 
-                if (stripos($class, $prefix) === 0) {
+				if (stripos($class, $prefix) === 0) {
 
-                    //we found a class to load
-                    $file = substr($class, strlen($prefix));
-                    $file = str_replace(['\\'], DIRECTORY_SEPARATOR, $file) . '.php';
+					//we found a class to load
+					$file = substr($class, strlen($prefix));
+					$file = str_replace(['\\'], DIRECTORY_SEPARATOR, $file) . '.php';
 
-                    $resolvedFile = stream_resolve_include_path($baseDir . $file);
+					$resolvedFile = stream_resolve_include_path($baseDir . $file);
 
-                    if ($resolvedFile !== false) {
+					if ($resolvedFile !== false) {
 
-                        // the file was found so see if it can be read
-                        if (is_readable($resolvedFile)) {
-                            require $resolvedFile;
-                            return true;
-                        }
-                    }
+						// the file was found so see if it can be read
+						if (is_readable($resolvedFile)) {
+							require $resolvedFile;
+							return true;
+						}
+					}
 
-                }
-            }
+				}
+			}
 
-            return false;
-        }
+			return false;
+		}
 
-    }
+	}
 }

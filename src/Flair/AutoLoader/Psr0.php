@@ -9,7 +9,6 @@ namespace Flair\AutoLoader {
      * class should be loaded. Additionally each prefix can have a path prefix
      * that will be prepended to the filename before trying to include it.
      * @author Daniel Sherman
-     * @todo simplify unit tests
      */
     class Psr0
     {

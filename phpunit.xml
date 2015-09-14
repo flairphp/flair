@@ -16,12 +16,28 @@
         <testsuite name="Unit">
             <file>./tests/unit/AutoLoader/Psr0Test.php</file>
             <file>./tests/unit/AutoLoader/Psr4Test.php</file>
+
             <file>./tests/unit/Exception/HandlerTest.php</file>
             <file>./tests/unit/Exception/ExceptionTraitTest.php</file>
             <file>./tests/unit/Exception/ExceptionTest.php</file>
             <file>./tests/unit/Exception/InvalidArgumentExceptionTest.php</file>
             <file>./tests/unit/Exception/LogicExceptionTest.php</file>
             <file>./tests/unit/Exception/UnexpectedValueExceptionTest.php</file>
+            <file>./tests/unit/Exception/OutOfBoundsExceptionTest.php</file>
+
+            <file>./tests/unit/Validation/InvalidArgumentExceptionTest.php</file>
+            <file>./tests/unit/Validation/LogicExceptionTest.php</file>
+            <file>./tests/unit/Validation/OutOfBoundsExceptionTest.php</file>
+            <file>./tests/unit/Validation/UnexpectedValueExceptionTest.php</file>
+            <file>./tests/unit/Validation/ReplacerTraitTest.php</file>
+            <file>./tests/unit/Validation/ReplacerTest.php</file>
+            <file>./tests/unit/Validation/RuleMessageTraitTest.php</file>
+            <file>./tests/unit/Validation/RuleReplacerTraitTest.php</file>
+            <file>./tests/unit/Validation/RuleTraitTest.php</file>
+
+            <file>./tests/unit/Validation/Rules/UnexpectedValueExceptionTest.php</file>
+            <file>./tests/unit/Validation/Rules/CallerTest.php</file>
+
         </testsuite>
     </testsuites>
 </phpunit>

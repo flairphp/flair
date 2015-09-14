@@ -1,5 +1,5 @@
 <?php
-namespace Flair\Validation\Core {
+namespace Flair\Validation {
 
     /**
      * If a class is part of the Flair\Validation namespace, and it needs to throw a
