@@ -42,7 +42,7 @@ namespace Flair\Validation {
                 return;
             }
 
-            throw new InvalidArgumentException('$message is not a string!', 0);
+            throw new InvalidArgumentException('$message is not a string!', 1);
         }
     }
 }

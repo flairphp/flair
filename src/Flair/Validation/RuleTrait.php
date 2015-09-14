@@ -45,7 +45,7 @@ namespace Flair\Validation {
                 return;
             }
 
-            throw new InvalidArgumentException('$halt is not a bool!', 1);
+            throw new InvalidArgumentException('$halt is not a bool!', 0);
         }
     }
 }

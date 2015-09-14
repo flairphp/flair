@@ -42,6 +42,5 @@ namespace Flair\Validation {
          * @return array
          */
         public function getErrors();
-
     }
 }
