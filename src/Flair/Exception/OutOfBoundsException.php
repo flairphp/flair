@@ -5,7 +5,6 @@ namespace Flair\Exception {
 	 * A bare bones OutOfBoundsException, that can be used or extended.
 	 *
 	 * @author Daniel Sherman
-	 * @todo test
 	 */
 	class OutOfBoundsException extends \OutOfBoundsException implements ExceptionInterface {
 

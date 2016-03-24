@@ -22,6 +22,7 @@
             <file>./tests/unit/Exception/InvalidArgumentExceptionTest.php</file>
             <file>./tests/unit/Exception/LogicExceptionTest.php</file>
             <file>./tests/unit/Exception/UnexpectedValueExceptionTest.php</file>
+            <file>./tests/unit/Exception/OutOfBoundsExceptionTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>
