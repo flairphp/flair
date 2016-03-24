@@ -54,5 +54,24 @@ namespace Flair\Validation {
 		 */
 		public function getReplacement($key);
 
+		/**
+		 * adds a new replacement key & value.
+		 *
+		 * @param string $key The replacement key .
+		 * @param string $key The replacement value.
+		 * @throws InvalidArgumentException If $key isn't a string.
+		 * @throws LogicException If key already exists.
+		 * @throws LogicException If $value isn't a scalars, or object
+		 * with a __toString() Method.
+		 */
+		public function addReplacement($key, $value);
+
+		/**
+		 * Deletes a replacement if the key exists.
+		 *
+		 * @param string $key The replacement key to look for.
+		 */
+		public function deleteReplacement($key);
+
 	}
 }
