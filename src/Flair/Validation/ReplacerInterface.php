@@ -49,8 +49,8 @@ namespace Flair\Validation {
 		 * Get the replacement value for a given key.
 		 *
 		 * @param string $key The replacement key to look for.
-		 * @return mixed The value associated with the key
 		 * @throws OutOfBoundsException If $key doesn't exist.
+		 * @return mixed The value associated with the key
 		 */
 		public function getReplacement($key);
 
@@ -67,11 +67,31 @@ namespace Flair\Validation {
 		public function addReplacement($key, $value);
 
 		/**
+		 * adds multiple replacement key & value pairs.
+		 *
+		 * @param array $replacements The replacement to add.
+		 * @throws InvalidArgumentException If an array key isn't a string.
+		 * @throws LogicException If a key already exists.
+		 * @throws LogicException If a value isn't a scalars, or object
+		 * with a __toString() Method.
+		 */
+		public function addReplacements(array $replacements);
+
+		/**
 		 * Deletes a replacement if the key exists.
 		 *
 		 * @param string $key The replacement key to look for.
 		 */
 		public function deleteReplacement($key);
+
+		/**
+		 * Does the replacements on the input string.
+		 *
+		 * @param string $message The string to perform replacements on.
+		 * @throws InvalidArgumentException If $message isn't a string.
+		 * @return string $message with the replacements performed on it
+		 */
+		public function doReplacement($message);
 
 	}
 }
