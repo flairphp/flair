@@ -6,23 +6,22 @@ namespace Flair\Validation {
 	 * objects.
 	 *
 	 * @author Daniel Sherman
-	 * @todo finish documentation and method hinting
 	 */
 	interface RuleReplacerInterface {
 		/**
 		 * Returns a reference to the internal replacer object.
 		 *
-		 * @return mixed A replacer object, or null if no replacer has been set
+		 * @return Replacer A replacer object, or null if no replacer has been set
 		 */
 		public function getReplacer();
 
 		/**
 		 * Sets the internal replacer object.
 		 *
-		 * @param mixed $replacer The value to assign.
+		 * @param Replacer $replacer The value to assign.
 		 * @throws InvalidArgumentException If $replacer isn't.
 		 */
-		public function setReplacer($replacer);
+		public function setReplacer(ReplacerInterface $replacer);
 
 		/**
 		 * Indicates if a replacer is currently set.

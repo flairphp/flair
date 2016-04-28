@@ -5,21 +5,20 @@ namespace Flair\Validation {
 	 * Provides The minimal functionality needed to manipulate a replacer.
 	 *
 	 * @author Daniel Sherman
-	 * @todo finish documentation and method hinting
 	 */
 	trait RuleReplacerTrait {
 
 		/**
 		 * The replacer associated with the object.
 		 *
-		 * @var RuleReplacer
+		 * @var Replacer
 		 */
 		protected $replacer = null;
 
 		/**
 		 * Returns a reference to the internal replacer object.
 		 *
-		 * @return mixed A replacer object, or null if no replacer has been set
+		 * @return Replacer A replacer object, or null if no replacer has been set
 		 */
 		public function getReplacer() {
 			return $this->replacer;
@@ -28,10 +27,10 @@ namespace Flair\Validation {
 		/**
 		 * Sets the internal replacer object.
 		 *
-		 * @param mixed $replacer The value to assign.
+		 * @param Replacer $replacer The value to assign.
 		 * @throws InvalidArgumentException If $replacer isn't.
 		 */
-		public function setReplacer($replacer) {
+		public function setReplacer(ReplacerInterface $replacer) {
 			$this->replacer = $replacer;
 		}
 

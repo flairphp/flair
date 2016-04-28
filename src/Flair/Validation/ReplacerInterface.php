@@ -91,7 +91,7 @@ namespace Flair\Validation {
 		 * @throws InvalidArgumentException If $message isn't a string.
 		 * @return string $message with the replacements performed on it
 		 */
-		public function doReplacement($message);
+		public function doReplacements($message);
 
 	}
 }
