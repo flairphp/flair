@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Trait Flair\Exception\ExceptionTrait | Flair</title>
+
+	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+				<h3>Namespaces</h3>
+			<ul>
+				<li class="active">
+					<a href="namespace-Flair.html">
+						Flair<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-Flair.AutoLoader.html">
+						AutoLoader					</a>
+
+						</li>
+				<li class="active">
+					<a href="namespace-Flair.Exception.html">
+						Exception					</a>
+
+						</li>
+				<li>
+					<a href="namespace-Flair.Validation.html">
+						Validation<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-Flair.Validation.Core.html">
+						Core					</a>
+
+						</li>
+							</ul></li></ul></li>
+				<li>
+					<a href="namespace-PHP.html">
+						PHP					</a>
+
+						</li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-Flair.Exception.Handler.html">Handler</a></li>
+			</ul>
+
+			<h3>Interfaces</h3>
+			<ul>
+				<li><a href="class-Flair.Exception.ExceptionInterface.html">ExceptionInterface</a></li>
+			</ul>
+
+			<h3>Traits</h3>
+			<ul>
+				<li class="active"><a href="class-Flair.Exception.ExceptionTrait.html">ExceptionTrait</a></li>
+			</ul>
+
+			<h3>Exceptions</h3>
+			<ul>
+				<li><a href="class-Flair.Exception.Exception.html">Exception</a></li>
+				<li><a href="class-Flair.Exception.InvalidArgumentException.html">InvalidArgumentException</a></li>
+				<li><a href="class-Flair.Exception.LogicException.html">LogicException</a></li>
+				<li><a href="class-Flair.Exception.OutOfBoundsException.html">OutOfBoundsException</a></li>
+				<li><a href="class-Flair.Exception.UnexpectedValueException.html">UnexpectedValueException</a></li>
+			</ul>
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-Flair.Exception.html" title="Summary of Flair\Exception"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
+			</li>
+				<li>
+					<a href="annotation-group-todo.html" title="List of elements with todo annotation">
+						<span>Todo</span>
+					</a>
+				</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Trait ExceptionTrait</h1>
+
+
+	<div class="description">
+	<p>Provides all the functionality needed to meet the requirements of the
+<code><a href="class-Flair.Exception.ExceptionInterface.html">Flair\Exception\ExceptionInterface</a></code> Interface.</p>
+	</div>
+
+
+
+
+
+
+
+	<div>
+		<h4>Direct Known Users</h4>
+			<a href="class-Flair.Exception.Exception.html">Flair\Exception\Exception</a>, 
+			<a href="class-Flair.Exception.InvalidArgumentException.html">Flair\Exception\InvalidArgumentException</a>, 
+			<a href="class-Flair.Exception.LogicException.html">Flair\Exception\LogicException</a>, 
+			<a href="class-Flair.Exception.OutOfBoundsException.html">Flair\Exception\OutOfBoundsException</a>, 
+			<a href="class-Flair.Exception.UnexpectedValueException.html">Flair\Exception\UnexpectedValueException</a>
+	</div>
+
+	<div>
+		<h4>Indirect Known Users</h4>
+			<a href="class-Flair.Validation.Core.LogicException.html">Flair\Validation\Core\LogicException</a>, 
+			<a href="class-Flair.Validation.Core.UnexpectedValueException.html">Flair\Validation\Core\UnexpectedValueException</a>, 
+			<a href="class-Flair.Validation.InvalidArgumentException.html">Flair\Validation\InvalidArgumentException</a>, 
+			<a href="class-Flair.Validation.LogicException.html">Flair\Validation\LogicException</a>, 
+			<a href="class-Flair.Validation.OutOfBoundsException.html">Flair\Validation\OutOfBoundsException</a>
+	</div>
+
+	<div class="info">
+		
+		
+		<b>Namespace:</b> <a href="namespace-Flair.html">Flair</a>\<a href="namespace-Flair.Exception.html">Exception</a><br>
+		
+
+				<b>Author:</b>
+				Daniel Sherman<br>
+			<b>Located at</b> <a href="source-class-Flair.Exception.ExceptionTrait.html#3-140" title="Go to source code">Flair/Exception/ExceptionTrait.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="setId" id="_setId">
+
+		<td class="attributes"><code>
+			 protected 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setId">#</a>
+		<code><a href="source-class-Flair.Exception.ExceptionTrait.html#27-35" title="Go to source code">setId</a>( )</code>
+
+		<div class="description short">
+			<p>Generates and stores $id class attribute.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Generates and stores $id class attribute.</p>
+
+
+
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-Flair.Exception.ExceptionTrait.html#$id">Flair\Exception\ExceptionTrait::<var>$id</var></a></code><br>
+				</div>
+				<h4>Var</h4>
+				<div class="list">
+						array $context<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="arrayToString" id="_arrayToString">
+
+		<td class="attributes"><code>
+			 protected 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_arrayToString">#</a>
+		<code><a href="source-class-Flair.Exception.ExceptionTrait.html#37-69" title="Go to source code">arrayToString</a>( <span>array <var>$array</var></span>, <span>integer <var>$indent</var> = <span class="php-num">0</span></span> )</code>
+
+		<div class="description short">
+			<p>Helper function used to convert a nested array to a string with with indents.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Helper function used to convert a nested array to a string with with indents.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$array</var></dt>
+					<dd>the array that needs to be turned into a string</dd>
+					<dt><var>$indent</var></dt>
+					<dd>the number of spaces that a nested array should be indented.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string
+				</div>
+
+
+				<h4>Author</h4>
+				<div class="list">
+						Daniel Sherman<br>
+				</div>
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-Flair.Exception.ExceptionTrait.html#_arrayToString">Flair\Exception\ExceptionTrait::arrayToString()</a></code><br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-Flair.Exception.ExceptionTrait.html#_arrayToString">Flair\Exception\ExceptionTrait::arrayToString()</a></code><br>
+						<code><a href="class-Flair.Exception.ExceptionTrait.html#_getContextAsString">Flair\Exception\ExceptionTrait::getContextAsString()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getId" id="_getId">
+
+		<td class="attributes"><code>
+			 public 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getId">#</a>
+		<code><a href="source-class-Flair.Exception.ExceptionTrait.html#71-80" title="Go to source code">getId</a>( )</code>
+
+		<div class="description short">
+			<p>Returns a unique id that makes every exception uniquely identifiable.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns a unique id that makes every exception uniquely identifiable.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					string
+				</div>
+
+
+				<h4>Author</h4>
+				<div class="list">
+						Daniel Sherman<br>
+				</div>
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-Flair.Exception.ExceptionTrait.html#$id">Flair\Exception\ExceptionTrait::<var>$id</var></a></code><br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-Flair.Exception.ExceptionTrait.html#___toString">Flair\Exception\ExceptionTrait::__toString()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getContext" id="_getContext">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getContext">#</a>
+		<code><a href="source-class-Flair.Exception.ExceptionTrait.html#82-91" title="Go to source code">getContext</a>( )</code>
+
+		<div class="description short">
+			<p>Returns the context array that was passed in during object instantiation.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns the context array that was passed in during object instantiation.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					array
+				</div>
+
+
+				<h4>Author</h4>
+				<div class="list">
+						Daniel Sherman<br>
+				</div>
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-Flair.Exception.ExceptionTrait.html#$context">Flair\Exception\ExceptionTrait::<var>$context</var></a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getContextAsString" id="_getContextAsString">
+
+		<td class="attributes"><code>
+			 public 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getContextAsString">#</a>
+		<code><a href="source-class-Flair.Exception.ExceptionTrait.html#93-103" title="Go to source code">getContextAsString</a>( )</code>
+
+		<div class="description short">
+			<p>Returns the context array that was passed in during object instantiation as a string.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns the context array that was passed in during object instantiation as a string.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					string
+				</div>
+
+
+				<h4>Author</h4>
+				<div class="list">
+						Daniel Sherman<br>
+				</div>
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-Flair.Exception.ExceptionTrait.html#$context">Flair\Exception\ExceptionTrait::<var>$context</var></a></code><br>
+						<code><a href="class-Flair.Exception.ExceptionTrait.html#_arrayToString">Flair\Exception\ExceptionTrait::arrayToString()</a></code><br>
+				</div>
+				<h4>Used by</h4>
+				<div class="list">
+						<code><a href="class-Flair.Exception.ExceptionTrait.html#___toString">Flair\Exception\ExceptionTrait::__toString()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="__toString" id="___toString">
+
+		<td class="attributes"><code>
+			 public 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___toString">#</a>
+		<code><a href="source-class-Flair.Exception.ExceptionTrait.html#105-139" title="Go to source code">__toString</a>( )</code>
+
+		<div class="description short">
+			<p>Generates and returns a string representation of the exception.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Generates and returns a string representation of the exception.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					string
+				</div>
+
+
+				<h4>Author</h4>
+				<div class="list">
+						Daniel Sherman<br>
+				</div>
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-Flair.Exception.ExceptionTrait.html#_getId">Flair\Exception\ExceptionTrait::getId()</a></code><br>
+						getMessage<br>
+						getCode<br>
+						getFile<br>
+						getLine<br>
+						getPrevious<br>
+						getTraceAsString<br>
+						<code><a href="class-Flair.Exception.ExceptionTrait.html#_getContextAsString">Flair\Exception\ExceptionTrait::getContextAsString()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+	<table class="summary properties" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="id" id="$id">
+		<td class="attributes"><code>
+			protected  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Flair.Exception.ExceptionTrait.html#10-16" title="Go to source code"><var>$id</var></a>
+
+			<div class="description short">
+				<p>a unique id for the exception that can be given to the user and
+then referenced in the logs.</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>a unique id for the exception that can be given to the user and
+then referenced in the logs.</p>
+
+					<h4>Used by</h4>
+					<div class="list">
+							<code><a href="class-Flair.Exception.ExceptionTrait.html#_setId">Flair\Exception\ExceptionTrait::setId()</a></code><br>
+							<code><a href="class-Flair.Exception.ExceptionTrait.html#_getId">Flair\Exception\ExceptionTrait::getId()</a></code><br>
+					</div>
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$id" class="anchor">#</a>
+				<code><span class="php-keyword1">null</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="context" id="$context">
+		<td class="attributes"><code>
+			protected  
+			array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Flair.Exception.ExceptionTrait.html#18-25" title="Go to source code"><var>$context</var></a>
+
+			<div class="description short">
+				<p>stores additional output to give an exception context. The array can be indexed or associative,
+as well as infinitively nested. Any values other than arrays, scalars, or objects
+with __toString() Methods will be ignored when converted to a string.</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>stores additional output to give an exception context. The array can be indexed or associative,
+as well as infinitively nested. Any values other than arrays, scalars, or objects
+with __toString() Methods will be ignored when converted to a string.</p>
+
+					<h4>Used by</h4>
+					<div class="list">
+							<code><a href="class-Flair.Exception.ExceptionTrait.html#_getContext">Flair\Exception\ExceptionTrait::getContext()</a></code><br>
+							<code><a href="class-Flair.Exception.ExceptionTrait.html#_getContextAsString">Flair\Exception\ExceptionTrait::getContextAsString()</a></code><br>
+					</div>
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$context" class="anchor">#</a>
+				<code>[]</code>
+			</div>
+		</td>
+	</tr>
+	</table>
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		Flair API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
+</body>
+</html>
