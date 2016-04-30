@@ -29,6 +29,7 @@
             <file>./tests/unit/Validation/LogicExceptionTest.php</file>
             <file>./tests/unit/Validation/OutOfBoundsExceptionTest.php</file>
             <file>./tests/unit/Validation/ReplacerTraitTest.php</file>
+            <file>./tests/unit/Validation/ReplacerTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>
