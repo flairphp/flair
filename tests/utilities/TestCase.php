@@ -74,27 +74,30 @@ namespace Flair\PhpUnit {
 		 *
 		 * @uses markTestSkipped
 		 * @uses dependentTestCases
+		 * @return bool true if all Dependencies passed, false otherwise
 		 */
 		protected static function skipTestCaseOnFailedDependencies() {
 			foreach (self::$dependentTestCases as $testCase) {
 
 				if (!is_callable([$testCase, 'finished'])) {
 					self::markTestSkipped("TestCase $testCase is not in scope!");
-					return;
+					return false;
 				}
 
 				$method = [$testCase, 'finished'];
 				if (!$method()) {
 					self::markTestSkipped("TestCase $testCase did not finish!");
-					return;
+					return false;
 				}
 
 				$method = [$testCase, 'hadFailure'];
 				if ($method()) {
 					self::markTestSkipped("TestCase $testCase had Failures!");
-					return;
+					return false;
 				}
 			}
+
+			return true;
 		}
 
 		/**

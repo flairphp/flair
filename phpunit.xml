@@ -30,6 +30,9 @@
             <file>./tests/unit/Validation/OutOfBoundsExceptionTest.php</file>
             <file>./tests/unit/Validation/ReplacerTraitTest.php</file>
             <file>./tests/unit/Validation/ReplacerTest.php</file>
+            <file>./tests/unit/Validation/RuleMessageTraitTest.php</file>
+            <file>./tests/unit/Validation/RuleReplacerTraitTest.php</file>
+            <file>./tests/unit/Validation/RuleTraitTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>
