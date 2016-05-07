@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Interface Flair\Exception\ExceptionInterface | Flair</title>
+
+	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+				<h3>Namespaces</h3>
+			<ul>
+				<li class="active">
+					<a href="namespace-Flair.html">
+						Flair<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-Flair.AutoLoader.html">
+						AutoLoader					</a>
+
+						</li>
+				<li class="active">
+					<a href="namespace-Flair.Exception.html">
+						Exception					</a>
+
+						</li>
+				<li>
+					<a href="namespace-Flair.Validation.html">
+						Validation					</a>
+
+						</li>
+							</ul></li>
+				<li>
+					<a href="namespace-PHP.html">
+						PHP					</a>
+
+						</li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-Flair.Exception.Handler.html">Handler</a></li>
+			</ul>
+
+			<h3>Interfaces</h3>
+			<ul>
+				<li class="active"><a href="class-Flair.Exception.ExceptionInterface.html">ExceptionInterface</a></li>
+			</ul>
+
+			<h3>Traits</h3>
+			<ul>
+				<li><a href="class-Flair.Exception.ExceptionTrait.html">ExceptionTrait</a></li>
+			</ul>
+
+			<h3>Exceptions</h3>
+			<ul>
+				<li><a href="class-Flair.Exception.Exception.html">Exception</a></li>
+				<li><a href="class-Flair.Exception.InvalidArgumentException.html">InvalidArgumentException</a></li>
+				<li><a href="class-Flair.Exception.LogicException.html">LogicException</a></li>
+				<li><a href="class-Flair.Exception.OutOfBoundsException.html">OutOfBoundsException</a></li>
+				<li><a href="class-Flair.Exception.UnexpectedValueException.html">UnexpectedValueException</a></li>
+			</ul>
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-Flair.Exception.html" title="Summary of Flair\Exception"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
+			</li>
+				<li>
+					<a href="annotation-group-todo.html" title="List of elements with todo annotation">
+						<span>Todo</span>
+					</a>
+				</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Interface ExceptionInterface</h1>
+
+
+	<div class="description">
+	<p>The blueprint to build basic Exception against, and hint with for all Flair generated
+Exceptions.</p>
+	</div>
+
+
+
+
+
+	<div>
+		<h4>Direct known implementers</h4>
+			<a href="class-Flair.Exception.Exception.html">Flair\Exception\Exception</a>, 
+			<a href="class-Flair.Exception.InvalidArgumentException.html">Flair\Exception\InvalidArgumentException</a>, 
+			<a href="class-Flair.Exception.LogicException.html">Flair\Exception\LogicException</a>, 
+			<a href="class-Flair.Exception.OutOfBoundsException.html">Flair\Exception\OutOfBoundsException</a>, 
+			<a href="class-Flair.Exception.UnexpectedValueException.html">Flair\Exception\UnexpectedValueException</a>
+	</div>
+
+	<div>
+		<h4>Indirect known implementers</h4>
+			<a href="class-Flair.Validation.InvalidArgumentException.html">Flair\Validation\InvalidArgumentException</a>, 
+			<a href="class-Flair.Validation.LogicException.html">Flair\Validation\LogicException</a>, 
+			<a href="class-Flair.Validation.OutOfBoundsException.html">Flair\Validation\OutOfBoundsException</a>
+	</div>
+
+
+
+	<div class="info">
+		
+		
+		<b>Namespace:</b> <a href="namespace-Flair.html">Flair</a>\<a href="namespace-Flair.Exception.html">Exception</a><br>
+		
+
+				<b>Author:</b>
+				Daniel Sherman<br>
+			<b>Located at</b> <a href="source-class-Flair.Exception.ExceptionInterface.html#4-37" title="Go to source code">Flair/Exception/ExceptionInterface.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="getId" id="_getId">
+
+		<td class="attributes"><code>
+			 public 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getId">#</a>
+		<code><a href="source-class-Flair.Exception.ExceptionInterface.html#13-19" title="Go to source code">getId</a>( )</code>
+
+		<div class="description short">
+			<p>Returns a unique id that makes every exception uniquely identifiable.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns a unique id that makes every exception uniquely identifiable.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					string
+				</div>
+
+
+				<h4>Author</h4>
+				<div class="list">
+						Daniel Sherman<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getContext" id="_getContext">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getContext">#</a>
+		<code><a href="source-class-Flair.Exception.ExceptionInterface.html#21-27" title="Go to source code">getContext</a>( )</code>
+
+		<div class="description short">
+			<p>Returns the context array that was passed in during object instantiation.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns the context array that was passed in during object instantiation.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					array
+				</div>
+
+
+				<h4>Author</h4>
+				<div class="list">
+						Daniel Sherman<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getContextAsString" id="_getContextAsString">
+
+		<td class="attributes"><code>
+			 public 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getContextAsString">#</a>
+		<code><a href="source-class-Flair.Exception.ExceptionInterface.html#29-35" title="Go to source code">getContextAsString</a>( )</code>
+
+		<div class="description short">
+			<p>Returns the context array that was passed in during object instantiation as a string.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns the context array that was passed in during object instantiation as a string.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					string
+				</div>
+
+
+				<h4>Author</h4>
+				<div class="list">
+						Daniel Sherman<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		Flair API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
+</body>
+</html>

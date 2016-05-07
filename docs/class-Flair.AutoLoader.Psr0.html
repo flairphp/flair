@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Class Flair\AutoLoader\Psr0 | Flair</title>
+
+	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+				<h3>Namespaces</h3>
+			<ul>
+				<li class="active">
+					<a href="namespace-Flair.html">
+						Flair<span></span>
+					</a>
+
+						<ul>
+				<li class="active">
+					<a href="namespace-Flair.AutoLoader.html">
+						AutoLoader					</a>
+
+						</li>
+				<li>
+					<a href="namespace-Flair.Exception.html">
+						Exception					</a>
+
+						</li>
+				<li>
+					<a href="namespace-Flair.Validation.html">
+						Validation					</a>
+
+						</li>
+							</ul></li>
+				<li>
+					<a href="namespace-PHP.html">
+						PHP					</a>
+
+						</li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li class="active"><a href="class-Flair.AutoLoader.Psr0.html">Psr0</a></li>
+				<li><a href="class-Flair.AutoLoader.Psr4.html">Psr4</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-Flair.AutoLoader.html" title="Summary of Flair\AutoLoader"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
+			</li>
+				<li>
+					<a href="annotation-group-todo.html" title="List of elements with todo annotation">
+						<span>Todo</span>
+					</a>
+				</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class Psr0</h1>
+
+
+	<div class="description">
+	<p>Used to automatically load files that are
+compliant with the PSR-0 standard.</p>
+
+<p>The class uses the concept of class prefix Identifiers to determine if a
+class should be loaded. Additionally each prefix can have a path prefix
+that will be prepended to the filename before trying to include it.</p>
+	</div>
+
+
+
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		<b>Namespace:</b> <a href="namespace-Flair.html">Flair</a>\<a href="namespace-Flair.AutoLoader.html">AutoLoader</a><br>
+		
+
+				<b>Author:</b>
+				Daniel Sherman<br>
+			<b>Located at</b> <a href="source-class-Flair.AutoLoader.Psr0.html#4-227" title="Go to source code">Flair/AutoLoader/Psr0.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="getDefaultPathPrefix" id="_getDefaultPathPrefix">
+
+		<td class="attributes"><code>
+			 public 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getDefaultPathPrefix">#</a>
+		<code><a href="source-class-Flair.AutoLoader.Psr0.html#32-41" title="Go to source code">getDefaultPathPrefix</a>( )</code>
+
+		<div class="description short">
+			<p>Gets the current value of $defaultPathPrefix</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Gets the current value of $defaultPathPrefix</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					string
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-Flair.AutoLoader.Psr0.html#$defaultPathPrefix">Flair\AutoLoader\Psr0::<var>$defaultPathPrefix</var></a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setDefaultPathPrefix" id="_setDefaultPathPrefix">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_setDefaultPathPrefix">#</a>
+		<code><a href="source-class-Flair.AutoLoader.Psr0.html#43-58" title="Go to source code">setDefaultPathPrefix</a>( <span>string <var>$path</var> = <span class="php-quote">''</span></span> )</code>
+
+		<div class="description short">
+			<p>sets $defaultPathPrefix</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>sets $defaultPathPrefix</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$path</var></dt>
+					<dd>What the new default should be.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>true it it works, false if $path was invalid.
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-Flair.AutoLoader.Psr0.html#$defaultPathPrefix">Flair\AutoLoader\Psr0::<var>$defaultPathPrefix</var></a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getPrefixes" id="_getPrefixes">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getPrefixes">#</a>
+		<code><a href="source-class-Flair.AutoLoader.Psr0.html#60-69" title="Go to source code">getPrefixes</a>( )</code>
+
+		<div class="description short">
+			<p>gets the current value of $pefixes</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>gets the current value of $pefixes</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					array
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-Flair.AutoLoader.Psr0.html#$prefixes">Flair\AutoLoader\Psr0::<var>$prefixes</var></a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addPrefix" id="_addPrefix">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addPrefix">#</a>
+		<code><a href="source-class-Flair.AutoLoader.Psr0.html#71-102" title="Go to source code">addPrefix</a>( <span>string <var>$prefix</var></span>, <span>string <var>$pathPrefix</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			<p>Adds a new prefix to, or resets an existing prefix in the internal array.
+If $pathPrefix is not passed, $defaultPathPrefix will be used instead.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Adds a new prefix to, or resets an existing prefix in the internal array.
+If $pathPrefix is not passed, $defaultPathPrefix will be used instead.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$prefix</var></dt>
+					<dd><p>The class name prefix used to identify classes than
+should be loaded.</p></dd>
+					<dt><var>$pathPrefix</var></dt>
+					<dd><p>The Optional path prefix that will be prepended to
+the class, before attemting to load it.</p></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>true it it works, false if $prefix or $pathPrefix was invalid.
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-Flair.AutoLoader.Psr0.html#$defaultPathPrefix">Flair\AutoLoader\Psr0::<var>$defaultPathPrefix</var></a></code><br>
+						<code><a href="class-Flair.AutoLoader.Psr0.html#$prefixes">Flair\AutoLoader\Psr0::<var>$prefixes</var></a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="removePrefix" id="_removePrefix">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_removePrefix">#</a>
+		<code><a href="source-class-Flair.AutoLoader.Psr0.html#104-119" title="Go to source code">removePrefix</a>( <span>string <var>$prefix</var></span> )</code>
+
+		<div class="description short">
+			<p>Removes an existing prefix from the internal array.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Removes an existing prefix from the internal array.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$prefix</var></dt>
+					<dd>The class name prefix to remove.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>true it it works, false otherwise.
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-Flair.AutoLoader.Psr0.html#$prefixes">Flair\AutoLoader\Psr0::<var>$prefixes</var></a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="register" id="_register">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_register">#</a>
+		<code><a href="source-class-Flair.AutoLoader.Psr0.html#121-135" title="Go to source code">register</a>( <span>boolean <var>$prepend</var> = <span class="php-keyword1">false</span></span> )</code>
+
+		<div class="description short">
+			<p>Registers the class with php as an autoloader.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Registers the class with php as an autoloader.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$prepend</var></dt>
+					<dd>Should the loader be prepended to the list.</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-LogicException.html">LogicException</a></code><br>If spl_autoload_register fails.
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="deregister" id="_deregister">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_deregister">#</a>
+		<code><a href="source-class-Flair.AutoLoader.Psr0.html#137-145" title="Go to source code">deregister</a>( )</code>
+
+		<div class="description short">
+			<p>Deregisters the class with php as an autoloader if it's not needed anymore.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Deregisters the class with php as an autoloader if it's not needed anymore.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>true it it works, false otherwise.
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="addToIncludePath" id="_addToIncludePath">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_addToIncludePath">#</a>
+		<code><a href="source-class-Flair.AutoLoader.Psr0.html#147-164" title="Go to source code">addToIncludePath</a>( <span>string <var>$path</var></span> )</code>
+
+		<div class="description short">
+			<p>Provides a way of adding a path to the include_path.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Provides a way of adding a path to the include_path.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$path</var></dt>
+					<dd>A new path to add to the include_path.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>true it it works, false otherwise.
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="removeFromIncludePath" id="_removeFromIncludePath">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_removeFromIncludePath">#</a>
+		<code><a href="source-class-Flair.AutoLoader.Psr0.html#166-189" title="Go to source code">removeFromIncludePath</a>( <span>string <var>$path</var></span> )</code>
+
+		<div class="description short">
+			<p>Provides a way of removing a path from the include_path.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Provides a way of removing a path from the include_path.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$path</var></dt>
+					<dd>A path to remove from the include_path.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>true it it works, false otherwise.
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="load" id="_load">
+
+		<td class="attributes"><code>
+			 public 
+
+			boolean
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_load">#</a>
+		<code><a href="source-class-Flair.AutoLoader.Psr0.html#191-226" title="Go to source code">load</a>( <span>string <var>$class</var></span> )</code>
+
+		<div class="description short">
+			<p>This is the method called by spl_autoload to actually load a lass.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>This is the method called by spl_autoload to actually load a lass.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$class</var></dt>
+					<dd>The name of the class that needs to be included.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>Was the class file loaded sucessfully.
+				</div>
+
+
+				<h4>Uses</h4>
+				<div class="list">
+						<code><a href="class-Flair.AutoLoader.Psr0.html#$prefixes">Flair\AutoLoader\Psr0::<var>$prefixes</var></a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+	<table class="summary properties" id="properties">
+	<caption>Properties summary</caption>
+	<tr data-order="defaultPathPrefix" id="$defaultPathPrefix">
+		<td class="attributes"><code>
+			protected  
+			string
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Flair.AutoLoader.Psr0.html#16-22" title="Go to source code"><var>$defaultPathPrefix</var></a>
+
+			<div class="description short">
+				<p>The path prefix that will be prepended to a filename if one wasn't registered
+with the prefix.</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>The path prefix that will be prepended to a filename if one wasn't registered
+with the prefix.</p>
+
+					<h4>Used by</h4>
+					<div class="list">
+							<code><a href="class-Flair.AutoLoader.Psr0.html#_getDefaultPathPrefix">Flair\AutoLoader\Psr0::getDefaultPathPrefix()</a></code><br>
+							<code><a href="class-Flair.AutoLoader.Psr0.html#_setDefaultPathPrefix">Flair\AutoLoader\Psr0::setDefaultPathPrefix()</a></code><br>
+							<code><a href="class-Flair.AutoLoader.Psr0.html#_addPrefix">Flair\AutoLoader\Psr0::addPrefix()</a></code><br>
+					</div>
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$defaultPathPrefix" class="anchor">#</a>
+				<code><span class="php-quote">''</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="prefixes" id="$prefixes">
+		<td class="attributes"><code>
+			protected  
+			Array
+		</code></td>
+
+		<td class="name">
+				<a href="source-class-Flair.AutoLoader.Psr0.html#24-30" title="Go to source code"><var>$prefixes</var></a>
+
+			<div class="description short">
+				<p>an associative array of namespace/class prefixes and their path prefixes.
+The key is the class prefix, &amp; the value is the path prefix.</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>an associative array of namespace/class prefixes and their path prefixes.
+The key is the class prefix, &amp; the value is the path prefix.</p>
+
+					<h4>Used by</h4>
+					<div class="list">
+							<code><a href="class-Flair.AutoLoader.Psr0.html#_getPrefixes">Flair\AutoLoader\Psr0::getPrefixes()</a></code><br>
+							<code><a href="class-Flair.AutoLoader.Psr0.html#_addPrefix">Flair\AutoLoader\Psr0::addPrefix()</a></code><br>
+							<code><a href="class-Flair.AutoLoader.Psr0.html#_removePrefix">Flair\AutoLoader\Psr0::removePrefix()</a></code><br>
+							<code><a href="class-Flair.AutoLoader.Psr0.html#_load">Flair\AutoLoader\Psr0::load()</a></code><br>
+					</div>
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#$prefixes" class="anchor">#</a>
+				<code>[]</code>
+			</div>
+		</td>
+	</tr>
+	</table>
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		Flair API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
+</body>
+</html>

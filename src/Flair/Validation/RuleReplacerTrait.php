@@ -32,7 +32,7 @@ namespace Flair\Validation {
          * @param Replacer $replacer The value to assign.
          * @throws InvalidArgumentException If $replacer isn't.
          */
-        public function setReplacer(ReplacerInterface $replacer)
+        public function setReplacer(ReplacerInterface $replacer = null)
         {
             $this->replacer = $replacer;
         }
