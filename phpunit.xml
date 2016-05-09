@@ -36,6 +36,8 @@
             <file>./tests/unit/Validation/RuleTraitTest.php</file>
 
             <file>./tests/unit/Validation/Rules/UnexpectedValueExceptionTest.php</file>
+            <file>./tests/unit/Validation/Rules/CallerTest.php</file>
+
         </testsuite>
     </testsuites>
 </phpunit>

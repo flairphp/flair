@@ -1,351 +1,341 @@
 <?php
 namespace Flair\AutoLoader {
-    /**
-     * The Unit test for the psr4 class.
-     *
-     * @author Daniel Sherman
-     * @coversDefaultClass \Flair\AutoLoader\Psr4
-     */
-    class Psr4Test extends \Flair\PhpUnit\TestCase
-    {
-        /**
-         * holds a loader
-         *
-         * @var Psr0
-         */
-        protected static $loader = null;
+	/**
+	 * The Unit test for the psr4 class.
+	 *
+	 * @author Daniel Sherman
+	 * @coversDefaultClass \Flair\AutoLoader\Psr4
+	 */
+	class Psr4Test extends \Flair\PhpUnit\TestCase {
+		/**
+		 * holds a loader
+		 *
+		 * @var Psr0
+		 */
+		protected static $loader = null;
 
-        /**
-         * set up the needed data before each test.
-         */
-        protected function setUp()
-        {
-            self::$loader = new Psr4();
-        }
+		/**
+		 * set up the needed data before each test.
+		 */
+		protected function setUp() {
+			self::$loader = new Psr4();
+		}
 
-        /**
-         * Checks the object is of the correct type
-         *
-         * @author Daniel Sherman
-         * @test
-         * @covers ::__construct
-         */
-        public function testConstruct()
-        {
-            $msg = 'the object is not the correct type';
-            $this->assertInstanceOf('Flair\AutoLoader\Psr4', self::$loader, $msg);
-        }
+		/**
+		 * mark the test finished.
+		 */
+		public static function tearDownAfterClass() {
+			self::setFinishedTest();
+		}
 
-        /**
-         * Checks if getPrefixes works as expected.
-         * @author Daniel Sherman
-         * @test
-         * @depends testConstruct
-         * @covers ::getPrefixes
-         */
-        public function testGetPrefixes()
-        {
-            $val = self::$loader->getPrefixes();
-            $this->assertTrue(is_array($val), 'An array was not returned');
-        }
+		/**
+		 * Checks the object is of the correct type
+		 *
+		 * @author Daniel Sherman
+		 * @test
+		 * @covers ::__construct
+		 */
+		public function testConstruct() {
+			$msg = 'the object is not the correct type';
+			$this->assertInstanceOf('Flair\AutoLoader\Psr4', self::$loader, $msg);
+		}
 
-        /**
-         * Checks if addPrefix works as expected.
-         * @author Daniel Sherman
-         * @test
-         * @depends testGetPrefixes
-         * @covers ::addPrefix
-         */
-        public function testAddPrefix()
-        {
-            $prefix = 'Flair\Autoloader';
-            $baseDir = '/www/libs/';
-            $result = self::$loader->addPrefix($prefix, $baseDir);
-            $this->assertTrue($result, 'a valid prefix could not be added!');
+		/**
+		 * Checks if getPrefixes works as expected.
+		 * @author Daniel Sherman
+		 * @test
+		 * @depends testConstruct
+		 * @covers ::getPrefixes
+		 */
+		public function testGetPrefixes() {
+			$val = self::$loader->getPrefixes();
+			$this->assertTrue(is_array($val), 'An array was not returned');
+		}
 
-            $prefixes = [$prefix => $baseDir];
-            $storedPrefixes = self::$loader->getPrefixes();
-            $msg = 'the prefix did not get saved properly!';
-            $this->assertEquals($prefixes, $storedPrefixes, $msg);
-        }
+		/**
+		 * Checks if addPrefix works as expected.
+		 * @author Daniel Sherman
+		 * @test
+		 * @depends testGetPrefixes
+		 * @covers ::addPrefix
+		 */
+		public function testAddPrefix() {
+			$prefix = 'Flair\Autoloader';
+			$baseDir = '/www/libs/';
+			$result = self::$loader->addPrefix($prefix, $baseDir);
+			$this->assertTrue($result, 'a valid prefix could not be added!');
 
-        /**
-         * Checks if removePrefix works as expected.
-         * @author Daniel Sherman
-         * @test
-         * @depends testAddPrefix
-         * @depends testGetPrefixes
-         * @covers ::removePrefix
-         */
-        public function testRemovePrefix()
-        {
-            $prefix = 'Flair\Autoloader';
-            $baseDir = '/www/libs/';
-            $result = self::$loader->addPrefix($prefix, $baseDir);
-            $this->assertTrue($result, 'a valid prefix could not be added!');
+			$prefixes = [$prefix => $baseDir];
+			$storedPrefixes = self::$loader->getPrefixes();
+			$msg = 'the prefix did not get saved properly!';
+			$this->assertEquals($prefixes, $storedPrefixes, $msg);
+		}
 
-            $prefixes = [$prefix => $baseDir];
-            $storedPrefixes = self::$loader->getPrefixes();
-            $msg = 'the prefix did not get saved properly!';
-            $this->assertEquals($prefixes, $storedPrefixes, $msg);
+		/**
+		 * Checks if removePrefix works as expected.
+		 * @author Daniel Sherman
+		 * @test
+		 * @depends testAddPrefix
+		 * @depends testGetPrefixes
+		 * @covers ::removePrefix
+		 */
+		public function testRemovePrefix() {
+			$prefix = 'Flair\Autoloader';
+			$baseDir = '/www/libs/';
+			$result = self::$loader->addPrefix($prefix, $baseDir);
+			$this->assertTrue($result, 'a valid prefix could not be added!');
 
-            $result = self::$loader->removePrefix($prefix);
-            $this->assertTrue($result, 'the prefix did not get removed');
+			$prefixes = [$prefix => $baseDir];
+			$storedPrefixes = self::$loader->getPrefixes();
+			$msg = 'the prefix did not get saved properly!';
+			$this->assertEquals($prefixes, $storedPrefixes, $msg);
 
-            $prefixes = self::$loader->getPrefixes();
-            $this->assertEquals([], $prefixes, 'the prefix did not get removed properly!');
-        }
+			$result = self::$loader->removePrefix($prefix);
+			$this->assertTrue($result, 'the prefix did not get removed');
 
-        /**
-         * Checks if add prefix forces the proper type constraints.
-         *
-         * @author Daniel Sherman
-         * @test
-         * @depends testGetPrefixes
-         * @depends testRemovePrefix
-         * @dataProvider testAddPrefixTypeConstraintProvider
-         * @covers ::addPrefix
-         */
-        public function testAddPrefixTypeConstraint($prefixType, $prefixVal, $pathPrefixType, $pathPrefixVal)
-        {
-            $result = self::$loader->addPrefix($prefixVal, $pathPrefixVal);
-            $msg = "A prefix type of $prefixType was accepted";
-            $msg .= " with a path prefix type of $pathPrefixType!";
+			$prefixes = self::$loader->getPrefixes();
+			$this->assertEquals([], $prefixes, 'the prefix did not get removed properly!');
+		}
 
-            if ($prefixType !== 'string') {
-                // we should get false any time $prefixType is not a string
-                $this->assertFalse($result, $msg);
-            } else {
-                if ($pathPrefixType === 'string') {
-                    // we should get true if a sting or null was passed
-                    $this->assertTrue($result, $msg);
-                } else {
-                    // false should be returned for everything else
-                    $this->assertFalse($result, $msg);
-                }
-            }
-        }
+		/**
+		 * Checks if add prefix forces the proper type constraints.
+		 *
+		 * @author Daniel Sherman
+		 * @test
+		 * @depends testGetPrefixes
+		 * @depends testRemovePrefix
+		 * @dataProvider testAddPrefixTypeConstraintProvider
+		 * @covers ::addPrefix
+		 */
+		public function testAddPrefixTypeConstraint($prefixType, $prefixVal, $pathPrefixType, $pathPrefixVal) {
+			$result = self::$loader->addPrefix($prefixVal, $pathPrefixVal);
+			$msg = "A prefix type of $prefixType was accepted";
+			$msg .= " with a path prefix type of $pathPrefixType!";
 
-        /**
-         * provides data for testAddPrefixTypeConstraint
-         */
-        public function testAddPrefixTypeConstraintProvider()
-        {
-            $data = self::getDataTypeProvider();
-            $tmp = $data->arrayOfArrays($data->excludeTypes());
-            $tmp2 = $tmp;
-            $rtn = [];
-            foreach ($tmp as $val) {
-                foreach ($tmp2 as $val2) {
-                    $rtn[] = array_merge($val, $val2);
-                }
-            }
+			if ($prefixType !== 'string') {
+				// we should get false any time $prefixType is not a string
+				$this->assertFalse($result, $msg);
+			} else {
+				if ($pathPrefixType === 'string') {
+					// we should get true if a sting or null was passed
+					$this->assertTrue($result, $msg);
+				} else {
+					// false should be returned for everything else
+					$this->assertFalse($result, $msg);
+				}
+			}
+		}
 
-            return $rtn;
-        }
+		/**
+		 * provides data for testAddPrefixTypeConstraint
+		 */
+		public function testAddPrefixTypeConstraintProvider() {
+			$data = self::getDataTypeProvider();
+			$tmp = $data->arrayOfArrays($data->excludeTypes());
+			$tmp2 = $tmp;
+			$rtn = [];
+			foreach ($tmp as $val) {
+				foreach ($tmp2 as $val2) {
+					$rtn[] = array_merge($val, $val2);
+				}
+			}
 
-        /**
-         * Checks if register works as expected, and doesn't throw an exception
-         * @author Daniel Sherman
-         * @test
-         * @depends testConstruct
-         * @covers ::register
-         */
-        public function testRegister()
-        {
-            $e = null;
-            try {
-                self::$loader->register();
-            } catch (\LogicException $e) {}
-            $this->assertNull($e, 'The autloader failed to register');
-        }
+			return $rtn;
+		}
 
-        /**
-         * Checks if deregister works as expected.
-         * @author Daniel Sherman
-         * @test
-         * @depends testRegister
-         * @covers ::deregister
-         */
-        public function testDeregisterSuccess()
-        {
-            $e = null;
-            try {
-                self::$loader->register();
-            } catch (\LogicException $e) {}
-            $this->assertNull($e, 'The autloader failed to register');
+		/**
+		 * Checks if register works as expected, and doesn't throw an exception
+		 * @author Daniel Sherman
+		 * @test
+		 * @depends testConstruct
+		 * @covers ::register
+		 */
+		public function testRegister() {
+			$e = null;
+			try {
+				self::$loader->register();
+			} catch (\LogicException $e) {}
+			$this->assertNull($e, 'The autloader failed to register');
+		}
 
-            $result = self::$loader->deregister();
-            $this->assertTrue($result, 'Failed to deregister');
-        }
+		/**
+		 * Checks if deregister works as expected.
+		 * @author Daniel Sherman
+		 * @test
+		 * @depends testRegister
+		 * @covers ::deregister
+		 */
+		public function testDeregisterSuccess() {
+			$e = null;
+			try {
+				self::$loader->register();
+			} catch (\LogicException $e) {}
+			$this->assertNull($e, 'The autloader failed to register');
 
-        /**
-         * Checks if deregister fails as expected.
-         * @author Daniel Sherman
-         * @test
-         * @depends testConstruct
-         * @covers ::deregister
-         */
-        public function testDeregisterFail()
-        {
-            $result = self::$loader->deregister();
-            $this->assertFalse($result, 'deregisterd something that was not registered');
-        }
+			$result = self::$loader->deregister();
+			$this->assertTrue($result, 'Failed to deregister');
+		}
 
-        /**
-         * Checks if addToIncludePath works as expected.
-         * @author Daniel Sherman
-         * @test
-         * @depends testConstruct
-         * @covers ::addToIncludePath
-         */
-        public function testAddToIncludePath()
-        {
-            $newPath = '/someCrapola';
-            $origonalPath = get_include_path();
+		/**
+		 * Checks if deregister fails as expected.
+		 * @author Daniel Sherman
+		 * @test
+		 * @depends testConstruct
+		 * @covers ::deregister
+		 */
+		public function testDeregisterFail() {
+			$result = self::$loader->deregister();
+			$this->assertFalse($result, 'deregisterd something that was not registered');
+		}
 
-            $result = self::$loader->addToIncludePath($newPath);
-            $this->assertTrue($result, 'The include path failed to update');
+		/**
+		 * Checks if addToIncludePath works as expected.
+		 * @author Daniel Sherman
+		 * @test
+		 * @depends testConstruct
+		 * @covers ::addToIncludePath
+		 */
+		public function testAddToIncludePath() {
+			$newPath = '/someCrapola';
+			$origonalPath = get_include_path();
 
-            $expected = $origonalPath . PATH_SEPARATOR . $newPath;
-            $newpath = get_include_path();
-            $this->assertEquals($expected, $newpath, 'The include is not what it should be');
+			$result = self::$loader->addToIncludePath($newPath);
+			$this->assertTrue($result, 'The include path failed to update');
 
-            set_include_path($origonalPath);
-        }
+			$expected = $origonalPath . PATH_SEPARATOR . $newPath;
+			$newpath = get_include_path();
+			$this->assertEquals($expected, $newpath, 'The include is not what it should be');
 
-        /**
-         * Checks if addToIncludePath handles types properly.
-         * @author Daniel Sherman
-         * @test
-         * @depends testConstruct
-         * @dataProvider testAddToIncludePathTypeConstraintProvider
-         * @covers ::addToIncludePath
-         */
-        public function testAddToIncludePathTypeConstraint($type, $val)
-        {
-            $origonalPath = get_include_path();
+			set_include_path($origonalPath);
+		}
 
-            $result = self::$loader->addToIncludePath($val);
-            $msg = "A value of type $type was accepted";
+		/**
+		 * Checks if addToIncludePath handles types properly.
+		 * @author Daniel Sherman
+		 * @test
+		 * @depends testConstruct
+		 * @dataProvider testAddToIncludePathTypeConstraintProvider
+		 * @covers ::addToIncludePath
+		 */
+		public function testAddToIncludePathTypeConstraint($type, $val) {
+			$origonalPath = get_include_path();
 
-            if ($type !== 'string') {
-                $this->assertFalse($result, $msg);
-            } else {
-                $this->assertTrue($result, $msg);
-            }
+			$result = self::$loader->addToIncludePath($val);
+			$msg = "A value of type $type was accepted";
 
-            set_include_path($origonalPath);
-        }
+			if ($type !== 'string') {
+				$this->assertFalse($result, $msg);
+			} else {
+				$this->assertTrue($result, $msg);
+			}
 
-        /**
-         * provides data for testAddToIncludePathTypeConstraint
-         */
-        public function testAddToIncludePathTypeConstraintProvider()
-        {
-            $data = self::getDataTypeProvider();
-            return $data->arrayOfArrays($data->excludeTypes());
-        }
+			set_include_path($origonalPath);
+		}
 
-        /**
-         * Checks if removeFromIncludePath works.
-         * @author Daniel Sherman
-         * @test
-         * @depends testConstruct
-         * @covers ::removeFromIncludePath
-         */
-        public function testRemoveFromIncludePath()
-        {
-            $newPath = '/www';
-            $origonalPath = get_include_path();
-            set_include_path($origonalPath . PATH_SEPARATOR . $newPath);
+		/**
+		 * provides data for testAddToIncludePathTypeConstraint
+		 */
+		public function testAddToIncludePathTypeConstraintProvider() {
+			$data = self::getDataTypeProvider();
+			return $data->arrayOfArrays($data->excludeTypes());
+		}
 
-            $result = self::$loader->removeFromIncludePath($newPath);
-            $this->assertTrue($result, 'The path was not removed from the include path');
+		/**
+		 * Checks if removeFromIncludePath works.
+		 * @author Daniel Sherman
+		 * @test
+		 * @depends testConstruct
+		 * @covers ::removeFromIncludePath
+		 */
+		public function testRemoveFromIncludePath() {
+			$newPath = '/www';
+			$origonalPath = get_include_path();
+			set_include_path($origonalPath . PATH_SEPARATOR . $newPath);
 
-            $updatedPath = get_include_path();
-            $this->assertEquals($origonalPath, $updatedPath, 'The include path is not what it should be');
+			$result = self::$loader->removeFromIncludePath($newPath);
+			$this->assertTrue($result, 'The path was not removed from the include path');
 
-            set_include_path($origonalPath);
-        }
+			$updatedPath = get_include_path();
+			$this->assertEquals($origonalPath, $updatedPath, 'The include path is not what it should be');
 
-        /**
-         * Checks if load works as expected using the inclde path
-         * @author Daniel Sherman
-         * @test
-         * @depends testConstruct
-         * @depends testAddToIncludePath
-         * @depends testAddPrefix
-         * @covers ::load
-         */
-        public function testLoadIncludePath()
-        {
-            $origonalIncludePath = get_include_path();
-            $prefix = 'Vendor\\Simple';
-            $baseDir = 'Vendor' . DIRECTORY_SEPARATOR . 'Simple' . DIRECTORY_SEPARATOR;
-            $newPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'fixtures';
-            $newPath .= DIRECTORY_SEPARATOR . 'Psr4';
+			set_include_path($origonalPath);
+		}
 
-            //configure the object
-            $result = self::$loader->addToIncludePath($newPath);
-            $this->assertTrue($result, 'updating the includepath failed');
+		/**
+		 * Checks if load works as expected using the inclde path
+		 * @author Daniel Sherman
+		 * @test
+		 * @depends testConstruct
+		 * @depends testAddToIncludePath
+		 * @depends testAddPrefix
+		 * @covers ::load
+		 */
+		public function testLoadIncludePath() {
+			$origonalIncludePath = get_include_path();
+			$prefix = 'Vendor\\Simple';
+			$baseDir = 'Vendor' . DIRECTORY_SEPARATOR . 'Simple' . DIRECTORY_SEPARATOR;
+			$newPath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'fixtures';
+			$newPath .= DIRECTORY_SEPARATOR . 'Psr4';
 
-            $result = self::$loader->addPrefix($prefix, $baseDir);
-            $this->assertTrue($result, 'adding a prefix failed');
+			//configure the object
+			$result = self::$loader->addToIncludePath($newPath);
+			$this->assertTrue($result, 'updating the includepath failed');
 
-            // the actual assertions/tests
-            $result = self::$loader->load('Vendor\\Simple\\ClassOne');
-            $this->assertTrue($result, 'the class file did not get load');
+			$result = self::$loader->addPrefix($prefix, $baseDir);
+			$this->assertTrue($result, 'adding a prefix failed');
 
-            $result = class_exists('Vendor\\Simple\\ClassOne', false);
-            $this->assertTrue($result, 'the class is not in scope');
+			// the actual assertions/tests
+			$result = self::$loader->load('Vendor\\Simple\\ClassOne');
+			$this->assertTrue($result, 'the class file did not get load');
 
-            $result = self::$loader->load('Vendor\\Simple\\NonexistentClassOne');
-            $this->assertFalse($result, 'the class/file does not exist');
+			$result = class_exists('Vendor\\Simple\\ClassOne', false);
+			$this->assertTrue($result, 'the class is not in scope');
 
-            $result = self::$loader->load('Vendor\\Complex\\ClassOne');
-            $this->assertFalse($result, 'The prefix was not configured');
+			$result = self::$loader->load('Vendor\\Simple\\NonexistentClassOne');
+			$this->assertFalse($result, 'the class/file does not exist');
 
-            // reconfigure the object
-            set_include_path($origonalIncludePath);
-        }
+			$result = self::$loader->load('Vendor\\Complex\\ClassOne');
+			$this->assertFalse($result, 'The prefix was not configured');
 
-        /**
-         * Checks if load works as expected
-         * @author Daniel Sherman
-         * @test
-         * @depends testConstruct
-         * @depends testAddPrefix
-         * @depends testRemovePrefix
-         * @covers ::load
-         */
-        public function testLoad()
-        {
-            $prefix = 'Vendor\\Simple';
-            $baseDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'fixtures';
-            $baseDir .= DIRECTORY_SEPARATOR . 'Psr4' . DIRECTORY_SEPARATOR;
-            $baseDir .= 'Vendor' . DIRECTORY_SEPARATOR . 'Simple' . DIRECTORY_SEPARATOR;
+			// reconfigure the object
+			set_include_path($origonalIncludePath);
+		}
 
-            //configure the object
-            $result = self::$loader->addPrefix($prefix, $baseDir);
-            $this->assertTrue($result, 'adding a prefix failed');
+		/**
+		 * Checks if load works as expected
+		 * @author Daniel Sherman
+		 * @test
+		 * @depends testConstruct
+		 * @depends testAddPrefix
+		 * @depends testRemovePrefix
+		 * @covers ::load
+		 */
+		public function testLoad() {
+			$prefix = 'Vendor\\Simple';
+			$baseDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'fixtures';
+			$baseDir .= DIRECTORY_SEPARATOR . 'Psr4' . DIRECTORY_SEPARATOR;
+			$baseDir .= 'Vendor' . DIRECTORY_SEPARATOR . 'Simple' . DIRECTORY_SEPARATOR;
 
-            // the actual assertions/tests
-            $result = self::$loader->load('Vendor\\Simple\\ClassTwo');
-            $this->assertTrue($result, 'the class file did not get load');
+			//configure the object
+			$result = self::$loader->addPrefix($prefix, $baseDir);
+			$this->assertTrue($result, 'adding a prefix failed');
 
-            $result = class_exists('Vendor\\Simple\\ClassTwo', false);
-            $this->assertTrue($result, 'the class is not in scope');
+			// the actual assertions/tests
+			$result = self::$loader->load('Vendor\\Simple\\ClassTwo');
+			$this->assertTrue($result, 'the class file did not get load');
 
-            $result = self::$loader->load('Vendor\\Simple\\NonexistentClassTwo');
-            $this->assertFalse($result, 'the class/file does not exist');
+			$result = class_exists('Vendor\\Simple\\ClassTwo', false);
+			$this->assertTrue($result, 'the class is not in scope');
 
-            $result = self::$loader->load('Vendor\\Complex\\ClassTwo');
-            $this->assertFalse($result, 'The prefix was not configured');
+			$result = self::$loader->load('Vendor\\Simple\\NonexistentClassTwo');
+			$this->assertFalse($result, 'the class/file does not exist');
 
-            // reconfigure the object
-            $result = self::$loader->removePrefix($prefix);
-            $this->assertTrue($result, 'removing a prefix failed');
-        }
-    }
+			$result = self::$loader->load('Vendor\\Complex\\ClassTwo');
+			$this->assertFalse($result, 'The prefix was not configured');
+
+			// reconfigure the object
+			$result = self::$loader->removePrefix($prefix);
+			$this->assertTrue($result, 'removing a prefix failed');
+		}
+	}
 }
