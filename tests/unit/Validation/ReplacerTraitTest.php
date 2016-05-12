@@ -326,6 +326,111 @@ namespace Flair\Validation {
         }
 
         /**
+         * Checks if updateReplacement throws an exception when a key is not a string
+         *
+         * @author Daniel Sherman
+         * @test
+         * @dataProvider nonStringProvider
+         * @covers ::updateReplacement
+         */
+        public function testUpdateReplacementKeyNotValid($type, $val)
+        {
+            try {
+                self::$obj->updateReplacement($val, 'random');
+            } catch (\Exception $e) {
+                $this->assertInstanceOf('Flair\Validation\InvalidArgumentException', $e);
+                $this->assertEquals(9, $e->getCode());
+                $this->assertEquals('$key is not a string!', $e->getMessage());
+                return;
+            }
+            $this->fail('An exception was not thrown for a value of type: ' . $type);
+        }
+
+        /**
+         * Checks if update works as expected when key is a string
+         *
+         * @author Daniel Sherman
+         * @test
+         * @covers ::updateReplacement
+         */
+        public function testUpdateReplacementKeyValid()
+        {
+            try {
+                self::$obj->updateReplacement('validKey01', 'valid');
+            } catch (\Exception $e) {
+                $this->fail('An exception was thrown');
+                return;
+            }
+
+            // a dummy assertion to deal with phpunit stupidity
+            $this->assertEquals(1, 1);
+        }
+
+        /**
+         * Checks if updateReplacement throws an exception when $value is not a valid input
+         *
+         * @author Daniel Sherman
+         * @test
+         * @dataProvider nonScalarProvider
+         * @covers ::updateReplacement
+         */
+        public function testUpdateReplacementValueNotValid($type, $val)
+        {
+            try {
+                self::$obj->updateReplacement('random', $val);
+            } catch (\Exception $e) {
+                $this->assertInstanceOf('Flair\Validation\LogicException', $e);
+                $this->assertEquals(10, $e->getCode());
+                $this->assertEquals('$value is not a valid type!', $e->getMessage());
+                return;
+            }
+            $this->fail('An exception was not thrown for a value of type: ' . $type);
+        }
+
+        /**
+         * Checks if updateReplacement doesn't throws an exception when $value is a valid input
+         *
+         * @author Daniel Sherman
+         * @test
+         * @dataProvider scalarProvider
+         * @covers ::updateReplacement
+         */
+        public function testupdateReplacementValueValid($type, $val)
+        {
+            try {
+                self::$obj->updateReplacement($type, $val);
+            } catch (\Exception $e) {
+                $this->fail('An exception was thrown');
+                return;
+            }
+
+            // a dummy assertion to deal with phpunit stupidity
+            $this->assertEquals(1, 1);
+        }
+
+        /**
+         * Checks if updateReplacement doesn't throws an exception when $value is a valid input
+         *
+         * @author Daniel Sherman
+         * @test
+         * @covers ::updateReplacement
+         */
+        public function testUpdateReplacementValueToString()
+        {
+            $eObj = new \Exception('', 0);
+            try {
+                self::$obj->updateReplacement('__toString', $eObj);
+            } catch (\Exception $e) {
+                $this->fail('An exception was thrown');
+                return;
+            }
+
+            // a dummy assertion to deal with phpunit stupidity
+            $this->assertEquals(1, 1);
+
+        }
+
+        /**
          * Checks if hasReplacement works as expected
          *
          * @author Daniel Sherman
