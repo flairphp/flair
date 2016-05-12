@@ -129,7 +129,7 @@ namespace Flair\Validation {
          * adds a new replacement key & value.
          *
          * @param string $key The replacement key .
-         * @param string $key The replacement value.
+         * @param mixed $value The replacement value.
          * @uses replacements
          * @throws InvalidArgumentException If $key isn't a string.
          * @throws LogicException If key already exists.
@@ -157,7 +157,7 @@ namespace Flair\Validation {
          * updates an existing replacement key & value.
          *
          * @param string $key The replacement key .
-         * @param string $key The replacement value.
+         * @param mixed $value The replacement value.
          * @throws InvalidArgumentException If $key isn't a string.
          * @throws LogicException If $value isn't a scalars, or object
          * with a __toString() Method.
