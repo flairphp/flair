@@ -26,7 +26,7 @@ namespace Flair\Validation {
 		 *
 		 * @var array
 		 */
-		protected $replacements = array();
+		protected $replacements = [];
 
 		/**
 		 * Sets the value of the prefix used when doing replacements.

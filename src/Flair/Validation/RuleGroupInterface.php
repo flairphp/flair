@@ -40,7 +40,6 @@ namespace Flair\Validation {
 		 * returns a reference to a rule in the object.
 		 *
 		 * @param integer|string $key The key for the rule to get.
-		 * @throws InvalidArgumentException If $key isn't a string or Integer.
 		 * @throws OutOfBoundsException If $key doesn't exist.
 		 * @return RuleInterface
 		 */
