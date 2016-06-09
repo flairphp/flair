@@ -66,5 +66,21 @@ namespace Flair\Validation {
 		 * @return array An array of the rule keys.
 		 */
 		public function getInvalidRulekeys();
+
+		/**
+		 * Returns true if $value is valid, false otherwise.
+		 *
+		 * @param mixed $value The value to be validated.
+		 * @throws LogicException If it's not possible to validate $value.
+		 * @return bool
+		 */
+		public function isValid($value);
+
+		/**
+		 * Returns an array of one or more error messages.
+		 *
+		 * @return array
+		 */
+		public function getErrors();
 	}
 }

@@ -126,12 +126,57 @@ namespace Flair\Validation {
 		 * It should be noted that if updateRule or deleteRule has been called since isValid
 		 * was called last the keys returned could be wrong.
 		 *
-		 * @uses $invalidRuleKeys
+		 * @uses invalidRuleKeys
 		 * @return array An array of rule keys.
 		 */
 		public function getInvalidRulekeys() {
 			return $this->invalidRuleKeys;
 		}
 
+		/**
+		 *  Returns true if $value is valid, false otherwise.
+		 *
+		 * @param mixed $value The value to be validated.
+		 * @uses invalidRuleKeys
+		 * @uses rules
+		 * @return bool
+		 */
+		public function isValid($value) {
+			$rtn = true;
+			$this->invalidRuleKeys = [];
+
+			foreach ($this->rules as $key => $rule) {
+				if (!$rule->isValid($value)) {
+
+					// failed to pass validation for a rule
+					$rtn = false;
+					$this->invalidRuleKeys[] = $key;
+
+					if ($rule->halt()) {
+						// the rule says halt execution of any subsequent rules
+						break;
+					}
+				}
+			}
+
+			return $rtn;
+		}
+
+		/**
+		 * Returns an array of error message arrays. One array for each rule that failed validation.
+		 *
+		 * @uses invalidRuleKeys
+		 * @uses rules
+		 * @return array An array of error message arrays.
+		 */
+		public function getErrors() {
+			$rtn = [];
+
+			foreach ($this->invalidRuleKeys as $key) {
+				$rtn[$key] = $this->rules[$key]->getErrors();
+			}
+
+			return $rtn;
+		}
 	}
 }

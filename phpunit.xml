@@ -29,14 +29,22 @@
             <file>./tests/unit/Validation/LogicExceptionTest.php</file>
             <file>./tests/unit/Validation/OutOfBoundsExceptionTest.php</file>
             <file>./tests/unit/Validation/UnexpectedValueExceptionTest.php</file>
+
             <file>./tests/unit/Validation/ReplacerTraitTest.php</file>
             <file>./tests/unit/Validation/ReplacerTest.php</file>
+
             <file>./tests/unit/Validation/RuleMessageTraitTest.php</file>
             <file>./tests/unit/Validation/RuleReplacerTraitTest.php</file>
             <file>./tests/unit/Validation/RuleTraitTest.php</file>
 
             <file>./tests/unit/Validation/Rules/UnexpectedValueExceptionTest.php</file>
+            
             <file>./tests/unit/Validation/Rules/CallerTest.php</file>
+
+            <file>./tests/unit/Validation/RuleGroupTraitTest.php</file>
+            <file>./tests/unit/Validation/Rules/GroupTest.php</file>
+
+            <file>./tests/unit/Validation/Rules/WrapperTest.php</file>
 
         </testsuite>
     </testsuites>
