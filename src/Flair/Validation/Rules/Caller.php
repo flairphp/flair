@@ -126,7 +126,8 @@ namespace Flair\Validation\Rules {
 				return $result;
 			}
 
-			throw new UnexpectedValueException('The callable method did not return a boolean!', 0);
+			$msg = 'The callable method did not return a boolean!';
+			throw new \Flair\Validation\UnexpectedValueException($msg, 18);
 		}
 
 		/**

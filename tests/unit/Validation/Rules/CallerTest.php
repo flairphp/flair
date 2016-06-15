@@ -142,8 +142,8 @@ namespace Flair\Validation\Rules {
 			try {
 				$test->isValid(['One', 'Two', 'Three']);
 			} catch (\Exception $e) {
-				$this->assertInstanceOf('Flair\Validation\Rules\UnexpectedValueException', $e);
-				$this->assertEquals(0, $e->getCode());
+				$this->assertInstanceOf('Flair\Validation\UnexpectedValueException', $e);
+				$this->assertEquals(18, $e->getCode());
 				$this->assertEquals('The callable method did not return a boolean!', $e->getMessage());
 				return;
 			}

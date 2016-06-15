@@ -24,6 +24,7 @@
             <file>./tests/unit/Exception/LogicExceptionTest.php</file>
             <file>./tests/unit/Exception/UnexpectedValueExceptionTest.php</file>
             <file>./tests/unit/Exception/OutOfBoundsExceptionTest.php</file>
+            <file>./tests/unit/Exception/RuntimeExceptionTest.php</file>
 
             <file>./tests/unit/Validation/InvalidArgumentExceptionTest.php</file>
             <file>./tests/unit/Validation/LogicExceptionTest.php</file>
@@ -32,19 +33,23 @@
 
             <file>./tests/unit/Validation/ReplacerTraitTest.php</file>
             <file>./tests/unit/Validation/ReplacerTest.php</file>
-
             <file>./tests/unit/Validation/RuleMessageTraitTest.php</file>
             <file>./tests/unit/Validation/RuleReplacerTraitTest.php</file>
             <file>./tests/unit/Validation/RuleTraitTest.php</file>
-
-            <file>./tests/unit/Validation/Rules/UnexpectedValueExceptionTest.php</file>
-            
             <file>./tests/unit/Validation/Rules/CallerTest.php</file>
-
             <file>./tests/unit/Validation/RuleGroupTraitTest.php</file>
             <file>./tests/unit/Validation/Rules/GroupTest.php</file>
-
             <file>./tests/unit/Validation/Rules/WrapperTest.php</file>
+
+            <file>./tests/unit/Configuration/InvalidArgumentExceptionTest.php</file>
+            <file>./tests/unit/Configuration/LogicExceptionTest.php</file>
+            <file>./tests/unit/Configuration/OutOfBoundsExceptionTest.php</file>
+            <file>./tests/unit/Configuration/RuntimeExceptionTest.php</file>
+
+            <file>./tests/unit/Configuration/SetsTraitTest.php</file>
+            <file>./tests/unit/Configuration/Sets/ArraysTest.php</file>
+            <file>./tests/unit/Configuration/Sets/JsonFileTest.php</file>
+            <file>./tests/unit/Configuration/Sets/SerializedFileTest.php</file>
 
         </testsuite>
     </testsuites>
