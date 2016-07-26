@@ -51,6 +51,8 @@
             <file>./tests/unit/Configuration/Sets/JsonFileTest.php</file>
             <file>./tests/unit/Configuration/Sets/SerializedFileTest.php</file>
 
+            <file>./tests/unit/Input/OutOfBoundsExceptionTest.php</file>
+
         </testsuite>
     </testsuites>
 </phpunit>
