@@ -6,7 +6,7 @@ namespace Flair\AutoLoader {
 	 * @author Daniel Sherman
 	 * @coversDefaultClass \Flair\AutoLoader\Psr0
 	 */
-	class Psr0Test extends \Flair\PhpUnit\TestCase {
+	class Psr0Test extends \PHPUnit\Framework\TestCase {
 		/**
 		 * holds a loader
 		 *
@@ -19,13 +19,6 @@ namespace Flair\AutoLoader {
 		 */
 		protected function setUp() {
 			self::$loader = new Psr0();
-		}
-
-		/**
-		 * mark the test finished.
-		 */
-		public static function tearDownAfterClass() {
-			self::setFinishedTest();
 		}
 
 		/**
@@ -76,7 +69,7 @@ namespace Flair\AutoLoader {
 		 * @author Daniel Sherman
 		 * @test
 		 * @depends testSetDefaultPathPrefix
-		 * @dataProvider testSetDefaultPathPrefixTypeConstraintProvider
+		 * @dataProvider setDefaultPathPrefixTypeConstraintProvider
 		 * @covers ::setDefaultPathPrefix
 		 */
 		public function testSetDefaultPathPrefixTypeConstraint($type, $val) {
@@ -93,8 +86,8 @@ namespace Flair\AutoLoader {
 		/**
 		 * provides data for testSetDefaultPathPrefixTypeConstraint
 		 */
-		public function testSetDefaultPathPrefixTypeConstraintProvider() {
-			$data = self::getDataTypeProvider();
+		public function setDefaultPathPrefixTypeConstraintProvider() {
+			$data = new \Flair\PhpUnit\DataTypeProvider();
 			return $data->arrayOfArrays($data->excludeTypes());
 		}
 
@@ -189,7 +182,7 @@ namespace Flair\AutoLoader {
 		 * @depends testAddPrefixDefault
 		 * @depends testGetPrefixes
 		 * @depends testRemovePrefix
-		 * @dataProvider testAddPrefixTypeConstraintProvider
+		 * @dataProvider addPrefixTypeConstraintProvider
 		 * @covers ::addPrefix
 		 */
 		public function testAddPrefixTypeConstraint($prefixType, $prefixVal, $pathPrefixType, $pathPrefixVal) {
@@ -214,8 +207,8 @@ namespace Flair\AutoLoader {
 		/**
 		 * provides data for testAddPrefixTypeConstraint
 		 */
-		public function testAddPrefixTypeConstraintProvider() {
-			$data = self::getDataTypeProvider();
+		public function addPrefixTypeConstraintProvider() {
+			$data = new \Flair\PhpUnit\DataTypeProvider();
 			$tmp = $data->arrayOfArrays($data->excludeTypes());
 			$tmp2 = $tmp;
 			$rtn = [];
@@ -300,7 +293,7 @@ namespace Flair\AutoLoader {
 		 * @author Daniel Sherman
 		 * @test
 		 * @depends testConstruct
-		 * @dataProvider testAddToIncludePathTypeConstraintProvider
+		 * @dataProvider addToIncludePathTypeConstraintProvider
 		 * @covers ::addToIncludePath
 		 */
 		public function testAddToIncludePathTypeConstraint($type, $val) {
@@ -321,8 +314,8 @@ namespace Flair\AutoLoader {
 		/**
 		 * provides data for testAddToIncludePathTypeConstraint
 		 */
-		public function testAddToIncludePathTypeConstraintProvider() {
-			$data = self::getDataTypeProvider();
+		public function addToIncludePathTypeConstraintProvider() {
+			$data = new \Flair\PhpUnit\DataTypeProvider();
 			return $data->arrayOfArrays($data->excludeTypes());
 		}
 
@@ -447,5 +440,6 @@ namespace Flair\AutoLoader {
 			$result = self::$loader->load('ComplexClassThree');
 			$this->assertFalse($result, 'The prefix was not configured');
 		}
+
 	}
 }

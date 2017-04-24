@@ -16,7 +16,7 @@
         <testsuite name="Unit">
             <file>./tests/unit/AutoLoader/Psr0Test.php</file>
             <file>./tests/unit/AutoLoader/Psr4Test.php</file>
-
+            <!--
             <file>./tests/unit/Exception/HandlerTest.php</file>
             <file>./tests/unit/Exception/ExceptionTraitTest.php</file>
             <file>./tests/unit/Exception/ExceptionTest.php</file>
@@ -52,7 +52,7 @@
             <file>./tests/unit/Configuration/Sets/SerializedFileTest.php</file>
 
             <file>./tests/unit/Input/OutOfBoundsExceptionTest.php</file>
-
-        </testsuite>
+            -->
+      </testsuite>
     </testsuites>
 </phpunit>
