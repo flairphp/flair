@@ -6,7 +6,7 @@ namespace Flair\Exception {
 	 * @author Daniel Sherman
 	 * @coversDefaultClass \Flair\Exception\Exception
 	 */
-	class ExceptionTest extends \Flair\Exception\ExceptionTraitTest {
+	class ExceptionTest extends \PHPUnit\Framework\TestCase {
 		/**
 		 * holds a list of context data.
 		 *
@@ -57,15 +57,6 @@ namespace Flair\Exception {
 		 * @var string
 		 */
 		protected static $interface = 'Flair\Exception\ExceptionInterface';
-
-		/**
-		 * set up the needed data before the testing starts.
-		 */
-		public static function setUpBeforeClass() {
-			parent::setUpBeforeClass();
-			self::addDependentTestCase('Flair\Exception\ExceptionTraitTest');
-			self::skipTestCaseOnFailedDependencies();
-		}
 
 		/**
 		 * A data provider that returns an exception with a null previous exception

@@ -10,13 +10,12 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="true"
-         verbose="false"
+         verbose="true"
          debug="false">
     <testsuites>
         <testsuite name="Unit">
             <file>./tests/unit/AutoLoader/Psr0Test.php</file>
             <file>./tests/unit/AutoLoader/Psr4Test.php</file>
-            <!--
             <file>./tests/unit/Exception/HandlerTest.php</file>
             <file>./tests/unit/Exception/ExceptionTraitTest.php</file>
             <file>./tests/unit/Exception/ExceptionTest.php</file>
@@ -26,6 +25,7 @@
             <file>./tests/unit/Exception/OutOfBoundsExceptionTest.php</file>
             <file>./tests/unit/Exception/RuntimeExceptionTest.php</file>
 
+            <!--
             <file>./tests/unit/Validation/InvalidArgumentExceptionTest.php</file>
             <file>./tests/unit/Validation/LogicExceptionTest.php</file>
             <file>./tests/unit/Validation/OutOfBoundsExceptionTest.php</file>

@@ -7,7 +7,7 @@ namespace Flair\Exception {
 	 * @author Daniel Sherman
 	 * @coversDefaultClass \Flair\Exception\ExceptionTrait
 	 */
-	class ExceptionTraitTest extends \Flair\PhpUnit\TestCase {
+	class ExceptionTraitTest extends \PHPUnit\Framework\TestCase {
 		/**
 		 * holds the test message
 		 *
@@ -32,13 +32,6 @@ namespace Flair\Exception {
 			require_once self::$fixturePath . 'ExceptionTraitTestUser.php';
 
 			self::$traitObj = new ExceptionTraitTestUser();
-		}
-
-		/**
-		 * mark the test finished.
-		 */
-		public static function tearDownAfterClass() {
-			self::setFinishedTest();
 		}
 
 		/**

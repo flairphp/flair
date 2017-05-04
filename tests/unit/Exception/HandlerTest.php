@@ -13,7 +13,7 @@ namespace Flair\Exception{
      * @author Daniel Sherman
      * @coversDefaultClass \Flair\Exception\Handler
      */
-    class HandlerTest extends \Flair\PhpUnit\TestCase
+    class HandlerTest extends \PHPUnit\Framework\TestCase
     {
         /**
          * holds a regular base Flair exception.
@@ -147,7 +147,7 @@ namespace Flair\Exception{
          */
         public function setTemplateTypesProvider()
         {
-            $data = self::getDataTypeProvider();
+            $data = new \Flair\PhpUnit\DataTypeProvider();
             return $data->arrayOfArrays($data->excludeTypes());
         }
 
@@ -185,7 +185,7 @@ namespace Flair\Exception{
          */
         public function setLoggingFailProvider()
         {
-            $data = self::getDataTypeProvider();
+            $data = new \Flair\PhpUnit\DataTypeProvider();
             return $data->arrayOfArrays($data->excludeTypes(['boolean']));
         }
 
