@@ -7,7 +7,7 @@ namespace Flair\Validation {
 	 * @author Daniel Sherman
 	 * @coversDefaultClass \Flair\Validation\RuleReplacerTrait
 	 */
-	class RuleReplacerTraitTest extends \Flair\PhpUnit\TestCase {
+	class RuleReplacerTraitTest extends \PHPUnit\Framework\TestCase {
 		/**
 		 * holds the path to the fixture directory
 		 *
@@ -26,24 +26,12 @@ namespace Flair\Validation {
 		 * set up the needed data before the testing starts.
 		 */
 		public static function setUpBeforeClass() {
-			self::addDependentTestCase('Flair\Validation\ReplacerTest');
-			$result = self::skipTestCaseOnFailedDependencies();
+			self::$fixturePath = dirname(__FILE__) . DIRECTORY_SEPARATOR;
+			self::$fixturePath .= 'fixtures' . DIRECTORY_SEPARATOR;
 
-			if ($result) {
-				self::$fixturePath = dirname(__FILE__) . DIRECTORY_SEPARATOR;
-				self::$fixturePath .= 'fixtures' . DIRECTORY_SEPARATOR;
+			require_once self::$fixturePath . 'RuleReplacerTraitTestObject.php';
 
-				require_once self::$fixturePath . 'RuleReplacerTraitTestObject.php';
-
-				self::$obj = new RuleReplacerTraitTestObject();
-			}
-		}
-
-		/**
-		 * mark the test finished.
-		 */
-		public static function tearDownAfterClass() {
-			self::setFinishedTest();
+			self::$obj = new RuleReplacerTraitTestObject();
 		}
 
 		/**

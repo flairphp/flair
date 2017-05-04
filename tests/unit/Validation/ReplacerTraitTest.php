@@ -7,7 +7,7 @@ namespace Flair\Validation {
 	 * @author Daniel Sherman
 	 * @coversDefaultClass \Flair\Validation\ReplacerTrait
 	 */
-	class ReplacerTraitTest extends \Flair\PhpUnit\TestCase {
+	class ReplacerTraitTest extends \PHPUnit\Framework\TestCase {
 		/**
 		 * holds the path to the fixture directory
 		 *
@@ -35,13 +35,6 @@ namespace Flair\Validation {
 		}
 
 		/**
-		 * mark the test finished.
-		 */
-		public static function tearDownAfterClass() {
-			self::setFinishedTest();
-		}
-
-		/**
 		 * Checks the object uses the correct trait, and
 		 * implements the correct interface.
 		 *
@@ -60,7 +53,7 @@ namespace Flair\Validation {
 		 * provides data values that aren't strings
 		 */
 		public function nonStringProvider() {
-			$data = self::getDataTypeProvider();
+			$data = new \Flair\PhpUnit\DataTypeProvider();
 			return $data->arrayOfArrays($data->excludeTypes(['string']));
 		}
 
@@ -233,7 +226,7 @@ namespace Flair\Validation {
 		 * provides data values that aren't scalar
 		 */
 		public function nonScalarProvider() {
-			$data = self::getDataTypeProvider();
+			$data = new \Flair\PhpUnit\DataTypeProvider();
 			return $data->arrayOfArrays($data->excludeTypes(['boolean', 'integer', 'float', 'string']));
 		}
 
@@ -261,7 +254,7 @@ namespace Flair\Validation {
 		 * provides data values that aren't scalar
 		 */
 		public function scalarProvider() {
-			$data = self::getDataTypeProvider();
+			$data = new \Flair\PhpUnit\DataTypeProvider();
 			return $data->arrayOfArrays($data->includeTypes(['boolean', 'integer', 'float', 'string']));
 		}
 

@@ -7,7 +7,7 @@ namespace Flair\Validation {
 	 * @author Daniel Sherman
 	 * @coversDefaultClass \Flair\Validation\ReplacerTrait
 	 */
-	class RuleMessageTraitTest extends \Flair\PhpUnit\TestCase {
+	class RuleMessageTraitTest extends \PHPUnit\Framework\TestCase {
 		/**
 		 * holds the path to the fixture directory
 		 *
@@ -32,13 +32,6 @@ namespace Flair\Validation {
 			require_once self::$fixturePath . 'RuleMessageTraitTestObject.php';
 
 			self::$obj = new RuleMessageTraitTestObject();
-		}
-
-		/**
-		 * mark the test finished.
-		 */
-		public static function tearDownAfterClass() {
-			self::setFinishedTest();
 		}
 
 		/**
@@ -73,7 +66,7 @@ namespace Flair\Validation {
 		 * provides data values that aren't strings
 		 */
 		public function nonStringProvider() {
-			$data = self::getDataTypeProvider();
+			$data = new \Flair\PhpUnit\DataTypeProvider();
 			return $data->arrayOfArrays($data->excludeTypes(['string']));
 		}
 

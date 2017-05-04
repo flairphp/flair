@@ -7,7 +7,7 @@ namespace Flair\Validation {
 	 * @author Daniel Sherman
 	 * @coversDefaultClass \Flair\Validation\RuleTrait
 	 */
-	class RuleTraitTest extends \Flair\PhpUnit\TestCase {
+	class RuleTraitTest extends \PHPUnit\Framework\TestCase {
 		/**
 		 * holds the path to the fixture directory
 		 *
@@ -32,13 +32,6 @@ namespace Flair\Validation {
 			require_once self::$fixturePath . 'RuleTraitTestObject.php';
 
 			self::$obj = new RuleTraitTestObject();
-		}
-
-		/**
-		 * mark the test finished.
-		 */
-		public static function tearDownAfterClass() {
-			self::setFinishedTest();
 		}
 
 		/**
@@ -72,7 +65,7 @@ namespace Flair\Validation {
 		 * provides data values that aren't boolean
 		 */
 		public function nonBooleanProvider() {
-			$data = self::getDataTypeProvider();
+			$data = new \Flair\PhpUnit\DataTypeProvider();
 			return $data->arrayOfArrays($data->excludeTypes(['boolean']));
 		}
 

@@ -7,23 +7,7 @@ namespace Flair\Validation\Rules {
 	 * @author Daniel Sherman
 	 * @coversDefaultClass \Flair\Validation\Rules\Group
 	 */
-	class GroupTest extends \Flair\PhpUnit\TestCase {
-		/**
-		 * set up the needed data before the testing starts.
-		 */
-		public static function setUpBeforeClass() {
-			self::addDependentTestCase('Flair\Validation\RuleTraitTest');
-			self::addDependentTestCase('Flair\Validation\RuleGroupTraitTest');
-			self::skipTestCaseOnFailedDependencies();
-		}
-
-		/**
-		 * mark the test finished.
-		 */
-		public static function tearDownAfterClass() {
-			self::setFinishedTest();
-		}
-
+	class GroupTest extends \PHPUnit\Framework\TestCase {
 		/**
 		 * Checks the object uses the correct trait, and
 		 * implements the correct interface.

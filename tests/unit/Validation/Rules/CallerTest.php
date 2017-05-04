@@ -7,24 +7,7 @@ namespace Flair\Validation\Rules {
 	 * @author Daniel Sherman
 	 * @coversDefaultClass \Flair\Validation\Rules\Caller
 	 */
-	class CallerTest extends \Flair\PhpUnit\TestCase {
-		/**
-		 * set up the needed data before the testing starts.
-		 */
-		public static function setUpBeforeClass() {
-			self::addDependentTestCase('Flair\Validation\RuleTraitTest');
-			self::addDependentTestCase('Flair\Validation\RuleMessageTraitTest');
-			self::addDependentTestCase('Flair\Validation\RuleReplacerTraitTest');
-			self::skipTestCaseOnFailedDependencies();
-		}
-
-		/**
-		 * mark the test finished.
-		 */
-		public static function tearDownAfterClass() {
-			self::setFinishedTest();
-		}
-
+	class CallerTest extends \PHPUnit\Framework\TestCase {
 		/**
 		 * Checks the object uses the correct trait, and
 		 * implements the correct interface.

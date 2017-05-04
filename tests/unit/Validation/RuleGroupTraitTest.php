@@ -7,7 +7,7 @@ namespace Flair\Validation {
 	 * @author Daniel Sherman
 	 * @coversDefaultClass \Flair\Validation\RuleGroupTrait
 	 */
-	class RuleGroupTraitTest extends \Flair\PhpUnit\TestCase {
+	class RuleGroupTraitTest extends \PHPUnit\Framework\TestCase {
 		/**
 		 * holds the path to the fixture directory
 		 *
@@ -26,8 +26,6 @@ namespace Flair\Validation {
 		 * set up the needed data before the testing starts.
 		 */
 		public static function setUpBeforeClass() {
-			self::addDependentTestCase('Flair\Validation\Rules\CallerTest');
-			self::skipTestCaseOnFailedDependencies();
 
 			self::$fixturePath = dirname(__FILE__) . DIRECTORY_SEPARATOR;
 			self::$fixturePath .= 'fixtures' . DIRECTORY_SEPARATOR;
@@ -35,13 +33,6 @@ namespace Flair\Validation {
 			require_once self::$fixturePath . 'RuleGroupTraitTestObject.php';
 
 			self::$obj = new RuleGroupTraitTestObject();
-		}
-
-		/**
-		 * mark the test finished.
-		 */
-		public static function tearDownAfterClass() {
-			self::setFinishedTest();
 		}
 
 		/**

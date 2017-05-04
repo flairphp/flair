@@ -7,22 +7,7 @@ namespace Flair\Validation {
 	 * @author Daniel Sherman
 	 * @coversDefaultClass \Flair\Validation\Replacer
 	 */
-	class ReplacerTest extends \Flair\PhpUnit\TestCase {
-		/**
-		 * set up the needed data before the testing starts.
-		 */
-		public static function setUpBeforeClass() {
-			self::addDependentTestCase('Flair\Validation\ReplacerTraitTest');
-			self::skipTestCaseOnFailedDependencies();
-		}
-
-		/**
-		 * mark the test finished.
-		 */
-		public static function tearDownAfterClass() {
-			self::setFinishedTest();
-		}
-
+	class ReplacerTest extends \PHPUnit\Framework\TestCase {
 		/**
 		 * Checks the object is of the correct type, uses the correct trait, and
 		 * implements the correct interface.
