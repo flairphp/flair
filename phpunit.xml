@@ -40,19 +40,15 @@
             <file>./tests/unit/Validation/Rules/GroupTest.php</file>
             <file>./tests/unit/Validation/Rules/WrapperTest.php</file>
 
-            <!--
             <file>./tests/unit/Configuration/InvalidArgumentExceptionTest.php</file>
             <file>./tests/unit/Configuration/LogicExceptionTest.php</file>
             <file>./tests/unit/Configuration/OutOfBoundsExceptionTest.php</file>
             <file>./tests/unit/Configuration/RuntimeExceptionTest.php</file>
-
             <file>./tests/unit/Configuration/SetsTraitTest.php</file>
             <file>./tests/unit/Configuration/Sets/ArraysTest.php</file>
             <file>./tests/unit/Configuration/Sets/JsonFileTest.php</file>
             <file>./tests/unit/Configuration/Sets/SerializedFileTest.php</file>
-
             <file>./tests/unit/Input/OutOfBoundsExceptionTest.php</file>
-            -->
       </testsuite>
     </testsuites>
 </phpunit>

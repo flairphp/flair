@@ -7,7 +7,7 @@ namespace Flair\Configuration {
 	 * @author Daniel Sherman
 	 * @coversDefaultClass \Flair\Configuration\SetsTrait
 	 */
-	class SetsTraitTest extends \Flair\PhpUnit\TestCase {
+	class SetsTraitTest extends \PHPUnit\Framework\TestCase {
 		/**
 		 * holds the path to the fixture directory
 		 *
@@ -32,13 +32,6 @@ namespace Flair\Configuration {
 			require_once self::$fixturePath . 'SetsTraitTestObject.php';
 
 			self::$obj = new SetsTraitTestObject();
-		}
-
-		/**
-		 * mark the test finished.
-		 */
-		public static function tearDownAfterClass() {
-			self::setFinishedTest();
 		}
 
 		/**

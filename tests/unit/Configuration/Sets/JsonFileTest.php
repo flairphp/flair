@@ -7,7 +7,7 @@ namespace Flair\Configuration\Sets {
 	 * @author Daniel Sherman
 	 * @coversDefaultClass \Flair\Configuration\Sets\JsonFile
 	 */
-	class JsonFileTest extends \Flair\PhpUnit\TestCase {
+	class JsonFileTest extends \PHPUnit\Framework\TestCase {
 
 		/**
 		 * holds the path to the fixture directory
@@ -20,18 +20,8 @@ namespace Flair\Configuration\Sets {
 		 * set up the needed data before the testing starts.
 		 */
 		public static function setUpBeforeClass() {
-			self::addDependentTestCase('Flair\Configuration\SetsTraitTest');
-			self::skipTestCaseOnFailedDependencies();
-
 			self::$fixturePath = dirname(__FILE__) . DIRECTORY_SEPARATOR;
 			self::$fixturePath .= 'fixtures' . DIRECTORY_SEPARATOR;
-		}
-
-		/**
-		 * mark the test finished.
-		 */
-		public static function tearDownAfterClass() {
-			self::setFinishedTest();
 		}
 
 		/**

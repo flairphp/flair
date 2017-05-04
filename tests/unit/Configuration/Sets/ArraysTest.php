@@ -7,22 +7,7 @@ namespace Flair\Configuration\Sets {
 	 * @author Daniel Sherman
 	 * @coversDefaultClass \Flair\Configuration\Sets\Arrays
 	 */
-	class ArraysTest extends \Flair\PhpUnit\TestCase {
-		/**
-		 * set up the needed data before the testing starts.
-		 */
-		public static function setUpBeforeClass() {
-			self::addDependentTestCase('Flair\Configuration\SetsTraitTest');
-			self::skipTestCaseOnFailedDependencies();
-		}
-
-		/**
-		 * mark the test finished.
-		 */
-		public static function tearDownAfterClass() {
-			self::setFinishedTest();
-		}
-
+	class ArraysTest extends \PHPUnit\Framework\TestCase {
 		/**
 		 * Checks the object uses the correct trait, and
 		 * implements the correct interface.
