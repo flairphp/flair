@@ -23,31 +23,5 @@ namespace Flair\Input {
 		 * @throws OutOfBoundsException If the input doesn't exist.
 		 */
 		public function get();
-
-		/**
-		 * Indicates if an input is required.
-		 *
-		 * @return boolean
-		 */
-		public function required();
-
-		/**
-		 * Indicates if an input is valid.
-		 *
-		 * @return boolean
-		 * @uses get
-		 * @throws OutOfBoundsException If the input doesn't exist.
-		 */
-		public function valid();
-
-		/**
-		 * checks if the input exists and is valid.
-		 *
-		 * @uses exists
-		 * @uses valid
-		 * @return boolean
-		 */
-		public function existsAndValid();
-
 	}
 }

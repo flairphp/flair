@@ -48,7 +48,11 @@
             <file>./tests/unit/Configuration/Sets/ArraysTest.php</file>
             <file>./tests/unit/Configuration/Sets/JsonFileTest.php</file>
             <file>./tests/unit/Configuration/Sets/SerializedFileTest.php</file>
+            
+            <file>./tests/unit/Input/InvalidArgumentExceptionTest.php</file>
             <file>./tests/unit/Input/OutOfBoundsExceptionTest.php</file>
+            <file>./tests/unit/Input/AccessorkeyTraitTest.php</file>
+
       </testsuite>
     </testsuites>
 </phpunit>
