@@ -2,11 +2,11 @@
 namespace Flair\Input\Accessor {
 
 	/**
-	 * The Accessor for Post input.
+	 * The Accessor for Request input.
 	 *
 	 * @author Daniel Sherman
 	 */
-	class Post implements \Flair\Input\AccessorInterface {
+	class Request implements \Flair\Input\AccessorInterface {
 
 		/**
 		 * Add the needed methods.
@@ -16,7 +16,7 @@ namespace Flair\Input\Accessor {
 		/**
 		 * The constructor does what you would expect it to.
 		 *
-		 * @param integer|string $key The key for the Post variable.
+		 * @param integer|string $key The key for the Request variable.
 		 * @uses setKey
 		 * @throws InvalidArgumentException If $key isn't a string or Integer.
 		 */
@@ -25,26 +25,26 @@ namespace Flair\Input\Accessor {
 		}
 
 		/**
-		 * Checks to see if the Post variable is present/available.
+		 * Checks to see if the Request variable is present/available.
 		 *
 		 * @return boolean
 		 */
 		public function exists(){
-			return array_key_exists($this->key, $_POST);
+			return array_key_exists($this->key, $_REQUEST);
 		}
 
 		/**
-		 * Returns the value of the Post variable if it exists.
+		 * Returns the value of the Request variable if it exists.
 		 *
 		 * @uses exists
 		 * @return mixed
-		 * @throws OutOfBoundsException If the Post variable doesn't exist.
+		 * @throws OutOfBoundsException If the Request variable doesn't exist.
 		 */
 		public function get(){
 			if($this->exists()){
-				return $_POST[$this->key];
+				return $_REQUEST[$this->key];
 			}else{
-				throw new \Flair\Input\OutOfBoundsException('The Post variable does not exist', 1);
+				throw new \Flair\Input\OutOfBoundsException('The Request variable does not exist', 3);
 			}
 		}
 	}

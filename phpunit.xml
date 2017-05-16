@@ -52,6 +52,9 @@
             <file>./tests/unit/Input/InvalidArgumentExceptionTest.php</file>
             <file>./tests/unit/Input/OutOfBoundsExceptionTest.php</file>
             <file>./tests/unit/Input/AccessorkeyTraitTest.php</file>
+            <file>./tests/unit/Input/Accessor/PostTest.php</file>
+            <file>./tests/unit/Input/Accessor/GetTest.php</file>
+            <file>./tests/unit/Input/Accessor/RequestTest.php</file>
 
       </testsuite>
     </testsuites>
