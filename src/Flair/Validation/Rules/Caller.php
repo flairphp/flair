@@ -27,7 +27,7 @@ namespace Flair\Validation\Rules {
 		protected $call = null;
 
 		/**
-		 * The optional arguments that isValid() will pass to $callable for validating input.
+		 * The optional arguments that isValid() will pass to $call for validating input.
 		 *
 		 * @var array
 		 */

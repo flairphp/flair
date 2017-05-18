@@ -51,6 +51,7 @@
             
             <file>./tests/unit/Input/InvalidArgumentExceptionTest.php</file>
             <file>./tests/unit/Input/OutOfBoundsExceptionTest.php</file>
+            <file>./tests/unit/Input/UnexpectedValueExceptionTest.php</file>
             <file>./tests/unit/Input/AccessorkeyTraitTest.php</file>
             <file>./tests/unit/Input/Accessor/PostTest.php</file>
             <file>./tests/unit/Input/Accessor/GetTest.php</file>
@@ -61,6 +62,8 @@
             <file>./tests/unit/Input/Accessor/FilesTest.php</file>
             <file>./tests/unit/Input/Accessor/ArgvTest.php</file>
             <file>./tests/unit/Input/Accessor/SessionTest.php</file>
+            <file>./tests/unit/Input/Required/BooleanTest.php</file>
+            <file>./tests/unit/Input/Required/CallerTest.php</file>
 
       </testsuite>
     </testsuites>
