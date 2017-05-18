@@ -55,6 +55,12 @@
             <file>./tests/unit/Input/Accessor/PostTest.php</file>
             <file>./tests/unit/Input/Accessor/GetTest.php</file>
             <file>./tests/unit/Input/Accessor/RequestTest.php</file>
+            <file>./tests/unit/Input/Accessor/ServerTest.php</file>
+            <file>./tests/unit/Input/Accessor/EnvTest.php</file>
+            <file>./tests/unit/Input/Accessor/CookieTest.php</file>
+            <file>./tests/unit/Input/Accessor/FilesTest.php</file>
+            <file>./tests/unit/Input/Accessor/ArgvTest.php</file>
+            <file>./tests/unit/Input/Accessor/SessionTest.php</file>
 
       </testsuite>
     </testsuites>
